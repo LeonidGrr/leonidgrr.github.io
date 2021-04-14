@@ -1,0 +1,40 @@
+{
+  "name": "personal-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "leonidgrr",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve --open --hot",
+    "build": "webpack --config webpack.config.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "@types/dat.gui": "^0.7.6",
+    "@types/three": "^0.127.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^6.4.1",
+    "css-loader": "^3.6.0",
+    "gh-pages": "^1.2.0",
+    "html-webpack-plugin": "^4.5.2",
+    "sass": "^1.32.8",
+    "sass-loader": "^10.1.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.2.4",
+    "webpack": "^5.31.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-glsl-loader": "^1.0.1",
+    "worker-loader": "^3.0.8"
+  },
+  "dependencies": {
+    "dat.gui": "^0.7.7",
+    "stats-js": "^1.0.1",
+    "three": "^0.127.0"
+  }
+}

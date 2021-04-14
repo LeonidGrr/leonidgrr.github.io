@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitReturns": false,
+        "noImplicitAny": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "esNext",
+        "target": "es5",
+        "jsx": "react",
+        "moduleResolution": "node",
+        "lib": ["es2015", "dom", "webworker"]
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        ".git",
+        "node_modules",
+        "old"
+    ]
+}

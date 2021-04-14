@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Prime';
+    src: url('./fonts/Prime-Light.eot');
+    src: url('./fonts/Prime-Light.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Prime-Light.woff2') format('woff2'),
+        url('./fonts/Prime-Light.woff') format('woff'),
+        url('./fonts/Prime-Light.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Prime';
+    src: url('./fonts/Prime-Regular.eot');
+    src: url('./fonts/Prime-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Prime-Regular.woff2') format('woff2'),
+        url('./fonts/Prime-Regular.woff') format('woff'),
+        url('./fonts/Prime-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+}
+
+html, body {
+    font-family: 'Prime', sans-serif;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    color: white;
+}
+
+h1, h2, h3, h4, h5, h6, p, ol, ul {
+    font-weight: normal;
+}
+
+canvas, #renderCanvas {
+    width: 100%;
+    height: 100%;
+}
