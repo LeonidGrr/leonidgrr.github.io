@@ -46,10 +46,17 @@ module.exports = {
                 ],
               },
             {
-                test: /\.(glb|gltf)$/i,
+                test: /\.(glb|gltf|fbx)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'models/[hash][ext][query]',
+                },
+            },
+            {
+                test: /\.(ogg)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'sounds/[hash][ext][query]',
                 },
             },
             {   

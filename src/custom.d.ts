@@ -18,6 +18,11 @@ declare module '*.glb' {
     export default content;
 }
 
+declare module '*.fbx' {
+    const content: any;
+    export default content;
+}
+
 declare module '*.obj' {
     const content: any;
     export default content;
@@ -29,6 +34,11 @@ declare module '*.mtl' {
 }
 
 declare module '*.glsl' {
+    const content: any;
+    export default content;
+}
+
+declare module '*.ogg' {
     const content: any;
     export default content;
 }

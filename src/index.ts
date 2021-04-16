@@ -1,13 +1,9 @@
 import * as THREE from 'three';
 import Stats from 'stats-js';
+import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-// import { Venusian } from './components/Venusian';
-// import { Atmo } from './components/Atmo';
-import { Dawn } from './components/Dawn';
-import { Rain } from './components/Rain';
-// import { ParticlePointer } from './components/ParticlePointer';
+import { Keyboard } from './components/Keyboard';
 import './index.scss';
-// import { Venusian } from './components/Venusian';
 
 const sizes = {
     width: document.body.clientWidth,
@@ -17,68 +13,44 @@ const sizes = {
 const setup = async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({ canvas });
+    // renderer.shadowMap.enabled = true;
+
+    const gui = new dat.GUI();
+    const stats = new Stats();
+    document.body.appendChild(stats.dom);
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x11111f, 0.002);
     renderer.setClearColor(scene.fog.color);
 
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.z = 10;
+    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
+    camera.position.set(1.157, 10.921, 10.312);
+    camera.rotation.set(-0.9, 0.08, 0.1);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.enablePan = false;
     controls.update();
 
-    const stats = new Stats();
-    document.body.appendChild(stats.dom);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.75);
+    directionalLight.position.set(10, 50, 25);
+    scene.add(directionalLight);
 
     const ambient = new THREE.AmbientLight(0x555555);
     scene.add(ambient);
 
-    // const planeGeometry = new THREE.PlaneGeometry(100, 100);
-    // const planeMaterial = new THREE.MeshBasicMaterial({
-    //     wireframe: true,
-    // });
-    // const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-    // planeMesh.rotateX(-Math.PI / 2);
-    // planeMesh.position.y = -10;
-    // scene.add(planeMesh);
+    const planeGeometry = new THREE.PlaneGeometry(100, 100);
+    const planeMaterial = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF,
+        side: THREE.DoubleSide,
+    });
+    const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+    planeMesh.receiveShadow = true;
+    planeMesh.rotateX(-Math.PI / 2);
+    planeMesh.position.y = -0.9;
+    scene.add(planeMesh);
 
-    const dawn = Dawn(scene);
-
-    // const rain = Rain();
-    // scene.add(rain.ref);
-
-    // const wasm = await import('../boids-wasm/pkg/boids_wasm');
-    // const obstacles: THREE.Mesh[] = [];
-    // const obstacleGeometry = new THREE.BoxGeometry(100, 100, 100);
-    // const obstacleMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true });
-    // obstacleMaterial.opacity = 0.0;
-    // const obstacle1 = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
-    // obstacles.push(obstacle1);
-    // scene.add(obstacle1);
-    // const config = wasm.boids_config();
-    // config.time_scale = 0.001;
-    // config.obstacle_dist = 10;
-    // const boids = Boids(wasm, config, 300, obstacles, scene);
-
-    // Pointer targets
-    // const materialExample = new THREE.MeshBasicMaterial({ color: 0x404040, wireframe: true });
-
-    // const geometryExample2 = new THREE.SphereGeometry(5).toNonIndexed();
-    // const meshExample2 = new THREE.Mesh(geometryExample2, materialExample);
-    // meshExample2.position.x = 40;
-    // scene.add(meshExample2);
-
-    // const geometryExample3 = new THREE.BoxGeometry(10, 3, 16).toNonIndexed();
-    // const meshExample3 = new THREE.Mesh(geometryExample3, materialExample);
-    // meshExample2.position.x = -40;
-    // scene.add(meshExample3);
-
-    // const pointer = ParticlePointer([meshExample1, meshExample2, meshExample3]);
-    // scene.add(pointer.refMesh);
+    const keyboard = Keyboard(scene, camera);
 
     const resizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => {
         const canvas = renderer.domElement;
@@ -96,7 +68,7 @@ const setup = async () => {
         time *= 0.001;
 		stats.update();
         controls.update();
-        // rain.update();
+        keyboard.update();
 
         if (resizeRendererToDisplaySize(renderer)) {
             const canvas = renderer.domElement;
