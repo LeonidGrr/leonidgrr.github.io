@@ -1,7 +1,10 @@
 import * as THREE from 'three';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { ReactGUI } from './components/ReactGUI';
 import { Keyboard } from './components/Keyboard';
 import './index.scss';
 import { Table } from './components/Table';
@@ -26,8 +29,8 @@ const setup = async () => {
     renderer.setClearColor(scene.fog.color);
 
     const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(1.25, 11, 13);
-    camera.rotation.set(-0.613, 0.18, 0.125);
+    camera.position.set(-0.669, 12.223, 13.995);
+    camera.rotation.set(-0.628, -0.124, -0.090);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -48,6 +51,8 @@ const setup = async () => {
     scene.add(table.mesh);
 
     const keyboard = Keyboard(scene, camera);
+
+    ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
 
     const resizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => {
         const canvas = renderer.domElement;

@@ -1,0 +1,30 @@
+div.navigation {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+
+    span {
+        font-size: 2rem;
+    }
+
+    ul {
+        margin-top: 2rem;
+    }
+
+    li {
+        list-style: none;
+
+        button {
+            font-family: 'Prime', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            background: none;
+            border: none;
+            outline: none;
+            
+            &:hover {
+                // text-shadow: rgba(0, 0, 0, 0.74) 1px 0 0.5rem;
+            }
+        }
+    }
+}
