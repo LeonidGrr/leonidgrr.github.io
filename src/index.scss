@@ -82,3 +82,13 @@ div.navigation {
         }
     }
 }
+
+div.terminal {
+    position: absolute;
+    margin: 3rem;
+    top: 0;
+    right: 0;
+    width: 30vw;
+    height: 25vh;
+    background-color: rgba(95, 95, 95, 0.15);
+}

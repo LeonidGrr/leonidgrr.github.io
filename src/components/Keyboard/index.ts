@@ -121,7 +121,6 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
                 if ((child as THREE.Mesh).isMesh) {
                     const mesh = child as THREE.Mesh;
                     child.castShadow = true;
-                    child.receiveShadow = true;
                     if (child.name.includes('Cube')
                     && child.position.y !== 0) {
                         (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
@@ -131,13 +130,20 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
                             color: 0x323138,
                         });
                         keyMeshes.push(child);
-                    }
-                    if (child.name === 'plate') {
+                    } else if (child.name === 'plate') {
                         (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,
                             color: 0x323138,
+                        });
+                    } else {
+                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                            roughness: 0.5,
+                            clearcoat: 1.0,
+                            clearcoatRoughness: 0.1,
+                            color: 0xFFFFFF,
+                            opacity: 0.5,
                         });
                     }
                 }
@@ -201,6 +207,8 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
 
     window.addEventListener('click', keyClickHandler, false);
     window.addEventListener('keydown', keyPressHandler);
+
+    const terminal = document.querySelector('div.terminal')!;
 
     // let dissolve = false;
     // const torusGeometry = new THREE.TorusBufferGeometry();

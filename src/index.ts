@@ -14,7 +14,8 @@ const sizes = {
 const setup = async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({ canvas });
-    // renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const gui = new dat.GUI();
     const stats = new Stats();
@@ -33,13 +34,14 @@ const setup = async () => {
     controls.enableDamping = true;
     controls.update();
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.75);
-    // directionalLight.castShadow = true;
-    directionalLight.position.set(10, 50, 25);
-    scene.add(directionalLight);
+    const pointLight = new THREE.PointLight(0xffffff);
+    pointLight.castShadow = true;
+    pointLight.shadow.mapSize.width = 1024;
+    pointLight.shadow.mapSize.height = 1024;
+    pointLight.position.set(10, 50, 10);
+    scene.add(pointLight);
 
     const ambient = new THREE.AmbientLight(0x555555);
-    // ambient.castShadow = true;
     scene.add(ambient);
 
     const table = Table();
