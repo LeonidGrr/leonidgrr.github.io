@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import keyboardModel from '../../models/keyboard/keyboard2.glb';
+import keyboardModel from '../../models/keyboard/keyboard.glb';
 import keySound1 from '../../sounds/key1.ogg';
 import keySound2 from '../../sounds/key2.ogg';
 
@@ -45,28 +45,31 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
 
     const loader = new GLTFLoader();    
     const keys: THREE.Object3D[] = [];
+    let model: THREE.Group | null = null;
 
     loader.load(keyboardModel,
         gltf => {
+            model = gltf.scene;
             gltf.scene.scale.set(50, 50, 50);
             gltf.scene.position.x = 5;
             gltf.scene.position.z = 2.5;
             gltf.scene.traverse(function (child) {
                 if ((child as THREE.Mesh).isMesh) {
+                    const mesh = child as THREE.Mesh;
                     child.castShadow = true;
                     child.receiveShadow = true;
                     if (child.name.includes('Cube')
                     && child.position.y !== 0) {
-                        // ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0x323138);
-                        ((child as THREE.Mesh).material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,
+                            // color: 0x323138,
                         });
                         keys.push(child);
                     }
                     if (child.name === 'plate') {
-                        ((child as THREE.Mesh).material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,
@@ -117,16 +120,58 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keys); 
         if (intersects.length > 0) {
+            const mesh = intersects[0].object as THREE.Mesh;
             animateKeyPress(intersects[0].object);
-            ((intersects[0].object as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0xFF0000);
+            (mesh.material as THREE.MeshStandardMaterial).color.set(0xFF0000);
 
         }
     };
 
     window.addEventListener('click', keyClickHandler, false);
 
+    let dissolve = false;
     const update = () => {
+        if (dissolve) {
+            model?.traverse(function (child) {
+                if ((child as THREE.Mesh).isMesh) {
+                    const mesh = child as THREE.Mesh;
+                    const positions = mesh.geometry.attributes.position;
+                    for (let i = 0; i < positions.array.length; i++) {   
+                        const px = positions.getX(i);
+                        const py = positions.getY(i);
+                        const pz = positions.getZ(i);   
+                        positions.setXYZ(
+                            i,
+                            px + Math.random() * 0.001 - 0.0005,
+                            py + Math.random() * 0.001 - 0.0005,
+                            pz + Math.random() * 0.001 - 0.0005,
+                        );
+                    }
+                    mesh.geometry.attributes.position.needsUpdate = true;
+                }
+            });
+        }
     };
+    
+    setTimeout(() => {
+        const allPoints: THREE.Points[] = [];
+        const material = new THREE.PointsMaterial({ color: 0xFF0000, size: 0.1 });
+        model?.traverse(function (child) {
+            if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh;
+                console.log(mesh.geometry.attributes)
+                setTimeout(() => {
+                    (mesh.material as THREE.MeshStandardMaterial).wireframe = true;
+                }, Math.random() * 750);
+                let points = new THREE.Points(mesh.geometry, material);
+                child.add(points);
+                allPoints.push(points);
+            }
+        });
+        setTimeout(() => {
+            dissolve = true;
+        }, 1000);
+    }, 5000);
 
-    return { update };
+    return { update, dissolve };
 };
