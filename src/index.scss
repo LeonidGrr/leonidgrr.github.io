@@ -47,7 +47,38 @@ h1, h2, h3, h4, h5, h6, p, ol, ul {
     font-weight: normal;
 }
 
-canvas, #renderCanvas {
+canvas.webgl {
     width: 100%;
     height: 100%;
+}
+
+div.navigation {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+
+    span {
+        font-size: 2rem;
+    }
+
+    ul {
+        margin-top: 2rem;
+    }
+
+    li {
+        list-style: none;
+
+        button {
+            font-family: 'Prime', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            background: none;
+            border: none;
+            outline: none;
+            
+            &:hover {
+                // text-shadow: rgba(0, 0, 0, 0.74) 1px 0 0.5rem;
+            }
+        }
+    }
 }

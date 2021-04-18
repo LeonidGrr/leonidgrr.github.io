@@ -4,6 +4,7 @@ import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Keyboard } from './components/Keyboard';
 import './index.scss';
+import { Table } from './components/Table';
 
 const sizes = {
     width: document.body.clientWidth,
@@ -23,9 +24,9 @@ const setup = async () => {
     scene.fog = new THREE.FogExp2(0x11111f, 0.002);
     renderer.setClearColor(scene.fog.color);
 
-    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(1.157, 10.921, 10.312);
-    camera.rotation.set(-0.9, 0.08, 0.1);
+    const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000);
+    camera.position.set(1.25, 11, 13);
+    camera.rotation.set(-0.613, 0.18, 0.125);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -33,22 +34,16 @@ const setup = async () => {
     controls.update();
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.75);
+    // directionalLight.castShadow = true;
     directionalLight.position.set(10, 50, 25);
     scene.add(directionalLight);
 
     const ambient = new THREE.AmbientLight(0x555555);
+    // ambient.castShadow = true;
     scene.add(ambient);
 
-    const planeGeometry = new THREE.PlaneGeometry(100, 100);
-    const planeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xFFFFFF,
-        side: THREE.DoubleSide,
-    });
-    const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-    planeMesh.receiveShadow = true;
-    planeMesh.rotateX(-Math.PI / 2);
-    planeMesh.position.y = -0.9;
-    scene.add(planeMesh);
+    const table = Table();
+    scene.add(table.mesh);
 
     const keyboard = Keyboard(scene, camera);
 
