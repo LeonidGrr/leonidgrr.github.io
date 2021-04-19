@@ -6,54 +6,63 @@ import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ReactGUI } from './components/ReactGUI';
 import { Keyboard } from './components/Keyboard';
-import './index.scss';
+import { Screen } from './components/Screen';
 import { Table } from './components/Table';
+import postprocessing from './postprocessing';
+import './index.scss';
 
+// const stats = new Stats();
+// document.body.appendChild(stats.dom);
+// const gui = new dat.GUI();
 const sizes = {
     width: document.body.clientWidth,
     height: document.body.clientHeight,
 };
 
-const setup = async () => {
+(async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
-    const renderer = new THREE.WebGLRenderer({ canvas });
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+    });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    const gui = new dat.GUI();
-    const stats = new Stats();
-    document.body.appendChild(stats.dom);
-
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x11111f, 0.002);
-    renderer.setClearColor(scene.fog.color);
+    scene.background = scene.fog.color;
+    scene.background.convertSRGBToLinear()
+
+    const light = new THREE.AmbientLight(0xFFFFFF, 0.1);
+    scene.add(light);
 
     const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(-0.669, 12.223, 13.995);
-    camera.rotation.set(-0.628, -0.124, -0.090);
+    camera.position.set(0, 7.5, 12.5);
+    camera.layers.enable(1);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.update();
 
-    const pointLight = new THREE.PointLight(0xffffff);
-    pointLight.castShadow = true;
-    pointLight.shadow.mapSize.width = 1024;
-    pointLight.shadow.mapSize.height = 1024;
-    pointLight.position.set(10, 50, 10);
-    scene.add(pointLight);
+    // Post-processing
+    const {
+        bloomComposer,
+        finalComposer,
+        renderBloom,
+    } = postprocessing(scene, camera, renderer);
 
-    const ambient = new THREE.AmbientLight(0x555555);
-    scene.add(ambient);
-
+    // Setup meshes
     const table = Table();
     scene.add(table.mesh);
 
     const keyboard = Keyboard(scene, camera);
+    const screen = Screen(scene, renderer, camera);
 
-    ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
+    // GUI
+    // ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
 
+    // Rendering
     const resizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => {
         const canvas = renderer.domElement;
         const pixelRatio = window.devicePixelRatio || 0;
@@ -62,15 +71,19 @@ const setup = async () => {
         const needResize = canvas.width !== width || canvas.height !== height;
         if (needResize) {
           renderer.setSize(width, height, false);
+          bloomComposer.setSize(width, height);
+          finalComposer.setSize(width, height);
         }
         return needResize;
     };
 
     const render = (time: number) => {
+        requestAnimationFrame(render);
         time *= 0.001;
-		stats.update();
+		// stats.update();
         controls.update();
         keyboard.update();
+        screen.update();
 
         if (resizeRendererToDisplaySize(renderer)) {
             const canvas = renderer.domElement;
@@ -78,10 +91,8 @@ const setup = async () => {
             camera.updateProjectionMatrix();
         }
 
-        renderer.render(scene, camera);
-        requestAnimationFrame(render);
+        renderBloom();
+        finalComposer.render();
     };
     requestAnimationFrame(render);
-};
-
-setup();
+})();

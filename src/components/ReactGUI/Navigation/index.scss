@@ -1,29 +1,42 @@
-div.navigation {
+.navigation {
     position: absolute;
-    top: 4rem;
-    left: 4rem;
+    top: 0;
+    left: 0;
+    padding: 4rem 2rem;
 
-    span {
-        font-size: 2rem;
+    * {
+        transition: all 0.1s ease-out;
+    }
+
+    button {
+        font-family: 'Prime', sans-serif;
+        background: none;
+        border: none;
+        outline: none;
+        
+        &:focus {
+            color: #0101af;
+            text-decoration: underline;
+        }
+
+        &:hover {
+            color: #0101af;
+        }
+    }
+
+    &-button {
+        font-size: 1.6rem;
     }
 
     ul {
-        margin-top: 2rem;
-    }
+        margin-top: 1rem;
 
-    li {
-        list-style: none;
-
-        button {
-            font-family: 'Prime', sans-serif;
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            background: none;
-            border: none;
-            outline: none;
-            
-            &:hover {
-                // text-shadow: rgba(0, 0, 0, 0.74) 1px 0 0.5rem;
+        li {
+            list-style: none;
+    
+            button {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
             }
         }
     }

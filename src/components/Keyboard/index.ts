@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import keyboardModel from '../../models/keyboard/keyboard.glb';
+import keyboardModel from '../../models/keyboard.glb';
 import keySound1 from '../../sounds/key1.ogg';
 import keySound2 from '../../sounds/key2.ogg';
 
@@ -114,16 +114,15 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
     loader.load(keyboardModel,
         gltf => {
             model = gltf.scene;
-            gltf.scene.scale.set(50, 50, 50);
-            gltf.scene.position.x = 5;
-            gltf.scene.position.z = 2.5;
+            gltf.scene.scale.set(30, 30, 30);
+            gltf.scene.position.z = 5;
             gltf.scene.traverse(function (child) {
                 if ((child as THREE.Mesh).isMesh) {
                     const mesh = child as THREE.Mesh;
                     child.castShadow = true;
                     if (child.name.includes('Cube')
                     && child.position.y !== 0) {
-                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                        mesh.material = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,
@@ -131,14 +130,14 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
                         });
                         keyMeshes.push(child);
                     } else if (child.name === 'plate') {
-                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                        mesh.material = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,
                             color: 0x323138,
                         });
                     } else {
-                        (mesh.material as THREE.MeshStandardMaterial) = new THREE.MeshPhysicalMaterial({
+                        mesh.material = new THREE.MeshPhysicalMaterial({
                             roughness: 0.5,
                             clearcoat: 1.0,
                             clearcoatRoughness: 0.1,

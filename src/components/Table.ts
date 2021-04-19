@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export const Table = () => {
-    const geometry = new THREE.PlaneGeometry(1000, 1000, 100, 100);
+    const geometry = new THREE.PlaneGeometry(1000, 1000);
     const material = new THREE.MeshPhysicalMaterial({
         color: 0xFFFFFF,
     });
@@ -9,7 +9,7 @@ export const Table = () => {
     mesh.receiveShadow = true;
     mesh.rotateX(-Math.PI / 2);
     mesh.rotateZ(-Math.PI / 3);
-    mesh.position.y = -0.9;
+    mesh.position.y = -0.55;
     
     return { mesh };
 };
