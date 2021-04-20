@@ -43,7 +43,7 @@ const sizes = {
     const lamp = LightSphere(scene);
 
     const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(0, 7, 11);
+    camera.position.set(0, 6, 11);
     camera.layers.enable(1);
     scene.add(camera);
 
