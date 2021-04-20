@@ -1,3 +1,4 @@
+import { GUI } from 'dat.gui';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -24,16 +25,39 @@ const fragmentShader = `
 const bloomLayer = new THREE.Layers();
 bloomLayer.set(1);
 
-const params = {
-    exposure: 1,
-    bloomStrength: 3,
-    bloomThreshold: 0,
-    bloomRadius: 0.5,
-};
 const darkMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
 const materials: {[key: string]: THREE.Material | THREE.Material[]} = {};
 
-const postprocessing = (scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) => {
+const postprocessing = (
+    scene: THREE.Scene,
+    camera: THREE.PerspectiveCamera,
+    renderer: THREE.WebGLRenderer,
+    gui: GUI,
+) => {
+    const params = {
+        exposure: 1,
+        bloomStrength: 2,
+        bloomThreshold: 0,
+        bloomRadius: 0.5,
+    };
+    const folder = gui.addFolder('Bloom Parameters');
+    folder.add(params, 'exposure', 0.1, 2).step(0.01).onChange(function (value) {
+        renderer.toneMappingExposure = Math.pow(value, 4.0);
+    });
+
+    folder.add(params, 'bloomThreshold', 0.0, 1.0).step(0.01).onChange(function (value) {
+        bloomPass.threshold = Number(value);
+    });
+
+    folder.add(params, 'bloomStrength', 0.0, 10.0).step(0.1).onChange(function (value) {
+        bloomPass.strength = Number(value);
+    });
+
+    folder.add(params, 'bloomRadius', 0.0, 1.0).step(0.01).onChange(function (value) {
+        bloomPass.radius = Number(value);
+    });
+
+
     const renderScene = new RenderPass(scene, camera);
 
     const bloomPass = new UnrealBloomPass(
@@ -41,7 +65,7 @@ const postprocessing = (scene: THREE.Scene, camera: THREE.PerspectiveCamera, ren
         params.bloomStrength,
         params.bloomRadius,
         params.bloomThreshold,
-    );
+);
 
     const bloomComposer = new EffectComposer(renderer);
     bloomComposer.renderToScreen = false;
@@ -58,7 +82,7 @@ const postprocessing = (scene: THREE.Scene, camera: THREE.PerspectiveCamera, ren
             fragmentShader,
             defines: {}
         }), "baseTexture"
-    );
+);
     finalPass.needsSwap = true;
 
     const finalComposer = new EffectComposer(renderer);

@@ -1,82 +1,43 @@
+import { GUI } from 'dat.gui';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import keyboardModel from '../../models/keyboard.glb';
 import keySound1 from '../../sounds/key1.ogg';
 import keySound2 from '../../sounds/key2.ogg';
+import keyCodeMap from './keycodeMap';
 
-const keyCodeMap: {[key: number]: string | string[]} = {
-    192: 'Cube004',
-    49: 'Cube039',
-    50: 'Cube040',
-    51: 'Cube041',
-    52: 'Cube042',
-    53: 'Cube043',
-    54: 'Cube044',
-    56: 'Cube045',
-    57: 'Cube046',
-    58: 'Cube047',
-    48: 'Cube048',
-    173: 'Cube049',
-    61: 'Cube050',
-    8: 'Cube016',
+export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera, gui: GUI) => {
+    // Materials
+    const keyboardMaterial = new THREE.MeshPhysicalMaterial({
+        roughness: 0.4,
+        clearcoat: 0.3,
+        clearcoatRoughness: 0.3,
+        metalness: 0.7,
+        color: 0x323138,
+    });
+    const switchMaterial = keyboardMaterial.clone();
+    switchMaterial.color.set(0xFF0000);
+    switchMaterial.opacity = 0.5;
 
-    9: 'Cube003',
-    81: 'Cube004',
-    87: 'Cube070',
-    69: 'Cube071',
-    82: 'Cube072',
-    84: 'Cube073',
-    89: 'Cube074',
-    85: 'Cube075',
-    73: 'Cube076',
-    79: 'Cube077',
-    80: 'Cube078',
-    219: 'Cube079',
-    221: 'Cube080',
-    220: 'Cube015',
+    // GUI
+    const folder = gui.addFolder('Keyboard Parameters');
+    folder.add(keyboardMaterial, 'roughness', 0.1, 1).step(0.01).onChange(function (value) {
+        keyboardMaterial.roughness = Number(value);
+    });
 
-    20: 'Cube005',
-    65: 'Cube001',
-    83: 'Cube051',
-    68: 'Cube052',
-    70: 'Cube053',
-    71: 'Cube054',
-    72: 'Cube055',
-    74: 'Cube056',
-    75: 'Cube057',
-    76: 'Cube058',
-    59: 'Cube059',
-    222: 'Cube060',
-    13: 'Cube017',
+    folder.add(keyboardMaterial, 'clearcoat', 0.0, 1.0).step(0.01).onChange(function (value) {
+        keyboardMaterial.clearcoat = Number(value);
+    });
 
-    16: ['Cube006', 'Cube018'],
-    90: 'Cube002',
-    88: 'Cube061',
-    67: 'Cube062',
-    86: 'Cube063',
-    66: 'Cube064',
-    78: 'Cube065',
-    77: 'Cube066',
-    188: 'Cube067',
-    190: 'Cube068',
-    191: 'Cube069',
+    folder.add(keyboardMaterial, 'clearcoatRoughness', 0.0, 1.0).step(0.01).onChange(function (value) {
+        keyboardMaterial.clearcoatRoughness = Number(value);
+    });
 
-    17: ['Cube008', 'Cube0014'],
-    91: 'Cube009',
-    18: ['Cube010', 'Cube013'],
-    32: 'Cube007',
-    93: 'Cube012',
-};
+    folder.add(keyboardMaterial, 'metalness', 0.0, 1.0).step(0.01).onChange(function (value) {
+        keyboardMaterial.metalness = Number(value);
+    });
 
-const pointer = new THREE.Vector2();
-const onPointerMove = (e: MouseEvent) => {
-    pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
-};
-document.addEventListener('mousemove', onPointerMove);
-
-export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
-    const raycaster = new THREE.Raycaster();
+    // Sounds
     const listener = new THREE.AudioListener();
     camera.add(listener);
 
@@ -109,41 +70,24 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
 
     const loader = new GLTFLoader();    
     const keyMeshes: THREE.Object3D[] = [];
-    let model: THREE.Group | null = null;
 
     loader.load(keyboardModel,
         gltf => {
-            model = gltf.scene;
-            gltf.scene.scale.set(30, 30, 30);
-            gltf.scene.position.z = 5;
+            gltf.scene.scale.set(33, 33, 33);
+            gltf.scene.position.z = 4;
             gltf.scene.traverse(function (child) {
                 if ((child as THREE.Mesh).isMesh) {
                     const mesh = child as THREE.Mesh;
                     child.castShadow = true;
                     if (child.name.includes('Cube')
                     && child.position.y !== 0) {
-                        mesh.material = new THREE.MeshPhysicalMaterial({
-                            roughness: 0.5,
-                            clearcoat: 1.0,
-                            clearcoatRoughness: 0.1,
-                            color: 0x323138,
-                        });
+                        mesh.material = keyboardMaterial;
                         keyMeshes.push(child);
                     } else if (child.name === 'plate') {
-                        mesh.material = new THREE.MeshPhysicalMaterial({
-                            roughness: 0.5,
-                            clearcoat: 1.0,
-                            clearcoatRoughness: 0.1,
-                            color: 0x323138,
-                        });
+                        mesh.material = keyboardMaterial;
                     } else {
-                        mesh.material = new THREE.MeshPhysicalMaterial({
-                            roughness: 0.5,
-                            clearcoat: 1.0,
-                            clearcoatRoughness: 0.1,
-                            color: 0xFFFFFF,
-                            opacity: 0.5,
-                        });
+                        mesh.material = switchMaterial;
+                        mesh.layers.enable(1);
                     }
                 }
             });
@@ -158,6 +102,13 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
             console.error(error);
         });
 
+    // Events
+    const pointer = new THREE.Vector2();
+    const onPointerMove = (e: MouseEvent) => {
+        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
+    };
+    const raycaster = new THREE.Raycaster();
     const keysPressed: {[key: string]: boolean} = {};
     const animateKeyPress = (key: THREE.Object3D) => {
         if (!keysPressed[key.name]) {
@@ -168,14 +119,14 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
     
             const interval = setInterval(() => {
                 if (direction === 'down') {
-                    key.position.y -= 0.001;
+                    key.position.y -= 0.0005;
                     if (key.position.y <= bottomY) {
                         Math.random() > 0.75 ? sound1.play() : sound2.play();
                         direction = 'up';
                     }
                 }
                 if (direction === 'up') {
-                    key.position.y += 0.001;
+                    key.position.y += 0.0005;
                     if (key.position.y >= initialY) {
                         direction = 'none';
                         clearInterval(interval);
@@ -190,9 +141,7 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keyMeshes); 
         if (intersects.length > 0) {
-            const mesh = intersects[0].object as THREE.Mesh;
             animateKeyPress(intersects[0].object);
-            // (mesh.material as THREE.MeshStandardMaterial).color.set(0xFF0000);
         }
     };
 
@@ -206,8 +155,8 @@ export const Keyboard = (scene: THREE.Scene, camera: THREE.Camera) => {
 
     window.addEventListener('click', keyClickHandler, false);
     window.addEventListener('keydown', keyPressHandler);
+    window.addEventListener('mousemove', onPointerMove);
 
-    const terminal = document.querySelector('div.terminal')!;
 
     // let dissolve = false;
     // const torusGeometry = new THREE.TorusBufferGeometry();

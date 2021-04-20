@@ -5,6 +5,14 @@ import { setupRenderTarget } from './renderTarget';
 import screenModel from '../../models/Screen.glb';
 
 export const Screen = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera) => {
+    const screenMaterial = new THREE.MeshPhysicalMaterial({
+        roughness: 0.4,
+        clearcoat: 0.3,
+        clearcoatRoughness: 0.3,
+        metalness: 0.7,
+        color: 0x323138,
+    });
+
     const renderTarget = setupRenderTarget(renderer, camera);
     const loader = new GLTFLoader();
 
@@ -14,16 +22,11 @@ export const Screen = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, camera
                 if ((child as THREE.Mesh).isMesh) {
                     const mesh = child as THREE.Mesh;
                     child.castShadow = true;
-                    mesh.material = new THREE.MeshPhysicalMaterial({
-                        roughness: 0.5,
-                        clearcoat: 1.0,
-                        clearcoatRoughness: 0.1,
-                        color: 0x323138,
-                    });
+                    mesh.material = screenMaterial;
                 }
             });
             gltf.scene.scale.set(1.75, 1.75, 1.75);
-            gltf.scene.position.set(-1, -0.5, -1.5);
+            gltf.scene.position.set(-1, -0.575, -1.5);
             gltf.scene.rotateY(-Math.PI / 8);
             scene.add(gltf.scene);
 
