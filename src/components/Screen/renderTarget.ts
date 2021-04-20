@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
 export const setupRenderTarget = (renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera) => {
-    const rtWidth = 512;
-    const rtHeight = 512;
+    const rtWidth = 256;
+    const rtHeight = 256;
     const renderTarget = new THREE.WebGLRenderTarget(rtWidth, rtHeight);
     const rtCamera = new THREE.PerspectiveCamera();
     rtCamera.position.z = 15;

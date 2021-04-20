@@ -2,7 +2,6 @@ import * as THREE from 'three';
 
 export const LightSphere = (scene: THREE.Scene) => {
     const geometry = new THREE.IcosahedronGeometry(0.5, 16);
-
     const color = new THREE.Color();
     color.setHSL(Math.random(), 0.7, Math.random() * 0.2 + 0.05);
     const material = new THREE.MeshStandardMaterial({
