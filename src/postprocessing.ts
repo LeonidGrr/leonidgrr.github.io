@@ -36,9 +36,9 @@ const postprocessing = (
 ) => {
     const params = {
         exposure: 1,
-        bloomStrength: 2,
+        bloomStrength: 1,
         bloomThreshold: 0,
-        bloomRadius: 0.5,
+        bloomRadius: 0.1,
     };
     const folder = gui.addFolder('Bloom Parameters');
     folder.add(params, 'exposure', 0.1, 2).step(0.01).onChange(function (value) {
@@ -65,7 +65,7 @@ const postprocessing = (
         params.bloomStrength,
         params.bloomRadius,
         params.bloomThreshold,
-);
+    );
 
     const bloomComposer = new EffectComposer(renderer);
     bloomComposer.renderToScreen = false;
@@ -96,17 +96,6 @@ const postprocessing = (
             o.material = darkMaterial;
         }
     };
-    const restoreMaterial2 = (obj: THREE.Object3D) => {
-        if (obj.type === 'Scene') {
-            console.log(obj);
-            obj.layers.mask = 0;
-        }
-        const o = obj as THREE.Mesh;
-        if (materials[o.uuid]) {
-            o.material = materials[o.uuid];
-            delete materials[o.uuid];
-        }
-    };
     const restoreMaterial = (obj: THREE.Object3D) => {
         if (obj.type === 'Scene') {
             obj.layers.mask = 0;
@@ -117,7 +106,6 @@ const postprocessing = (
             delete materials[o.uuid];
         }
     };
-    scene.traverse(restoreMaterial2);
     const renderBloom = () => {
         scene.traverse(darkenNonBloomed);
         bloomComposer.render();

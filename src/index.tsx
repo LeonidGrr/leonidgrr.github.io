@@ -1,19 +1,23 @@
 import * as THREE from 'three';
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { ReactGUI } from './components/ReactGUI';
-import { Keyboard } from './components/Keyboard';
-import { Screen } from './components/Screen';
-import { Table } from './components/Table';
+import {
+    Keyboard,
+    Screen,
+    Table,
+    SphereLight,
+    TextLight,
+} from './components';
+import {  } from './components/Screen';
+import {  } from './components/Table';
 import postprocessing from './postprocessing';
 import './index.scss';
-import { LightSphere } from './components/LightSphere';
 
-// const stats = new Stats();
-// document.body.appendChild(stats.dom);
+const stats = new Stats();
+document.body.appendChild(stats.dom);
 const gui = new dat.GUI();
 
 const sizes = {
@@ -40,11 +44,29 @@ const sizes = {
     const light = new THREE.AmbientLight(0xFFFFFF, 0.4);
     scene.add(light);
 
-    const lamp = LightSphere(scene);
+    let spotLight = new THREE.SpotLight(0xffffff, 2.5);
+    spotLight.position.set(-15, 20, 15);
+    spotLight.angle = Math.PI / 4;
+    spotLight.penumbra = 1;
+    spotLight.decay = 2;
+    spotLight.distance = 200;
 
-    const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(0, 6, 11);
-    camera.layers.enable(1);
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near = 1;
+    spotLight.shadow.camera.far = 50;
+    spotLight.shadow.focus = 1;
+    scene.add(spotLight);
+
+    let lightHelper = new THREE.SpotLightHelper( spotLight );
+    scene.add( lightHelper );
+
+    let shadowCameraHelper = new THREE.CameraHelper( spotLight.shadow.camera );
+    scene.add( shadowCameraHelper );
+
+    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
+    camera.position.set(0, 6, 11.5);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -59,11 +81,14 @@ const sizes = {
     } = postprocessing(scene, camera, renderer, gui);
 
     // Setup meshes
-    const table = Table(scene);
-    // scene.add(table.mesh);
-
-    const keyboard = Keyboard(scene, camera, gui);
-    const screen = Screen(scene, renderer, camera);
+    // const lamp = SphereLight(scene);
+    const textLight = await TextLight('Hello world!', scene);
+    textLight.mesh.position.set(-11, 0.1, -1);
+    textLight.mesh.rotateY(Math.PI / 8);
+    textLight.mesh.rotateX(-Math.PI / 12);
+    const table = await Table(scene);
+    const keyboard = await Keyboard(scene, camera, gui);
+    const screen = await Screen(scene, renderer, camera);
 
     // GUI
     // ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
@@ -86,11 +111,11 @@ const sizes = {
     const render = (time: number) => {
         requestAnimationFrame(render);
         time *= 0.001;
-		// stats.update();
+		stats.update();
         controls.update();
         keyboard.update();
         screen.update();
-        lamp.update();
+        // lamp.update();
 
         if (resizeRendererToDisplaySize(renderer)) {
             const canvas = renderer.domElement;

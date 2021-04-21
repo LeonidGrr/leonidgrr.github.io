@@ -43,4 +43,9 @@ declare module '*.ogg' {
     export default content;
 }
 
+declare module "*.ttf" {
+    const value: any;
+    export default value;
+  }
+
 declare module 'stats-js';
