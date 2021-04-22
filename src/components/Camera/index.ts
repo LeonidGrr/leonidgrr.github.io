@@ -8,10 +8,7 @@ const sizes = {
 };
 
 const pointer = new THREE.Vector2();
-const mouse = new THREE.Vector2()
 document.addEventListener('mousemove', (e: MouseEvent) => {
-    mouse.x = e.clientX / window.innerWidth;
-    mouse.y = e.clientY / window.innerHeight;
     pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
 });
@@ -51,28 +48,33 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
     };
 
     const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(pointer, camera);
     let keyboard: THREE.Object3D | null = null;
     let screen: THREE.Object3D | null = null;
-    const targets: THREE.Object3D[] = [];
+    const targets: Set<THREE.Object3D> = new Set();
 
     const render = () => {
-        if (!keyboard || !screen) {
-            keyboard = scene.getObjectByName('plate') || null; 
+        if (!keyboard) {
+            keyboard = scene.getObjectByName('plate') || null;
+        }
+        if (keyboard && !targets.has(keyboard)) {
+            targets.add(keyboard);
+        }
+        if (!screen) {
             screen = scene.getObjectByName('screen') || null;
-            keyboard && targets.push(keyboard);
-            screen && targets.push(screen);
-            console.log(keyboard, screen)
+        }
+        if (screen && !targets.has(screen)) {
+            targets.add(screen);
         }
         requestAnimationFrame(render);
-        const intersects = raycaster.intersectObjects(targets); 
+
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects([...targets]); 
         if (intersects.length > 0) {
             if (intersects[0].object.name === 'plate') {
-                changeCamera(intersects[0].object.position, keyboardPosition);
+                changeCamera(keyboardRotation, keyboardPosition);
             }
-
             if (intersects[0].object.name === 'screen') {
-                changeCamera(intersects[0].object.position, screenPosition);
+                changeCamera(screenRotation, screenPosition);
             }
         } else {
             changeCamera(baseRotation, basePosition);
