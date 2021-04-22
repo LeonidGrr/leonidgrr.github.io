@@ -29,6 +29,7 @@ export const setupRenderTarget = (renderer: THREE.WebGLRenderer, camera: THREE.P
         map: renderTarget.texture,
     });
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'screen';
     mesh.layers.enable(1);
 
     const rtObject = new THREE.Object3D();

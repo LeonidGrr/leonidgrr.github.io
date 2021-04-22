@@ -69,6 +69,7 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
     const gltf = await loader.loadAsync(keyboardModel);    
     gltf.scene.scale.set(33, 33, 33);
     gltf.scene.position.z = 4;
+    gltf.scene.name = 'keyboard';
     gltf.scene.traverse(function (child) {
         if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
@@ -126,14 +127,14 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
     
             const interval = setInterval(() => {
                 if (direction === 'down') {
-                    key.position.y -= 0.0002;
+                    key.position.y -= 0.0005;
                     if (key.position.y <= bottomY) {
                         Math.random() > 0.75 ? sound1.play() : sound2.play();
                         direction = 'up';
                     }
                 }
                 if (direction === 'up') {
-                    key.position.y += 0.0002;
+                    key.position.y += 0.0005;
                     if (key.position.y >= initialY) {
                         direction = 'none';
                         clearInterval(interval);
@@ -215,5 +216,5 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
     //     }, 1000);
     // }, 5000);
 
-    return { update };
+    return {  };
 };

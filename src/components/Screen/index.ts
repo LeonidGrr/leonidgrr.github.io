@@ -42,9 +42,11 @@ export const Screen = async (
     rectLight.rotateX(Math.PI / 24);
     gltf.scene.add(rectLight);
 
-    const update = () => {
+    const render = (time: number) => {
+        requestAnimationFrame(render);
         renderTarget.update();
     };
+    requestAnimationFrame(render);
 
-    return { update };
+    return {};
 };

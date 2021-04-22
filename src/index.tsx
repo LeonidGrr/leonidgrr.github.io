@@ -3,27 +3,20 @@ import * as THREE from 'three';
 // import ReactDOM from 'react-dom';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
     Keyboard,
     Screen,
     Table,
     SphereLight,
     TextLight,
+    Camera,
 } from './components';
-import {  } from './components/Screen';
-import {  } from './components/Table';
 import postprocessing from './postprocessing';
 import './index.scss';
 
 const stats = new Stats();
 document.body.appendChild(stats.dom);
 const gui = new dat.GUI();
-
-const sizes = {
-    width: document.body.clientWidth,
-    height: document.body.clientHeight,
-};
 
 (async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
@@ -40,6 +33,9 @@ const sizes = {
     scene.fog = new THREE.FogExp2(0x11111f, 0.002);
     scene.background = scene.fog.color;
     scene.background.convertSRGBToLinear()
+
+    
+    const camera = Camera(scene, renderer, gui);
 
     const light = new THREE.AmbientLight(0xFFFFFF, 0.4);
     scene.add(light);
@@ -65,14 +61,6 @@ const sizes = {
     let shadowCameraHelper = new THREE.CameraHelper( spotLight.shadow.camera );
     scene.add( shadowCameraHelper );
 
-    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(0, 6, 11.5);
-    scene.add(camera);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.update();
-
     // Post-processing
     const {
         bloomComposer,
@@ -86,9 +74,10 @@ const sizes = {
     textLight.mesh.position.set(-11, 0.1, -1);
     textLight.mesh.rotateY(Math.PI / 8);
     textLight.mesh.rotateX(-Math.PI / 12);
-    const table = await Table(scene);
-    const keyboard = await Keyboard(scene, camera, gui);
-    const screen = await Screen(scene, renderer, camera);
+
+    await Table(scene);
+    await Keyboard(scene, camera, gui);
+    await Screen(scene, renderer, camera);
 
     // GUI
     // ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
@@ -112,9 +101,7 @@ const sizes = {
         requestAnimationFrame(render);
         time *= 0.001;
 		stats.update();
-        controls.update();
-        keyboard.update();
-        screen.update();
+
         // lamp.update();
 
         if (resizeRendererToDisplaySize(renderer)) {
