@@ -128,7 +128,7 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
                 if (direction === 'down') {
                     key.position.y -= 0.0005;
                     if (key.position.y <= bottomY) {
-                        Math.random() > 0.75 ? sound1.play() : sound2.play();
+                        Math.random() > 0.6 ? sound1.play() : sound2.play();
                         direction = 'up';
                     }
                 }
