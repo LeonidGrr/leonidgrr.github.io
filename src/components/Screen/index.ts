@@ -29,7 +29,7 @@ export const Screen = async (
         }
     });
     gltf.scene.scale.set(1.95, 1.95, 1.95);
-    gltf.scene.position.set(-1.5, -0.575, -2);
+    gltf.scene.position.set(-1.5, -0.56, -2);
     gltf.scene.rotateY(-Math.PI / 8);
     scene.add(gltf.scene);
 
@@ -37,7 +37,7 @@ export const Screen = async (
 
     RectAreaLightUniformsLib.init();
     const rectLight = new THREE.RectAreaLight(0xfff, 10,  6.75, 5.15);
-    rectLight.position.set(3.25, 2.65, -1.6);
+    rectLight.position.set(3.3, 2.65, -1.7);
     rectLight.rotateY(Math.PI);
     rectLight.rotateX(Math.PI / 24);
     gltf.scene.add(rectLight);

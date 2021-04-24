@@ -7,11 +7,14 @@ export const Loader = () => {
 
     THREE.DefaultLoadingManager.onLoad = function() {
         console.log('Loading Complete!');
+        const loadingScreen = document.querySelector('div.loader-wrapper')!;
+		setTimeout(() => loadingScreen.classList.add('fade-out'), 3000);
     };
-    
     
     THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
         console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+        const loader = document.querySelector('#loader')!;
+        loader.setAttribute('value', `${itemsLoaded/itemsTotal * 100}`);
     };
     
     THREE.DefaultLoadingManager.onError = function(url) {

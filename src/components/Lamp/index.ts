@@ -13,7 +13,7 @@ export const Lamp = async (scene: THREE.Scene) => {
         }
     });
     gltf.scene.scale.set(10, 10, 10);
-    gltf.scene.position.set(-11, 4.75, -4);
+    gltf.scene.position.set(-13, 4.6, -4);
     gltf.scene.rotateY(Math.PI / 1.25);
 
     scene.add(gltf.scene);

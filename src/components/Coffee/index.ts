@@ -19,7 +19,7 @@ export const Coffee = async (scene: THREE.Scene) => {
         }
     });
     gltf.scene.scale.set(0.15, 0.15, 0.15);
-    gltf.scene.position.set(10, -0.575, 4);
+    gltf.scene.position.set(10, -0.56, 4);
     gltf.scene.rotateY(-Math.PI / 1.5);
 
     scene.add(gltf.scene);

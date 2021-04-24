@@ -16,7 +16,6 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
         clearcoatRoughness: 0,
         metalness: 0.9,
         color: 0x323138,
-        // color: 0xffffff,
     });
     const switchMaterial = keyboardMaterial.clone();
     switchMaterial.color.set(0xFFFFFF);

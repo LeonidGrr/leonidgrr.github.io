@@ -1,5 +1,5 @@
 export { Keyboard } from './Keyboard';
-export { Table } from './Table';
+export { Desk } from './Desk';
 export { TextLight } from './TextLight';
 export { Screen } from './Screen';
 export { SphereLight } from './SphereLight';

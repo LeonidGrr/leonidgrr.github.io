@@ -3,7 +3,7 @@ import { GUI } from 'dat.gui';
 import {
     Keyboard,
     Screen,
-    Table,
+    Desk,
     Coffee,
     Lamp,
     TextLight,
@@ -43,7 +43,7 @@ export const Desktop = async (
 
     await Lamp(desktopScene);
     await Coffee(desktopScene);
-    await Table(desktopScene);
+    await Desk(desktopScene);
     await Keyboard(desktopScene, camera, gui);
     await Screen(desktopScene, renderer, camera);
 
