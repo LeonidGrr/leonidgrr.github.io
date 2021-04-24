@@ -3,7 +3,7 @@ import * as THREE from 'three';
 // import ReactDOM from 'react-dom';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
-import { Camera } from './components';
+import { Camera, Loader } from './components';
 import { Desktop } from './scenes';
 
 import postprocessing from './postprocessing';
@@ -23,6 +23,8 @@ const gui = new dat.GUI();
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ReinhardToneMapping;
+
+    Loader();
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x11111f, 0.002);

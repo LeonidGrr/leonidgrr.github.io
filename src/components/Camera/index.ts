@@ -7,16 +7,18 @@ const sizes = {
     height: document.body.clientHeight,
 };
 
-const pointer = new THREE.Vector2();
 document.addEventListener('mousemove', (e: MouseEvent) => {
     pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
 });
 
+const pointer = new THREE.Vector2();
+
+
 export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: GUI) => {
     const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
-    camera.position.set(0, 7, 10);
-    camera.rotation.set(0, 0, 0);
+    camera.rotation.set(0, 2, 0);
+    camera.position.set(0, 10, 18);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -27,14 +29,17 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
     const folder = gui.addFolder('Orbit camera');
     folder.add(controls, 'enabled');
     
-    const baseRotation = new THREE.Vector3();
-    const basePosition = new THREE.Vector3(0, 7, 10);
+    const baseRotation = new THREE.Vector3(0, 2, 0);
+    const basePosition = new THREE.Vector3(0, 10, 18);
+    
+    // const tableRotation = new THREE.Vector3();
+    // const tablePosition = new THREE.Vector3(0, 9, 10);
 
     const keyboardRotation = new THREE.Vector3(0, 0, 2);
-    const keyboardPosition = new THREE.Vector3(0, 7, 7.5);
+    const keyboardPosition = new THREE.Vector3(0, 9, 7.5);
 
     const screenRotation = new THREE.Vector3(4, 2, -5);
-    const screenPosition = new THREE.Vector3(0, 7, 10);
+    const screenPosition = new THREE.Vector3(0, 9, 10);
 
     const nextTarget = new THREE.Vector3();
     const changeCamera = (target: THREE.Vector3, postion: THREE.Vector3) => {
@@ -59,10 +64,10 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
             const screen = scene.getObjectByName('screen');
             if (screen) targets.screen = screen;
         }
-        if (!targets.table) {
-            const table = scene.getObjectByName('table');
-            if (table) targets.table = table;
-        }
+        // if (!targets.table) {
+        //     const table = scene.getObjectByName('table');
+        //     if (table) targets.table = table;
+        // }
         requestAnimationFrame(render);
 
         raycaster.setFromCamera(pointer, camera);
@@ -74,10 +79,8 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
             if (intersects[0].object.name === 'screen') {
                 changeCamera(screenRotation, screenPosition);
             }
-            if (intersects[0].object.name === 'table') {
-                changeCamera(baseRotation, basePosition)
-            }
-        } else {
+        } else if (!controls.enabled) {
+            changeCamera(baseRotation, basePosition)
         }
         controls.update();
     };

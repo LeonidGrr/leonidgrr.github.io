@@ -36,7 +36,7 @@ const postprocessing = (
 ) => {
     const params = {
         exposure: 1,
-        bloomStrength: 1,
+        bloomStrength: 1.25,
         bloomThreshold: 0,
         bloomRadius: 0.1,
     };

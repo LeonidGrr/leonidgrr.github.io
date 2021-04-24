@@ -29,7 +29,7 @@ export const Screen = async (
         }
     });
     gltf.scene.scale.set(1.95, 1.95, 1.95);
-    gltf.scene.position.set(-1, -0.575, -1.5);
+    gltf.scene.position.set(-1.5, -0.575, -2);
     gltf.scene.rotateY(-Math.PI / 8);
     scene.add(gltf.scene);
 

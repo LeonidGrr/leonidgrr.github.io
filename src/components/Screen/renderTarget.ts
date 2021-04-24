@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera) => {
     const rtWidth = 512;

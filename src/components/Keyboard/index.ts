@@ -68,11 +68,10 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
 
     const gltf = await loader.loadAsync(keyboardModel);
     gltf.scene.scale.set(33, 33, 33);
-    gltf.scene.position.z = 4;
+    gltf.scene.position.z = 5;
     gltf.scene.traverse(function (child) {
         if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
-            child.castShadow = true;
             if (child.name.includes('Cube')
             && child.position.y !== 0) {
                 mesh.material = keyboardMaterial;
@@ -99,6 +98,7 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
                 keyMeshes.push(child);
             } else if (child.name === 'plate') {
                 mesh.material = keyboardMaterial;
+                child.castShadow = true;
             } else {
                 mesh.material = switchMaterial;
                 mesh.layers.enable(1);

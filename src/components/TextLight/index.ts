@@ -11,6 +11,8 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
     const material = new THREE.MeshPhongMaterial({
         color: 0xff0000,
         flatShading: true,
+        emissive: 0xffffff,
+        emissiveIntensity: 1,
     });
 
     const geometry = new THREE.TextGeometry(text, {
@@ -23,6 +25,13 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
     // mesh.castShadow = true;
     // mesh.receiveShadow = true;
     scene.add(mesh)
+
+    const render = () => {
+        requestAnimationFrame(render);
+        const time = Date.now() * 0.0005;
+        material.emissiveIntensity = Math.cos(time) * 0.5;
+    };
+    requestAnimationFrame(render);
 
     return { mesh }
 };

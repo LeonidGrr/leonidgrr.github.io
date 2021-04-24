@@ -3,4 +3,7 @@ export { Table } from './Table';
 export { TextLight } from './TextLight';
 export { Screen } from './Screen';
 export { SphereLight } from './SphereLight';
+export { Coffee } from './Coffee';
+export { Lamp } from './Lamp';
+export { Loader } from './Loader';
 export { Camera } from './Camera';

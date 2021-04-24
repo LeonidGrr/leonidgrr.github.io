@@ -18,8 +18,6 @@ export const SphereLight = (scene: THREE.Scene) => {
     
     light.shadow.camera.near = 1;
     light.shadow.camera.far = 20;
-    // light.shadow.bias = 0.0001;
-    // light.shadow.bias = - 0.005; 
     light.position.set(-12, 4, -6);
     light.castShadow = true;
     light.add(sphere);
