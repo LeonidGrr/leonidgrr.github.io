@@ -66,7 +66,7 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
     const loader = new GLTFLoader();
     const keyMeshes: THREE.Object3D[] = [];
 
-    const gltf = await loader.loadAsync(keyboardModel);    
+    const gltf = await loader.loadAsync(keyboardModel);
     gltf.scene.scale.set(33, 33, 33);
     gltf.scene.position.z = 4;
     gltf.scene.traverse(function (child) {

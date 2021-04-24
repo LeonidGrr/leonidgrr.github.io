@@ -17,7 +17,7 @@ export const Screen = async (
         color: 0x323138,
     });
 
-    const renderTarget = setupRenderTarget(renderer, camera);
+    const renderTarget = await setupRenderTarget(renderer, camera);
     const loader = new GLTFLoader();
 
     const gltf = await loader.loadAsync(screenModel);
@@ -41,12 +41,6 @@ export const Screen = async (
     rectLight.rotateY(Math.PI);
     rectLight.rotateX(Math.PI / 24);
     gltf.scene.add(rectLight);
-
-    const render = (time: number) => {
-        requestAnimationFrame(render);
-        renderTarget.update();
-    };
-    requestAnimationFrame(render);
 
     return {};
 };

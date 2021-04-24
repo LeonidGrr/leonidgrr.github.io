@@ -3,7 +3,6 @@ import { Vector3 } from 'three';
 
 export const fillWithPoints = (geometry: THREE.BufferGeometry, count: number): THREE.BufferGeometry => {
     const ray = new THREE.Ray()
-    const size = new THREE.Vector3();
 
     geometry.computeBoundingBox();
     let bbox = geometry.boundingBox!;

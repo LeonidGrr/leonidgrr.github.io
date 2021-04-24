@@ -7,6 +7,9 @@ export const Table = async (scene: THREE.Scene) => {
     const gltf = await loader.loadAsync(tableModel);
     gltf.scene.traverse(function (child) {
         if ((child as THREE.Mesh).isMesh) {
+            if (child.name === 'defaultMaterial') {
+                child.name = 'table';
+            }
             child.receiveShadow = true;
         }
     });

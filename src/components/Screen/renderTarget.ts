@@ -1,6 +1,7 @@
 import * as THREE from 'three';
+// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-export const setupRenderTarget = (renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera) => {
+export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera) => {
     const rtWidth = 512;
     const rtHeight = 512;
     const renderTarget = new THREE.WebGLRenderTarget(rtWidth, rtHeight);
@@ -23,6 +24,28 @@ export const setupRenderTarget = (renderer: THREE.WebGLRenderer, camera: THREE.P
     const cube = new THREE.Mesh(g, m);
     rtScene.add(cube);
 
+    // Model
+    // const loader = new GLTFLoader();
+    // const gltf = await loader.loadAsync(catModel);
+    // gltf.scene.scale.set(0.15, 0.15, 0.15);
+    // // const mixer = new THREE.AnimationMixer(gltf.scene);
+    // // const action = mixer.clipAction(gltf.scene.animations[0]);
+    // // action.play();
+    // console.log(gltf.scene)
+    // gltf.scene.traverse(function (child) {
+    //     if ((child as THREE.Mesh).isMesh) {
+    //         //         const mesh = child as THREE.Mesh;
+    //         //         mixer = new THREE.AnimationMixer(mesh);
+    //         //         const clips = mesh.animations;
+    //         //         // const action = mixer.clipAction(clip);
+    //         //         // action.play();
+    //         //         console.log(clips);
+    //         //         // (mesh.material as THREE.MeshStandardMaterial).wireframe = true;
+    //     }
+    // });
+
+    // rtScene.add(gltf.scene);
+
     // Container mesh
     const geometry = new THREE.PlaneGeometry(5.15, 3.25);
     const material = new THREE.MeshStandardMaterial({
@@ -37,16 +60,18 @@ export const setupRenderTarget = (renderer: THREE.WebGLRenderer, camera: THREE.P
     rtObject.rotateX(-Math.PI / 24);
     rtObject.add(mesh);
 
-    const update = () => {
+    // const clock = new THREE.Clock();
+    const render = () => {
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
+        // mixer.update(clock.getDelta());
+        // gltf.scene.rotation.y += 0.01;
         renderer.setRenderTarget(renderTarget);
         renderer.render(rtScene, rtCamera);
         renderer.setRenderTarget(null);
+        requestAnimationFrame(render);
     };
+    requestAnimationFrame(render);
 
-    return {
-        update,
-        rtObject,
-    };
+    return { rtObject };
 };
