@@ -44,7 +44,7 @@ export const Desktop = async (
     await Lamp(desktopScene);
     await Coffee(desktopScene);
     await Desk(desktopScene);
-    await Keyboard(desktopScene, camera, gui);
+    await Keyboard(desktopScene, camera);
     await Screen(desktopScene, renderer, camera);
 
     scene.add(desktopScene);

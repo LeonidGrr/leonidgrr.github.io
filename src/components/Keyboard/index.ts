@@ -1,4 +1,3 @@
-import { GUI } from 'dat.gui';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
@@ -8,7 +7,7 @@ import keySound1 from '../../sounds/key1.ogg';
 import keySound2 from '../../sounds/key2.ogg';
 import keyCodeMap from './keycodeMap';
 
-export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GUI) => {
+export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera) => {
     // Materials
     const keyboardMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0.45,
@@ -19,24 +18,6 @@ export const Keyboard = async (scene: THREE.Scene, camera: THREE.Camera, gui: GU
     });
     const switchMaterial = keyboardMaterial.clone();
     switchMaterial.color.set(0xFFFFFF);
-
-    // GUI
-    const folder = gui.addFolder('Keyboard Parameters');
-    folder.add(keyboardMaterial, 'roughness', 0.1, 1).step(0.01).onChange(function (value) {
-        keyboardMaterial.roughness = Number(value);
-    });
-
-    folder.add(keyboardMaterial, 'clearcoat', 0.0, 1.0).step(0.01).onChange(function (value) {
-        keyboardMaterial.clearcoat = Number(value);
-    });
-
-    folder.add(keyboardMaterial, 'clearcoatRoughness', 0.0, 1.0).step(0.01).onChange(function (value) {
-        keyboardMaterial.clearcoatRoughness = Number(value);
-    });
-
-    folder.add(keyboardMaterial, 'metalness', 0.0, 1.0).step(0.01).onChange(function (value) {
-        keyboardMaterial.metalness = Number(value);
-    });
 
     // Sounds
     const listener = new THREE.AudioListener();

@@ -18,7 +18,7 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, camera: T
     const m = new THREE.MeshStandardMaterial({
         color: 0x00ff00,
         wireframe: true,
-        wireframeLinewidth: 100,
+        wireframeLinewidth: 10,
     });
     const cube = new THREE.Mesh(g, m);
     rtScene.add(cube);

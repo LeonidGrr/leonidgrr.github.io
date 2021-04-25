@@ -76,6 +76,7 @@ div.terminal {
 
         &.fade-out {
             opacity: 0;
+            z-index: -1;
         }
     }
 
