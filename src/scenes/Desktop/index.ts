@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 import { GUI } from 'dat.gui';
-import {
-    Keyboard,
-    Screen,
-    Desk,
-    Coffee,
-    Lamp,
-    TextLight,
-} from '../../components';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { Keyboard } from './Keyboard';
+import { Screen } from './Screen';
+import { Lamp } from './Lamp';
+import { Coffee } from './Coffee';
+import { Desk } from './Desk';
+import { TextLight } from '../../components';
+import desktopScene from '../../models/desktopScene.glb';
 
 export const Desktop = async (
     scene: THREE.Scene,
@@ -15,10 +15,30 @@ export const Desktop = async (
     renderer: THREE.WebGLRenderer,
     gui: GUI,
 ) => {
-    const desktopScene = new THREE.Scene();
+    const loader = new GLTFLoader();
+    const desktop = await loader.loadAsync(desktopScene);
+    desktop.scene.rotateY(-Math.PI / 2);
+    desktop.scene.scale.set(12, 12, 12);
+    desktop.scene.children.forEach(async child => {
+        if (child.name === 'Desk') {
+            await Desk(child as THREE.Mesh);
+        }
+        if (child.name === 'Lamp') {
+            await Lamp(child as THREE.Mesh, scene);
+        }
+        if (child.name === 'Keyboard') {
+            await Keyboard(child as THREE.Mesh, camera);
+        }
+        if (child.name === 'Screen') {
+            await Screen(child as THREE.Mesh, renderer, scene);
+        }
+        if (child.name === 'Coffee') {
+            await Coffee(child as THREE.Mesh);
+        }
+    });
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
-    desktopScene.add(ambientLight);
+    desktop.scene.add(ambientLight);
 
     const spotLight = new THREE.SpotLight(0xffffff, 1.5);
     spotLight.position.set(-15, 20, 15);
@@ -33,19 +53,13 @@ export const Desktop = async (
     spotLight.shadow.camera.near = 1;
     spotLight.shadow.camera.far = 50;
     spotLight.shadow.focus = 1;
-    desktopScene.add(spotLight);
+    desktop.scene.add(spotLight);
 
     // Setup meshes
     const textLight = await TextLight('Hello world!', scene);
-    textLight.mesh.position.set(-9, 5, -5);
-    textLight.mesh.rotateY(Math.PI / 8);
-    textLight.mesh.rotateX(-Math.PI / 12);
+    textLight.mesh.position.set(-9, 12, -22);
+    textLight.mesh.rotateY(Math.PI / 6);
+    textLight.mesh.rotateX(-Math.PI / 10);
 
-    await Lamp(desktopScene);
-    await Coffee(desktopScene);
-    await Desk(desktopScene);
-    await Keyboard(desktopScene, camera);
-    await Screen(desktopScene, renderer, camera);
-
-    scene.add(desktopScene);
+    scene.add(desktop.scene);
 }

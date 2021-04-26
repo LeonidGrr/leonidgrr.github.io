@@ -33,7 +33,7 @@ const gui = new dat.GUI();
 
     const camera = Camera(scene, renderer, gui);
 
-    const light = new THREE.AmbientLight(0xFFFFFF, 0.4);
+    const light = new THREE.AmbientLight(0xFFFFFF, 0.2);
     scene.add(light);
 
     // Post-processing
