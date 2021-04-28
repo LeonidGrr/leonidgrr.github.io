@@ -27,13 +27,13 @@ const gui = new dat.GUI();
     Loader();
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x11111f, 0.002);
+    scene.fog = new THREE.FogExp2(0x11111f);
     scene.background = scene.fog.color;
     scene.background.convertSRGBToLinear()
 
     const camera = Camera(scene, renderer, gui);
 
-    const light = new THREE.AmbientLight(0xFFFFFF, 0.2);
+    const light = new THREE.AmbientLight(0xFFFFFF, 0.4);
     scene.add(light);
 
     // Post-processing

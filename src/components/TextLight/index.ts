@@ -22,8 +22,7 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.layers.enable(1);
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
+
     scene.add(mesh)
 
     const render = () => {
