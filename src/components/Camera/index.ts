@@ -27,11 +27,11 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     // controls.enabled = false;
-    // controls.enablePan = false;
-    // controls.maxAzimuthAngle = Math.PI / 8;
-    // controls.minAzimuthAngle = -Math.PI / 8;
-    // controls.maxPolarAngle = Math.PI / 2.4;
-    // controls.minPolarAngle = Math.PI / 3;
+    controls.enablePan = false;
+    controls.maxAzimuthAngle = Math.PI / 8;
+    controls.minAzimuthAngle = -Math.PI / 8;
+    controls.maxPolarAngle = Math.PI / 2.4;
+    controls.minPolarAngle = Math.PI / 3;
     controls.zoomSpeed = 2;
     camera.getWorldPosition(controls.target);
     controls.target.addScaledVector(direction, 1);
