@@ -16,9 +16,9 @@ const pointer = new THREE.Vector2();
 
 
 export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: GUI) => {
-    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 200);
     camera.rotation.set(-0.4, 0, 0);
-    camera.position.set(0, 14, -8);
+    camera.position.set(0, 15, -7.5);
     const direction = new THREE.Vector3();
     camera.getWorldDirection(direction);
 
@@ -27,11 +27,11 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     // controls.enabled = false;
-    controls.enablePan = false;
-    controls.maxAzimuthAngle = Math.PI / 8;
-    controls.minAzimuthAngle = -Math.PI / 8;
-    controls.maxPolarAngle = Math.PI / 2.4;
-    controls.minPolarAngle = Math.PI / 3;
+    // controls.enablePan = false;
+    // controls.maxAzimuthAngle = Math.PI / 8;
+    // controls.minAzimuthAngle = -Math.PI / 8;
+    // controls.maxPolarAngle = Math.PI / 2.4;
+    // controls.minPolarAngle = Math.PI / 3;
     controls.zoomSpeed = 2;
     camera.getWorldPosition(controls.target);
     controls.target.addScaledVector(direction, 1);

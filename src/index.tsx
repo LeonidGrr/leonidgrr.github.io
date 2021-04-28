@@ -74,7 +74,6 @@ const gui = new dat.GUI();
             camera.aspect = canvas.clientWidth / canvas.clientHeight;
             camera.updateProjectionMatrix();
         }
-
         renderBloom();
         finalComposer.render();
     };
