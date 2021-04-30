@@ -1,4 +1,3 @@
-
 import * as THREE from 'three';
 
 export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
@@ -20,7 +19,7 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
     const light = new THREE.PointLight(0xffffff, 3);
     light.shadow.mapSize = new THREE.Vector2(512, 512);
     light.shadow.bias = 0.001;
-    light.distance = 15;
+    light.distance = 25;
     
     light.shadow.camera.near = 0.01;
     light.shadow.camera.far = 15;

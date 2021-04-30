@@ -7,7 +7,6 @@ import {
     Lamp,
     Coffee,
     Desk,
-    RainyWindow,
     Rain,
 } from './components';
 import { TextLight } from '../../components';
@@ -34,9 +33,10 @@ export const Desktop = async (
         if (child.name === 'Keyboard') {
             await Keyboard(child as THREE.Mesh, camera);
         }
-        
-        if (child.name === 'Window') {
-            // await RainyWindow(child as THREE.Mesh, scene);
+        if (child.name === 'Floor') {
+            child.receiveShadow = true;
+            const mesh = child as THREE.Mesh;
+            (mesh.material as THREE.MeshStandardMaterial).color.set(0x003c8c);
         }
         if (child.name === 'Screen') {
             await Screen(child as THREE.Mesh, scene, renderer);
@@ -46,6 +46,7 @@ export const Desktop = async (
         }
         if (child.name === 'Room') {
             child.receiveShadow = true;
+            child.castShadow = true;
             child.traverse(c => {
                 if ((c as THREE.Mesh).isMesh) {
                     const mesh = c as THREE.Mesh;
@@ -55,14 +56,14 @@ export const Desktop = async (
         }
     });
 
-    // Rain({
-    //     position: new THREE.Vector3(-25, 5, -50),
-    //     raindropsCount: 50000,
-    //     rainPower: 0.01,
-    //     maxX: 50,
-    //     maxY: 50,
-    //     maxZ: 5,
-    // }, scene);
+    Rain({
+        position: new THREE.Vector3(-50, 5, -100),
+        raindropsCount: 200,
+        rainPower: 0.25,
+        maxX: 100,
+        maxY: 100,
+        maxZ: 50,
+    }, scene);
 
     const textLight = await TextLight('Hello world!', scene);
     textLight.mesh.position.set(-9, 12, -22);
@@ -72,20 +73,23 @@ export const Desktop = async (
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
     desktop.scene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0xffffff, 1.5);
-    spotLight.position.set(-15, 20, 15);
-    spotLight.angle = Math.PI / 3;
-    spotLight.penumbra = 1;
-    spotLight.decay = 1;
-    spotLight.distance = 200;
+    // const spotLight = new THREE.SpotLight(0xffffff, 2);
+    // spotLight.position.set(-5, 40, 40);
+    // spotLight.angle = Math.PI / 3;
+    // spotLight.penumbra = 1;
+    // spotLight.decay = 1;
+    // spotLight.distance = 200;
 
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize.width = 512;
-    spotLight.shadow.mapSize.height = 512;
-    spotLight.shadow.camera.near = 1;
-    spotLight.shadow.camera.far = 50;
-    spotLight.shadow.focus = 1;
-    desktop.scene.add(spotLight);
+    // spotLight.castShadow = true;
+    // spotLight.shadow.mapSize.width = 512;
+    // spotLight.shadow.mapSize.height = 512;
+    // spotLight.shadow.camera.near = 1;
+    // spotLight.shadow.camera.far = 50;
+    // spotLight.shadow.focus = 1;
+    // scene.add(spotLight);
+
+    // const h = new THREE.SpotLightHelper(spotLight);
+    // scene.add(h);
 
     scene.add(desktop.scene);
 }

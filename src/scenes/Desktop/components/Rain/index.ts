@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import raindrop from '../../../../textures/circle.png';
+import raindrop from '../../../../textures/raindrop.png';
 
 export const Rain = ({
     position = new THREE.Vector3(),
@@ -24,14 +24,13 @@ export const Rain = ({
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 0.025,
-        transparent: true,
+        size: 1,
+        // transparent: true,
         map: sprite,
-        sizeAttenuation: false, 
-        alphaTest: 0.1,
+        sizeAttenuation: true, 
+        // alphaTest: 0.1,
         // color: 0xd4e5fc,
-        // color: 0x152238,
-        color: 0x000034,
+        blending: THREE.AdditiveBlending,
     });
 
     const ref = new THREE.Points(geometry, material);
@@ -41,6 +40,17 @@ export const Rain = ({
         position.z,
     );
     const positions = ref.geometry.attributes.position;
+
+    const flash = new THREE.PointLight(0x062d89, 30, 300, 1.7);
+    // flash.shadow.mapSize.width = 512;
+    // flash.shadow.mapSize.height = 512;
+    // flash.shadow.camera.near = 50;
+    // flash.shadow.camera.far = 150;
+    flash.position.set(0, 50, -200);
+    scene.add(flash);
+
+    const h = new THREE.PointLightHelper(flash);
+    scene.add(h)
 
     const render = () => {
         for (let i = 0; i < raindropsCount; i ++) {
@@ -55,6 +65,21 @@ export const Rain = ({
             );
         }
         ref.geometry.attributes.position.needsUpdate = true;
+
+        if (Math.random() > 0.95 || flash.power > 100) {
+            // flash.castShadow = true;
+            if (flash.power < 100) {
+                flash.position.set(
+                    Math.random() * 200,
+                    50 + Math.random() * 100,
+                    -200,
+                );
+            }
+            flash.power = 50 + Math.random() * 500;
+        } else {
+            // flash.castShadow = false;
+        }
+
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
