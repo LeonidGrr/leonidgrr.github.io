@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import smoke from '../../textures/smoke.png';
 import raindrop from '../../textures/raindrop.png';
 import thunder1 from '../../sounds/thunder.ogg';
 import rain from '../../sounds/rain.ogg';
@@ -28,11 +29,11 @@ export const Rain = async ({
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 1,
-        // transparent: true,
+        size: 2,
+        transparent: true,
         map: sprite,
         sizeAttenuation: true, 
-        // alphaTest: 0.1,
+        alphaTest: 0.01,
         // color: 0xd4e5fc,
         blending: THREE.AdditiveBlending,
     });
@@ -76,9 +77,6 @@ export const Rain = async ({
     sound2.position.z = -50;
     sound2.play();
 
-    const h = new THREE.PointLightHelper(flash);
-    scene.add(h)
-    
     const render = () => {
         for (let i = 0; i < raindropsCount; i ++) {
             const py = positions.getY(i);
@@ -94,7 +92,7 @@ export const Rain = async ({
         ref.geometry.attributes.position.needsUpdate = true;
 
         if (Math.random() > 0.99 || flash.power > 100) {
-            sound1.play();
+            Math.random() > 0.5 && sound1.play();
             if (flash.power < 100) {
                 flash.position.set(
                     Math.random() * 200,
@@ -106,7 +104,6 @@ export const Rain = async ({
         } else {
             flash.power = 0;
         }
-        
 
         requestAnimationFrame(render);
     };

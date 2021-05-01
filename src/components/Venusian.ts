@@ -3,15 +3,14 @@ import* as THREE from 'three';
 import venusianVert from '../shaders/venusian-vert.glsl';
 import venusianFrag from '../shaders/venusian-frag.glsl';
 
-export const Venusian = () => {
-    const geometry = new THREE.SphereGeometry(50, 32, 32);
-
+export const Venusian = (position: THREE.Vector3, scene: THREE.Scene) => {
+    const geometry = new THREE.SphereBufferGeometry(5, 16, 16);
     const uniforms = {
         time: { value: 1.0 },
         noiseOctaves: { value: 8 },
         lightDiffuseColor: { value: new THREE.Vector3() },
-        lightPosition: { value: new THREE.Vector3(100, 100, 100) },
-        lightIntensity: { value: 1 },
+        lightPosition: { value: new THREE.Vector3(100, 0, 0) },
+        lightIntensity: { value: 0.5 },
     };
     const material = new THREE.ShaderMaterial({
         vertexShader: venusianVert,
@@ -20,9 +19,17 @@ export const Venusian = () => {
     });
 
     const mesh = new THREE.Mesh(geometry, material);
-    const update = (time: number) => {
-        uniforms.time.value = time / 10;
-    };
+    mesh.position.set(
+        position.x,
+        position.y,
+        position.z,
+    );
+    mesh.layers.enable(1);
+    scene.add(mesh);
 
-    return { mesh, update };
+    const render = (time: number) => {
+        uniforms.time.value = time / 1000;
+        requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
 }

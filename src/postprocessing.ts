@@ -32,7 +32,6 @@ const postprocessing = (
     scene: THREE.Scene,
     camera: THREE.PerspectiveCamera,
     renderer: THREE.WebGLRenderer,
-    gui: GUI,
 ) => {
     const params = {
         exposure: 1,
@@ -40,23 +39,6 @@ const postprocessing = (
         bloomThreshold: 0,
         bloomRadius: 0.1,
     };
-    const folder = gui.addFolder('Bloom Parameters');
-    folder.add(params, 'exposure', 0.1, 2).step(0.01).onChange(function (value) {
-        renderer.toneMappingExposure = Math.pow(value, 4.0);
-    });
-
-    folder.add(params, 'bloomThreshold', 0.0, 1.0).step(0.01).onChange(function (value) {
-        bloomPass.threshold = Number(value);
-    });
-
-    folder.add(params, 'bloomStrength', 0.0, 10.0).step(0.1).onChange(function (value) {
-        bloomPass.strength = Number(value);
-    });
-
-    folder.add(params, 'bloomRadius', 0.0, 1.0).step(0.01).onChange(function (value) {
-        bloomPass.radius = Number(value);
-    });
-
 
     const renderScene = new RenderPass(scene, camera);
 
@@ -81,8 +63,8 @@ const postprocessing = (
             vertexShader,
             fragmentShader,
             defines: {}
-        }), "baseTexture"
-);
+        }), 'baseTexture',
+    );
     finalPass.needsSwap = true;
 
     const finalComposer = new EffectComposer(renderer);

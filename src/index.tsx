@@ -32,15 +32,12 @@ const gui = new dat.GUI();
 
     const camera = Camera(scene, renderer, gui);
 
-    const light = new THREE.AmbientLight(0xFFFFFF, 0.4);
-    scene.add(light);
-
     // Post-processing
     const {
         bloomComposer,
         finalComposer,
         renderBloom,
-    } = postprocessing(scene, camera, renderer, gui);
+    } = postprocessing(scene, camera, renderer);
 
     // GUI
     // ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));

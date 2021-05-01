@@ -8,6 +8,9 @@ import {
     Coffee,
     Desk,
     Rain,
+    Trees,
+    StreetLight,
+    Venusian,
 } from '..';
 import { TextLight } from '..';
 import desktopScene from '../../models/desktopScene.glb';
@@ -44,6 +47,9 @@ export const Desktop = async (
         if (child.name === 'Coffee') {
             await Coffee(child as THREE.Mesh);
         }
+        if (child.name === 'Tree') {
+            Trees(child as THREE.Mesh, desktop.scene);
+        }
         if (child.name === 'Room') {
             child.receiveShadow = true;
             child.castShadow = true;
@@ -66,19 +72,20 @@ export const Desktop = async (
     }, camera, scene);
 
     const textLight = await TextLight('Hello world!', scene);
-    textLight.mesh.position.set(-9, 12, -22);
+    textLight.mesh.position.set(-9, 10, -22);
     textLight.mesh.rotateY(Math.PI / 6);
     textLight.mesh.rotateX(-Math.PI / 10);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
-    desktop.scene.add(ambientLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
+    scene.add(ambientLight);
 
-    // const spotLight = new THREE.SpotLight(0xffffff, 2);
+    StreetLight(new THREE.Vector3(-15, 15, -70), scene);
+    // const spotLight = new THREE.SpotLight(0xffffff, 5);
     // spotLight.position.set(-5, 40, 40);
-    // spotLight.angle = Math.PI / 3;
-    // spotLight.penumbra = 1;
-    // spotLight.decay = 1;
-    // spotLight.distance = 200;
+    // // spotLight.angle = Math.PI / 3;
+    // // spotLight.penumbra = 1;
+    // // spotLight.decay = 1;
+    // // spotLight.distance = 200;
 
     // spotLight.castShadow = true;
     // spotLight.shadow.mapSize.width = 512;

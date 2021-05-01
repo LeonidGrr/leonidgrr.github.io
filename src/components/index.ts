@@ -10,3 +10,6 @@ export { Lamp } from './Lamp';
 export { Screen } from './Screen';
 export { Rain } from './Rain';
 export { Desktop } from './Desktop';
+export { Trees } from './Trees';
+export { StreetLight } from './StreetLight';
+export { Venusian } from './Venusian';
