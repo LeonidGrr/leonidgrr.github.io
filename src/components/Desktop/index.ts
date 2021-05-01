@@ -10,10 +10,10 @@ import {
     Rain,
     Trees,
     StreetLight,
-    Venusian,
 } from '..';
 import { TextLight } from '..';
 import desktopScene from '../../models/desktopScene.glb';
+import background from '../../textures/background.png';
 
 export const Desktop = async (
     scene: THREE.Scene,
@@ -61,6 +61,7 @@ export const Desktop = async (
             });
         }
     });
+    scene.add(desktop.scene);
 
     Rain({
         position: new THREE.Vector3(-50, 5, -100),
@@ -79,7 +80,8 @@ export const Desktop = async (
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
     scene.add(ambientLight);
 
-    StreetLight(new THREE.Vector3(-15, 15, -70), scene);
+    // StreetLight(new THREE.Vector3(-15, 15, -70), scene);
+
     // const spotLight = new THREE.SpotLight(0xffffff, 5);
     // spotLight.position.set(-5, 40, 40);
     // // spotLight.angle = Math.PI / 3;
@@ -98,5 +100,14 @@ export const Desktop = async (
     // const h = new THREE.SpotLightHelper(spotLight);
     // scene.add(h);
 
-    scene.add(desktop.scene);
+    const textureLoader = new THREE.TextureLoader();
+    const backgroundTexture = textureLoader.load(background);
+    backgroundTexture.wrapS = THREE.RepeatWrapping;
+    backgroundTexture.wrapT = THREE.RepeatWrapping;
+    backgroundTexture.repeat.set(3, 1);
+    const backgroundGeometry = new THREE.PlaneBufferGeometry(400, 100);
+    const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
+    const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+    backgroundMesh.position.z = -300;
+    scene.add(backgroundMesh);
 }
