@@ -3,8 +3,7 @@ import * as THREE from 'three';
 // import ReactDOM from 'react-dom';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
-import { Camera, Loader, Sky } from './components';
-import { Desktop } from './scenes';
+import { Camera, Loader, Desktop } from './components';
 
 import postprocessing from './postprocessing';
 import './index.scss';

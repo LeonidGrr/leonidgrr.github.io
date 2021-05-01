@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
-import fontTtf from '../../../../fonts/Prime-Regular.ttf'; 
-import keySound1 from '../../../../sounds/key1.ogg';
-import keySound2 from '../../../../sounds/key2.ogg';
+import fontTtf from '../../fonts/Prime-Regular.ttf'; 
+import keySound1 from '../../sounds/key1.ogg';
+import keySound2 from '../../sounds/key2.ogg';
 import keyCodeMap from './keycodeMap';
 
 export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
@@ -61,6 +61,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
                     size: 0.005,
                     height: 0.0025,
                 });
+
                 const textMesh = new THREE.Mesh(textGeometry, textMaterial);
                 textMesh.position.y = 0.0067;
                 textMesh.position.x = -0.0075;

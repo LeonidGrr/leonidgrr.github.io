@@ -8,8 +8,8 @@ import {
     Coffee,
     Desk,
     Rain,
-} from './components';
-import { TextLight } from '../../components';
+} from '..';
+import { TextLight } from '..';
 import desktopScene from '../../models/desktopScene.glb';
 
 export const Desktop = async (
@@ -63,7 +63,7 @@ export const Desktop = async (
         maxX: 100,
         maxY: 100,
         maxZ: 50,
-    }, scene);
+    }, camera, scene);
 
     const textLight = await TextLight('Hello world!', scene);
     textLight.mesh.position.set(-9, 12, -22);
