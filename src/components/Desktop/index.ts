@@ -9,7 +9,6 @@ import {
     Desk,
     Rain,
     Trees,
-    StreetLight,
 } from '..';
 import { TextLight } from '..';
 import desktopScene from '../../models/desktopScene.glb';
@@ -19,7 +18,6 @@ export const Desktop = async (
     scene: THREE.Scene,
     camera: THREE.PerspectiveCamera,
     renderer: THREE.WebGLRenderer,
-    gui: GUI,
 ) => {
     const loader = new GLTFLoader();
     const desktop = await loader.loadAsync(desktopScene);
@@ -105,7 +103,7 @@ export const Desktop = async (
     backgroundTexture.wrapS = THREE.RepeatWrapping;
     backgroundTexture.wrapT = THREE.RepeatWrapping;
     backgroundTexture.repeat.set(3, 1);
-    const backgroundGeometry = new THREE.PlaneBufferGeometry(400, 100);
+    const backgroundGeometry = new THREE.PlaneBufferGeometry(400, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
     backgroundMesh.position.z = -300;

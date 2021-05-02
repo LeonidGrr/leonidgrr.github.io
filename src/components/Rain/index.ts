@@ -1,12 +1,11 @@
 import * as THREE from 'three';
-import smoke from '../../textures/smoke.png';
 import raindrop from '../../textures/raindrop.png';
 import thunder1 from '../../sounds/thunder.ogg';
 import rain from '../../sounds/rain.ogg';
 
 export const Rain = async ({
         position = new THREE.Vector3(),
-        raindropsCount = 100000,
+        raindropsCount = 150000,
         rainPower = 0.01,
         maxX = 100,
         maxY = 100,
@@ -34,7 +33,6 @@ export const Rain = async ({
         map: sprite,
         sizeAttenuation: true, 
         alphaTest: 0.01,
-        // color: 0xd4e5fc,
         blending: THREE.AdditiveBlending,
     });
 
@@ -48,10 +46,6 @@ export const Rain = async ({
 
     // Flashlight
     const flash = new THREE.PointLight(0x062d89, 30, 300, 1.7);
-    // flash.shadow.mapSize.width = 512;
-    // flash.shadow.mapSize.height = 512;
-    // flash.shadow.camera.near = 50;
-    // flash.shadow.camera.far = 150;
     flash.position.set(0, 50, -200);
     scene.add(flash);
 
@@ -92,7 +86,7 @@ export const Rain = async ({
         ref.geometry.attributes.position.needsUpdate = true;
 
         if (Math.random() > 0.99 || flash.power > 100) {
-            Math.random() > 0.5 && sound1.play();
+            Math.random() > 0.8 && sound1.play();
             if (flash.power < 100) {
                 flash.position.set(
                     Math.random() * 200,

@@ -23,12 +23,14 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
 
     const audioLoader = new THREE.AudioLoader();
     const sound1 = new THREE.PositionalAudio(listener);
-    const sound2 = new THREE.PositionalAudio(listener);
     const buffer1 = await audioLoader.loadAsync(keySound1);
     sound1.setBuffer(buffer1);
     sound1.setRefDistance(40);
+    sound1.setVolume(0.5);
+    const sound2 = new THREE.PositionalAudio(listener);
     const buffer2 = await audioLoader.loadAsync(keySound2);
     sound2.setBuffer(buffer2);
+    sound2.setVolume(0.5);
     sound2.setRefDistance(40);       
 
     // Font

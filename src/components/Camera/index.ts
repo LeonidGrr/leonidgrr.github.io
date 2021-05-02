@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { GUI } from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const sizes = {
@@ -14,7 +13,7 @@ document.addEventListener('mousemove', (e: MouseEvent) => {
 
 const pointer = new THREE.Vector2();
 
-export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: GUI) => {
+export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
     const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
     camera.rotation.set(-0.3, 0, 0);
     camera.position.set(0, 15, -4);
@@ -25,20 +24,17 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer, gui: G
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.enablePan = false;
-    controls.maxAzimuthAngle = Math.PI / 8;
-    controls.minAzimuthAngle = -Math.PI / 8;
-    controls.maxPolarAngle = Math.PI / 2.2;
-    controls.minPolarAngle = Math.PI / 2.5;
-    controls.maxDistance = 10;
-    controls.minDistance = 0.02;
-    controls.zoomSpeed = 2;
+    // controls.enablePan = false;
+    // controls.maxAzimuthAngle = Math.PI / 8;
+    // controls.minAzimuthAngle = -Math.PI / 8;
+    // controls.maxPolarAngle = Math.PI / 2.2;
+    // controls.minPolarAngle = Math.PI / 2.5;
+    // controls.maxDistance = 10;
+    // controls.minDistance = 0.02;
+    // controls.zoomSpeed = 2;
     camera.getWorldPosition(controls.target);
     controls.target.addScaledVector(direction, 1);
-    controls.update();  
-
-    const folder = gui.addFolder('Orbit camera');
-    folder.add(controls, 'enabled');
+    controls.update();
 
     // const baseRotation = new THREE.Vector3(-0.3, 0, 0);
     // const basePosition = new THREE.Vector3(0, 13.4, -5);

@@ -8,9 +8,9 @@ import { Camera, Loader, Desktop } from './components';
 import postprocessing from './postprocessing';
 import './index.scss';
 
-const stats = new Stats();
-document.body.appendChild(stats.dom);
-const gui = new dat.GUI();
+// const stats = new Stats();
+// document.body.appendChild(stats.dom);
+// const gui = new dat.GUI();
 
 (async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
@@ -26,11 +26,11 @@ const gui = new dat.GUI();
     Loader();
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x11111f);
+    scene.fog = new THREE.FogExp2(0x000000);
     scene.background = scene.fog.color;
     scene.background.convertSRGBToLinear()
 
-    const camera = Camera(scene, renderer, gui);
+    const camera = Camera(scene, renderer);
 
     // Post-processing
     const {
@@ -44,7 +44,7 @@ const gui = new dat.GUI();
 
     // Scenes
     // Sky(scene, renderer, gui);
-    Desktop(scene, camera, renderer, gui);
+    Desktop(scene, camera, renderer);
 
     // Rendering
     const resizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => {
@@ -64,7 +64,7 @@ const gui = new dat.GUI();
     const render = (time: number) => {
         requestAnimationFrame(render);
         time *= 0.001;
-		stats.update();
+		// stats.update();
 
         if (resizeRendererToDisplaySize(renderer)) {
             const canvas = renderer.domElement;
