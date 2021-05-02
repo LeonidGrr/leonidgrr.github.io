@@ -119,7 +119,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
         }
     };
 
-    const keyClickHandler = (e: MouseEvent) => {
+    const keyClickHandler = (e: MouseEvent | TouchEvent) => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keyMeshes); 
         if (intersects.length > 0) {
@@ -141,6 +141,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
     };
 
     window.addEventListener('click', keyClickHandler, false);
+    window.addEventListener('touchend', keyClickHandler, false);
     window.addEventListener('keydown', keyPressHandler);
     window.addEventListener('mousemove', onPointerMove);
 };

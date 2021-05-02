@@ -71,7 +71,7 @@ export const Desktop = async (
     }, camera, scene);
 
     const textLight = await TextLight('Hello world!', scene);
-    textLight.mesh.position.set(-9, 10, -22);
+    textLight.mesh.position.set(-9.5, 10, -22);
     textLight.mesh.rotateY(Math.PI / 6);
     textLight.mesh.rotateX(-Math.PI / 10);
 
@@ -102,8 +102,8 @@ export const Desktop = async (
     const backgroundTexture = textureLoader.load(background);
     backgroundTexture.wrapS = THREE.RepeatWrapping;
     backgroundTexture.wrapT = THREE.RepeatWrapping;
-    backgroundTexture.repeat.set(3, 1);
-    const backgroundGeometry = new THREE.PlaneBufferGeometry(400, 75);
+    backgroundTexture.repeat.set(4, 1);
+    const backgroundGeometry = new THREE.PlaneBufferGeometry(500, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
     backgroundMesh.position.z = -300;

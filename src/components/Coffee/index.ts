@@ -11,29 +11,17 @@ export const Coffee = async (mesh: THREE.Mesh) => {
 
     const loader = new THREE.TextureLoader();
     const smokeTexture = loader.load(smoke);
-    const smokeGeometry = new THREE.PlaneGeometry(40, 25);
+    const smokeGeometry = new THREE.PlaneBufferGeometry(75, 25);
     const smokeMaterial = new THREE.MeshPhongMaterial({
         map: smokeTexture,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.4,
     });
     const smokeMesh = new THREE.Mesh(smokeGeometry, smokeMaterial);
     smokeMesh.rotateY(-Math.PI / 2);
-    smokeMesh.position.z = 45;
+    smokeMesh.position.z = 50;
     smokeMesh.castShadow = false;
     smokeMesh.receiveShadow = false;
     mesh.add(smokeMesh);
-
-    const render = () => {
-        smokeMesh.position.z += 0.0125;
-        smokeMesh.material.opacity -= 0.001;
-        if (smokeMesh.material.opacity <= 0) {
-            smokeMesh.material.opacity = 0.75;
-            smokeMesh.position.set(0, 0, 45);
-        }
-        smokeMesh.rotateZ(0.001);
-        requestAnimationFrame(render);
-    };
-    requestAnimationFrame(render);
 };

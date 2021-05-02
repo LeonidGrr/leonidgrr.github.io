@@ -12,6 +12,8 @@ import './index.scss';
 // document.body.appendChild(stats.dom);
 // const gui = new dat.GUI();
 
+// ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
+
 (async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({
@@ -39,9 +41,6 @@ import './index.scss';
         renderBloom,
     } = postprocessing(scene, camera, renderer);
 
-    // GUI
-    // ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
-
     // Scenes
     // Sky(scene, renderer, gui);
     Desktop(scene, camera, renderer);
@@ -49,9 +48,8 @@ import './index.scss';
     // Rendering
     const resizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => {
         const canvas = renderer.domElement;
-        const pixelRatio = window.devicePixelRatio || 0;
-        const width = canvas.clientWidth * pixelRatio;
-        const height = canvas.clientHeight * pixelRatio;
+        const width = document.body.clientWidth;
+        const height = document.body.clientHeight;
         const needResize = canvas.width !== width || canvas.height !== height;
         if (needResize) {
           renderer.setSize(width, height, false);

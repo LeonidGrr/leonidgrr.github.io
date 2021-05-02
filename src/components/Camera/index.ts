@@ -2,39 +2,71 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const sizes = {
-    width: document.body.clientWidth,
-    height: document.body.clientHeight,
+    width: window.innerWidth,
+    height: window.innerHeight,
 };
 
+const pointer = new THREE.Vector2();
 document.addEventListener('mousemove', (e: MouseEvent) => {
     pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
 });
 
-const pointer = new THREE.Vector2();
+const changeCamera = (
+    camera: THREE.PerspectiveCamera,
+    controls: OrbitControls,
+    target: THREE.Vector3,
+    nextTarget: THREE.Vector3,
+    position: THREE.Vector3,
+    timing: number,
+) => {
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, position.x, timing);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, position.y, timing);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, position.z, timing);
+    nextTarget.x = THREE.MathUtils.lerp(nextTarget.x, target.x, timing);
+    nextTarget.y = THREE.MathUtils.lerp(nextTarget.y, target.y, timing);
+    nextTarget.z = THREE.MathUtils.lerp(nextTarget.z, target.z, timing);
+    controls.target = nextTarget;
+};
 
-export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
-    const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 1000);
-    camera.rotation.set(-0.3, 0, 0);
-    camera.position.set(0, 15, -4);
+const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    if (camera.aspect > 1) {
+        camera.position.set(0, 15, -4);
+        camera.rotation.set(-0.185, 0, 0);
+        controls.maxAzimuthAngle = Math.PI / 12;
+        controls.minAzimuthAngle = -Math.PI / 12;
+        controls.maxPolarAngle = Math.PI / 2.2;
+        controls.minPolarAngle = Math.PI / 2.2;
+    } else {
+        camera.position.set(14, 17, 4);
+        camera.rotation.set(0, 0.55, 0);
+        controls.maxAzimuthAngle = Math.PI / 4.5;
+        controls.minAzimuthAngle = Math.PI / 7.5;
+        controls.maxPolarAngle = Math.PI / 2;
+        controls.minPolarAngle = Math.PI / 2;
+    }
+    camera.updateProjectionMatrix();
     const direction = new THREE.Vector3();
     camera.getWorldDirection(direction);
+    camera.getWorldPosition(controls.target);
+    controls.target.addScaledVector(direction, 1);
+    controls.update();
+};
 
+
+export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
+    const camera = new THREE.PerspectiveCamera(55, sizes.width / sizes.height, 0.1, 1000);
     scene.add(camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    // controls.enablePan = false;
-    // controls.maxAzimuthAngle = Math.PI / 8;
-    // controls.minAzimuthAngle = -Math.PI / 8;
-    // controls.maxPolarAngle = Math.PI / 2.2;
-    // controls.minPolarAngle = Math.PI / 2.5;
-    // controls.maxDistance = 10;
-    // controls.minDistance = 0.02;
-    // controls.zoomSpeed = 2;
-    camera.getWorldPosition(controls.target);
-    controls.target.addScaledVector(direction, 1);
-    controls.update();
+    controls.enablePan = false;
+    controls.maxDistance = 10;
+    controls.minDistance = 0.02;
+    controls.zoomSpeed = 2;
+    
+    setupCamera(camera, controls);
 
     // const baseRotation = new THREE.Vector3(-0.3, 0, 0);
     // const basePosition = new THREE.Vector3(0, 13.4, -5);
@@ -46,18 +78,11 @@ export const Camera = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
     // const screenPosition = new THREE.Vector3(0, 9, 10);
 
     // const nextTarget = new THREE.Vector3();
-    // const changeCamera = (target: THREE.Vector3, postion: THREE.Vector3, timing: number) => {
-    //     camera.position.x = THREE.MathUtils.lerp(camera.position.x, postion.x, timing);
-    //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, postion.y, timing);
-    //     camera.position.z = THREE.MathUtils.lerp(camera.position.z, postion.z, timing);
-    //     nextTarget.x = THREE.MathUtils.lerp(nextTarget.x, target.x, timing);
-    //     nextTarget.y = THREE.MathUtils.lerp(nextTarget.y, target.y, timing);
-    //     nextTarget.z = THREE.MathUtils.lerp(nextTarget.z, target.z, timing);
-    //     controls.target = nextTarget;
-    // };
-
+    
     // const raycaster = new THREE.Raycaster();
     // const targets: {[key: string]: THREE.Object3D} = {};
+
+    addEventListener('resize', () => setupCamera(camera, controls));
 
     const render = () => {
         // if (!targets.keyboard) {
