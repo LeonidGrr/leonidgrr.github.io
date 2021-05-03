@@ -2,14 +2,14 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: document.body.clientWidth,
+    height: document.body.clientHeight,
 };
 
 const pointer = new THREE.Vector2();
 document.addEventListener('mousemove', (e: MouseEvent) => {
-    pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+    pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
 });
 
 const changeCamera = (
@@ -30,7 +30,7 @@ const changeCamera = (
 };
 
 const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = document.body.clientWidth / document.body.clientHeight;
     if (camera.aspect > 1) {
         camera.position.set(0, 15, -4);
         camera.rotation.set(-0.185, 0, 0);
