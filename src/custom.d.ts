@@ -38,7 +38,7 @@ declare module '*.glsl' {
     export default content;
 }
 
-declare module '*.ogg' {
+declare module '*.aac' {
     const content: any;
     export default content;
 }

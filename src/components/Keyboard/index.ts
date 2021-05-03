@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
 import fontTtf from '../../fonts/Prime-Regular.ttf'; 
-import keySound1 from '../../sounds/key1.ogg';
-import keySound2 from '../../sounds/key2.ogg';
+import keySound1 from '../../sounds/key1.aac';
+import keySound2 from '../../sounds/key2.aac';
 import keyCodeMap from './keycodeMap';
 
 export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
@@ -87,8 +87,8 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
     // Events
     const pointer = new THREE.Vector2();
     const onPointerMove = (e: MouseEvent) => {
-        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
+        pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+        pointer.y = - (e.clientY / document.body.clientHeight) * 2 + 1;
     };
     const raycaster = new THREE.Raycaster();
     const keysPressed: {[key: string]: boolean} = {};
@@ -119,7 +119,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
         }
     };
 
-    const keyClickHandler = (e: MouseEvent | TouchEvent) => {
+    const pointerDownHandler = (e: MouseEvent | TouchEvent) => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keyMeshes); 
         if (intersects.length > 0) {
@@ -140,8 +140,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
         }
     };
 
-    window.addEventListener('click', keyClickHandler, false);
-    window.addEventListener('touchend', keyClickHandler, false);
+    window.addEventListener('pointerdown', pointerDownHandler, false);
     window.addEventListener('keydown', keyPressHandler);
-    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('pointermove', onPointerMove);
 };
