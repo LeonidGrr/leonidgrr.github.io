@@ -4,7 +4,6 @@ export { Loader } from './Loader';
 export { Camera } from './Camera';
 export { Sky } from './Sky';
 export { Coffee } from './Coffee';
-export { Desk } from './Desk';
 export { Keyboard } from './Keyboard';
 export { Lamp } from './Lamp';
 export { Screen } from './Screen';

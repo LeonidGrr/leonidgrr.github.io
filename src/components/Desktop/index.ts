@@ -1,17 +1,15 @@
 import * as THREE from 'three';
-import { GUI } from 'dat.gui';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {
     Keyboard,
     Screen,
     Lamp,
     Coffee,
-    Desk,
     Rain,
     Trees,
 } from '..';
 import { TextLight } from '..';
-import desktopScene from '../../models/desktopScene.glb';
+import desktopScene from '../../models/desktopSceneTmp.glb';
 import background from '../../textures/background.png';
 
 export const Desktop = async (
@@ -26,7 +24,12 @@ export const Desktop = async (
     console.log(desktop.scene.children)
     desktop.scene.children.forEach(async child => {
         if (child.name === 'Desk') {
-            await Desk(child as THREE.Mesh);
+            child.traverse(function (c) {
+                if ((c as THREE.Mesh).isMesh) {
+                    c.castShadow = true;
+                    c.receiveShadow = true;
+                }
+            });
         }
         if (child.name === 'Lamp') {
             await Lamp(child as THREE.Mesh, scene);
