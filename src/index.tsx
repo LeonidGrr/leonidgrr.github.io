@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ReactGUI } from './ReactGUI';
 import Stats from 'stats-js';
 import * as dat from 'dat.gui';
 import { Camera, Loader, Desktop } from './components';
@@ -11,8 +12,6 @@ import './index.scss';
 // const stats = new Stats();
 // document.body.appendChild(stats.dom);
 // const gui = new dat.GUI();
-
-// ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot'));
 
 (async () => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
@@ -25,7 +24,7 @@ import './index.scss';
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ReinhardToneMapping;
 
-    Loader();
+    Loader(() => ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot')));
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000);

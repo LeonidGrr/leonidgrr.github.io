@@ -5,29 +5,15 @@ import Navigation from './Navigation';
 export const GUIcontext: any = React.createContext({});
 const langKeyMap = {
     header: {
+        lair: {
+            ru: 'my dev lair',
+            en: 'my dev lair',
+        },
         name: {
             ru: 'Леонид Гребенщиков',
             en: 'Leonid Grebenschikov',
         },
     },
-    navigation: {
-        experience: {
-            ru: 'Путь',
-            en: 'Path',
-        },
-        before: {
-            ru: 'Полевой инженер - Baker Hughes',
-            en: 'Before sofware development',
-        },
-        sibintek: {
-            ru: 'Разработчик - Сибинтек Софт',
-            en: 'Frontend Dev - SibintekSoft',
-        },
-        ase: {
-            ru: 'Разработчик - АСЭ',
-            en: 'Frontend Dev - ASE',
-        },
-    }
 };
 
 export const ReactGUI: FC = () => {
@@ -37,9 +23,9 @@ export const ReactGUI: FC = () => {
         <React.StrictMode>
             <GUIcontext.Provider value={{ langKeyMap, lang }}>
             <Header />
-            <div className="main">
+            {/* <div className="main">
                 <Navigation />
-            </div>
+            </div> */}
             </GUIcontext.Provider>
         </React.StrictMode>
     );

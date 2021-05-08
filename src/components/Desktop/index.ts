@@ -7,9 +7,10 @@ import {
     Coffee,
     Rain,
     Trees,
+    Tooltip,
 } from '..';
 import { TextLight } from '..';
-import desktopScene from '../../models/desktopSceneTmp.glb';
+import desktopScene from '../../models/desktopScene.glb';
 import background from '../../textures/background.png';
 
 export const Desktop = async (
@@ -19,9 +20,10 @@ export const Desktop = async (
 ) => {
     const loader = new GLTFLoader();
     const desktop = await loader.loadAsync(desktopScene);
+    const tooltip = Tooltip(camera, scene);
+
     desktop.scene.rotateY(-Math.PI / 2);
     desktop.scene.scale.set(12, 12, 12);
-    console.log(desktop.scene.children)
     desktop.scene.children.forEach(async child => {
         if (child.name === 'Desk') {
             child.traverse(function (c) {

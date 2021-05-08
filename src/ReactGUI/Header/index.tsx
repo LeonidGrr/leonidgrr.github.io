@@ -7,7 +7,7 @@ const Header: FC = () => {
 
     return (
         <header>
-            {langKeyMap.header.name[lang]}
+            <h1>{langKeyMap.header.lair[lang]}</h1>
         </header>
     );
 };

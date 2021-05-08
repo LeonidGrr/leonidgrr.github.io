@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const Loader = () => {
+export const Loader = (onLoad: () => void) => {
     THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
         console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
     };
@@ -8,7 +8,10 @@ export const Loader = () => {
     THREE.DefaultLoadingManager.onLoad = function() {
         console.log('Loading Complete!');
         const loadingScreen = document.querySelector('div.loader-wrapper')!;
-		setTimeout(() => loadingScreen.classList.add('fade-out'), 3000);
+		setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            onLoad();
+        }, 3000);
     };
     
     THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {

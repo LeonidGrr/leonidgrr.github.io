@@ -32,7 +32,7 @@ const changeCamera = (
 const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
     camera.aspect = document.body.clientWidth / document.body.clientHeight;
     if (camera.aspect > 1) {
-        camera.position.set(0, 15, -4);
+        camera.position.set(0, 15, -3);
         camera.rotation.set(-0.185, 0, 0);
         controls.maxAzimuthAngle = Math.PI / 12;
         controls.minAzimuthAngle = -Math.PI / 12;

@@ -1,8 +1,6 @@
 @font-face {
-    font-family: 'Prime';
-    src: url('./fonts/Prime-Light.eot');
-    src: url('./fonts/Prime-Light.eot?#iefix') format('embedded-opentype'),
-        url('./fonts/Prime-Light.woff2') format('woff2'),
+    font-family: 'PrimeLight';
+    src: url('./fonts/Prime-Light.woff2') format('woff2'),
         url('./fonts/Prime-Light.woff') format('woff'),
         url('./fonts/Prime-Light.ttf') format('truetype');
     font-weight: 100;
@@ -11,12 +9,45 @@
 
 @font-face {
     font-family: 'Prime';
-    src: url('./fonts/Prime-Regular.eot');
-    src: url('./fonts/Prime-Regular.eot?#iefix') format('embedded-opentype'),
-        url('./fonts/Prime-Regular.woff2') format('woff2'),
+    src: url('./fonts/Prime-Regular.woff2') format('woff2'),
         url('./fonts/Prime-Regular.woff') format('woff'),
         url('./fonts/Prime-Regular.ttf') format('truetype');
     font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CinzelRegular';
+    src: url('./fonts/Cinzel-Regular.woff2') format('woff2'),
+        url('./fonts/Cinzel-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoLight';
+    src: url('./fonts/Roboto-Light.woff2') format('woff2'),
+        url('./fonts/Roboto-Light.woff') format('woff'),
+        url('./fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoRegular';
+    src: url('./fonts/Roboto-Regular.woff2') format('woff2'),
+        url('./fonts/Roboto-Regular.woff') format('woff'),
+        url('./fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoMedium';
+    src: url('./fonts/Roboto-Medium.woff2') format('woff2'),
+        url('./fonts/Roboto-Medium.woff') format('woff'),
+        url('./fonts/Roboto-Medium.ttf') format('truetype');
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -60,6 +91,11 @@ div.terminal {
     width: 30vw;
     height: 25vh;
     background-color: rgba(95, 95, 95, 0.15);
+}
+
+#reactRoot {
+    position: relative;
+    z-index: 3;
 }
 
 .loader {

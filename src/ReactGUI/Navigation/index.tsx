@@ -28,25 +28,16 @@ const Navigation = () => {
                     onClick={handleShow}
                     data-type="experience"
                 >
-                    {langKeyMap.navigation.experience[lang]}
+                    mn,h
                 </button>
                 {show.experience && (
                     <ul>
                         <li>
                             <button type="button">
-                                {langKeyMap.navigation.before[lang]}
+                                ///
                             </button>
                         </li>
-                        <li>
-                            <button type="button">
-                                {langKeyMap.navigation.sibintek[lang]}                      
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button">
-                                {langKeyMap.navigation.ase[lang]}
-                            </button>
-                        </li>
+                        
                     </ul>
                 )}
             </div>
