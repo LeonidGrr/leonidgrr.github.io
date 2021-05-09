@@ -30,7 +30,7 @@ export class Tooltip {
         }, false);
 
         window.addEventListener('resize', () => {
-            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(document.body.clientWidth, document.body.clientHeight);
         });
 
         let intersected: string | null = null;

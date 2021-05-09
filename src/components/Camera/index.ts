@@ -32,7 +32,7 @@ const changeCamera = (
     camera.getWorldPosition(controls.target);
     controls.target.addScaledVector(direction, 1);
     controls.update();
-};
+}
 
 const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
     camera.aspect = document.body.clientWidth / document.body.clientHeight;
@@ -41,18 +41,11 @@ const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) =
     if (camera.aspect > 1) {
         camera.position.set(0, 15, -3);
         camera.rotation.set(-0.185, 0, 0);
-        // controls.maxAzimuthAngle = Math.PI / 12;
-        // controls.minAzimuthAngle = -Math.PI / 12;
-        // controls.maxPolarAngle = Math.PI / 2.2;
-        // controls.minPolarAngle = Math.PI / 2.2;
     } else {
         camera.position.set(14, 17, 4);
         camera.rotation.set(0, 0.55, 0);
-        // controls.maxAzimuthAngle = Math.PI / 4.5;
-        // controls.minAzimuthAngle = Math.PI / 7.5;
-        // controls.maxPolarAngle = Math.PI / 2;
-        // controls.minPolarAngle = Math.PI / 2;
     }
+    
     camera.updateProjectionMatrix();
     const direction = new THREE.Vector3();
     camera.getWorldDirection(direction);
@@ -72,6 +65,7 @@ export const Camera = (
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.enablePan = false;
+    controls.enableRotate = false;
     controls.maxDistance = 15;
     controls.zoomSpeed = 2;
     
