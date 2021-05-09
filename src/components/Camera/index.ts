@@ -36,6 +36,8 @@ const changeCamera = (
 
 const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
     camera.aspect = document.body.clientWidth / document.body.clientHeight;
+    camera.updateProjectionMatrix();
+
     if (camera.aspect > 1) {
         camera.position.set(0, 15, -3);
         camera.rotation.set(-0.185, 0, 0);
@@ -46,10 +48,10 @@ const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) =
     } else {
         camera.position.set(14, 17, 4);
         camera.rotation.set(0, 0.55, 0);
-        controls.maxAzimuthAngle = Math.PI / 4.5;
-        controls.minAzimuthAngle = Math.PI / 7.5;
-        controls.maxPolarAngle = Math.PI / 2;
-        controls.minPolarAngle = Math.PI / 2;
+        // controls.maxAzimuthAngle = Math.PI / 4.5;
+        // controls.minAzimuthAngle = Math.PI / 7.5;
+        // controls.maxPolarAngle = Math.PI / 2;
+        // controls.minPolarAngle = Math.PI / 2;
     }
     camera.updateProjectionMatrix();
     const direction = new THREE.Vector3();
@@ -75,60 +77,60 @@ export const Camera = (
     
     setupCamera(camera, controls);
 
-    const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
-        base: [camera.rotation.clone(), camera.position.clone()],
-        keyboard: [new THREE.Euler(-0.5, 0, 0), new THREE.Vector3(0, 13, -10.5)],
-        screen: [new THREE.Euler(-0.3, -0.05, 0), new THREE.Vector3(0, 13, -10.5)],
-    };
-    let currentState = 'base';
-    let cameraChanged = true;
+    // const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
+    //     base: [camera.rotation.clone(), camera.position.clone()],
+    //     keyboard: [new THREE.Euler(-0.5, 0, 0), new THREE.Vector3(0, 13, -10.5)],
+    //     screen: [new THREE.Euler(-0.3, -0.05, 0), new THREE.Vector3(0, 13, -10.5)],
+    // };
+    // let currentState = 'base';
+    // let cameraChanged = true;
 
-    addEventListener('resize', () => {
+    window.addEventListener('resize', () => {
         setupCamera(camera, controls);
-        cameraState.base = [camera.rotation.clone(), camera.position.clone()];
+        // cameraState.base = [camera.rotation.clone(), camera.position.clone()];
     });
 
-    const raycaster = new THREE.Raycaster();
-    const targets: {[key: string]: THREE.Object3D} = {};
+    // const raycaster = new THREE.Raycaster();
+    // const targets: {[key: string]: THREE.Object3D} = {};
 
-    document.addEventListener('pointerdown', () => {
-        if (!targets.keyboard) {
-            const keyboard = scene.getObjectByName('plate');
-            if (keyboard) targets.keyboard = keyboard;
-        }
-        if (!targets.screen) {
-            const screen = scene.getObjectByName('screen');
-            if (screen) targets.screen = screen;
-        }
+    // document.addEventListener('pointerdown', () => {
+    //     if (!targets.keyboard) {
+    //         const keyboard = scene.getObjectByName('plate');
+    //         if (keyboard) targets.keyboard = keyboard;
+    //     }
+    //     if (!targets.screen) {
+    //         const screen = scene.getObjectByName('screen');
+    //         if (screen) targets.screen = screen;
+    //     }
 
-        raycaster.setFromCamera(pointer, camera);
-        const intersects = raycaster.intersectObjects(Object.values(targets)); 
-        if (intersects.length > 0) {
-            if (intersects[0].object.name === 'plate') {
-                console.log(scene.getObjectByName('plate'))
-                if (currentState !== 'keyboard') {
-                    currentState = 'keyboard';
-                    cameraChanged = false;
-                }
-            }
-            if (intersects[0].object.name === 'screen') {
-                console.log(scene.getObjectByName('screen'))
-                if (currentState !== 'screen') {
-                    currentState = 'screen';
-                    cameraChanged = false;
-                }
-            }
-        } else {
-            cameraChanged = true;
-        }
-    }, false);
+    //     raycaster.setFromCamera(pointer, camera);
+    //     const intersects = raycaster.intersectObjects(Object.values(targets)); 
+    //     if (intersects.length > 0) {
+    //         if (intersects[0].object.name === 'plate') {
+    //             console.log(scene.getObjectByName('plate'))
+    //             if (currentState !== 'keyboard') {
+    //                 currentState = 'keyboard';
+    //                 cameraChanged = false;
+    //             }
+    //         }
+    //         if (intersects[0].object.name === 'screen') {
+    //             console.log(scene.getObjectByName('screen'))
+    //             if (currentState !== 'screen') {
+    //                 currentState = 'screen';
+    //                 cameraChanged = false;
+    //             }
+    //         }
+    //     } else {
+    //         cameraChanged = true;
+    //     }
+    // }, false);
 
     const render = () => {
         requestAnimationFrame(render);
 
-        if (!cameraChanged) {
-            changeCamera(camera, controls, cameraState[currentState][0], cameraState[currentState][1], 0.05);
-        }
+        // if (!cameraChanged) {
+        //     changeCamera(camera, controls, cameraState[currentState][0], cameraState[currentState][1], 0.05);
+        // }
         controls.update();
     };
     requestAnimationFrame(render);

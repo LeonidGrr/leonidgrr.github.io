@@ -29,6 +29,10 @@ export class Tooltip {
             pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
         }, false);
 
+        window.addEventListener('resize', () => {
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
         let intersected: string | null = null;
         const render = () => {
             raycaster.setFromCamera(pointer, camera);
