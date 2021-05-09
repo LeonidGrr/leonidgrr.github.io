@@ -20,7 +20,7 @@ export const Desktop = async (
 ) => {
     const loader = new GLTFLoader();
     const desktop = await loader.loadAsync(desktopScene);
-    const tooltip = Tooltip(camera, scene);
+    const tooltip = new Tooltip(camera, scene);
 
     desktop.scene.rotateY(-Math.PI / 2);
     desktop.scene.scale.set(12, 12, 12);
@@ -45,7 +45,7 @@ export const Desktop = async (
             (mesh.material as THREE.MeshStandardMaterial).color.set(0x003c8c);
         }
         if (child.name === 'Screen') {
-            await Screen(child as THREE.Mesh, scene, renderer);
+            await Screen(child as THREE.Mesh, scene, renderer, tooltip);
         }
         if (child.name === 'Coffee') {
             await Coffee(child as THREE.Mesh);

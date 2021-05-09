@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 import { setupRenderTarget } from './renderTarget';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { Tooltip } from '../Tooltip';
 
 export const Screen = async (
     mesh: THREE.Mesh,
     scene: THREE.Scene,
     renderer: THREE.WebGLRenderer,
+    tooltip: Tooltip,
 ) => {
     const screenMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0.45,
@@ -28,6 +30,8 @@ export const Screen = async (
     rtObject.rotateY(-Math.PI / 13);
     rtObject.rotateX(-Math.PI / 24);
     scene.add(rtObject);
+
+    tooltip?.addTarget(rtObject.children[0] as THREE.Mesh, 'Screen here!', new THREE.Vector3(0, 2, 0));
 
     RectAreaLightUniformsLib.init();
     const light = new THREE.RectAreaLight(0x0000ff, 5, 7.05, 4.3);

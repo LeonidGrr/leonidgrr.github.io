@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import Header from './Header';
-import Navigation from './Navigation';
+// import Navigation from './Navigation';
  
 export const GUIcontext: any = React.createContext({});
 const langKeyMap = {
