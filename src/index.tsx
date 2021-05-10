@@ -24,14 +24,13 @@ import './index.scss';
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ReinhardToneMapping;
 
-    Loader(() => ReactDOM.render(<ReactGUI />, document.querySelector('#reactRoot')));
-
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000);
     scene.background = scene.fog.color;
     scene.background.convertSRGBToLinear()
 
     const camera = Camera(scene, renderer);
+
 
     // Post-processing
     const {
@@ -41,7 +40,18 @@ import './index.scss';
     } = postprocessing(scene, camera, renderer);
 
     // Scenes
-    // Sky(scene, renderer, gui);
+    let currentSceneName = 'desktop';
+    const handleChangeScene = (sceneName: string) => {
+        const current = scene.getObjectByName(currentSceneName);
+        const next = scene.getObjectByName(sceneName);
+        currentSceneName = sceneName;
+        console.log(sceneName, current, next);
+    };
+    Loader(() => ReactDOM.render(
+        <ReactGUI
+            onChangeScene={handleChangeScene}
+        />,
+    document.querySelector('#reactRoot')));
     Desktop(scene, camera, renderer);
 
     // Rendering

@@ -3,7 +3,7 @@
     to { opacity: 1; }
 }
 
-button {
+button, a {
     font-family: PrimeLight, sans-serif;;
     background: none;
     color: #fff;
@@ -11,6 +11,7 @@ button {
     outline: none;
     font-size: 1.35rem;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
         color: blue;
@@ -47,17 +48,32 @@ div.explore {
     background-color: rgba($color: #000000, $alpha: 0.75);
     backdrop-filter: blur(1px);
     transform: translateX(-50%);
-    width: 90%;
+    max-width: 90%;
+    min-width: 30%;
     height: 0px;
 
     ul {
-        margin-top: 1rem;
+        height: 100%;
+        width: 100%;
+        margin: 1rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: start;
+        justify-content: start;
+
         li {
+            padding: 0.5rem;
             list-style: none;
+            width: 100%;
     
-            button {
+            button, a {
                 font-size: 1.2rem;
-                margin-bottom: 1rem;
+            }
+
+            &.links {
+                // margin-top: auto;
+                // margin-bottom: 2rem;
             }
         }
     }

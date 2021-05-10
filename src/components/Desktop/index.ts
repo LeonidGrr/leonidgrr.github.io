@@ -22,6 +22,7 @@ export const Desktop = async (
     const desktop = await loader.loadAsync(desktopScene);
     const tooltip = new Tooltip(camera, scene);
 
+    desktop.scene.name = 'desktop';
     desktop.scene.rotateY(-Math.PI / 2);
     desktop.scene.scale.set(12, 12, 12);
     desktop.scene.children.forEach(async child => {

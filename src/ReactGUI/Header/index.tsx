@@ -1,13 +1,10 @@
-import React, { useContext, FC } from 'react';
-import { GUIcontext } from '..';
+import React, { FC } from 'react';
 import './index.scss';
 
 const Header: FC = () => {
-    const { langKeyMap, lang } = useContext(GUIcontext);
-
     return (
         <header>
-            <h1>{langKeyMap.header.lair[lang]}</h1>
+            <h1>my dev lair</h1>
         </header>
     );
 };
