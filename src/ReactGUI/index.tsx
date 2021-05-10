@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react';
 import Header from './Header';
 // import Navigation from './Navigation';
+import ExplorePanel from './ExplorePanel';
+import './index.scss';
  
 export const GUIcontext: any = React.createContext({});
 const langKeyMap = {
@@ -23,9 +25,7 @@ export const ReactGUI: FC = () => {
         <React.StrictMode>
             <GUIcontext.Provider value={{ langKeyMap, lang }}>
             <Header />
-            {/* <div className="main">
-                <Navigation />
-            </div> */}
+            {/* <ExplorePanel /> */}
             </GUIcontext.Provider>
         </React.StrictMode>
     );

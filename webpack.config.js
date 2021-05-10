@@ -68,7 +68,7 @@ module.exports = {
                 },
             },
             {
-                test: /\.(woff|woff2|ttf)$/,
+                test: /\.(woff|woff2|ttf|svg)$/,
                 type: 'asset/inline',
             },
             {
