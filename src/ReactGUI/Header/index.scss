@@ -29,7 +29,7 @@ header {
     &::after {
         content: '';
         background: #fff;
-        height: 0.05rem;
+        height: 1px;
         animation: width_animation 2s ease-out forwards;
     }
 }

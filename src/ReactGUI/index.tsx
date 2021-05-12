@@ -14,7 +14,7 @@ export const ReactGUI: FC<ReactGUIProps> = props => {
         <React.StrictMode>
             <GUIcontext.Provider value={{ ...props }}>
                 <Header />
-                <ExplorePanel />
+                {/* <ExplorePanel /> */}
             </GUIcontext.Provider>
         </React.StrictMode>
     );
