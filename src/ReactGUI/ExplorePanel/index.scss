@@ -57,20 +57,25 @@ button, a {
 .content {
     background-color: rgba($color: #000000, $alpha: 0.95);
     z-index: 3;
+    top: 0;
+    left: 5%;
 }
 
 .description {
-    // color: #fff;
-    background-color: rgba($color: #FFFFFF, $alpha: 0.85);
+    background-color: rgba($color: #000000, $alpha: 0.95);
+    color: #fff;
+    // background-color: rgba($color: #FFFFFF, $alpha: 0.85);
     z-index: 2;
-    // transform: translateY(-100%);
-    padding: 0.75rem 1.25rem;
-    width: 90%;
+    padding: 0.5rem 1.25rem;
+    max-width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    right: 5%;
 }
 
 .content, .description {
-    top: 0;
-    left: 5%;
+    animation: opacity_animation 2s ease-out forwards;
     margin-top: 5rem;
     transition: height 0.35s ease-out;
     position: absolute;

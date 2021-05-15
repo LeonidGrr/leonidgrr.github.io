@@ -1,10 +1,15 @@
 import React, { FC } from 'react';
 import './index.scss';
 
-const Header: FC = () => {
+type HeaderProps = {
+    header: string,
+};
+
+const Header: FC<HeaderProps> = props => {
+    const { header } = props;
     return (
         <header>
-            <h1>my dev lair</h1>
+            <h1>{header}</h1>
         </header>
     );
 };
