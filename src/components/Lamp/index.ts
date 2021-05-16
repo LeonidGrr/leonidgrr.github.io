@@ -14,9 +14,11 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
         color: 0xffffff,
     });
     const sphere = new THREE.Mesh(geometry, material);
+    sphere.name = 'lamp_mesh';
     sphere.layers.enable(1);
 
     const light = new THREE.PointLight(0xffffff, 3);
+    light.name = 'lamp_light';
     light.shadow.mapSize = new THREE.Vector2(512, 512);
     light.shadow.bias = 0.001;
     light.distance = 25;

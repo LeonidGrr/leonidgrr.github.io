@@ -54,12 +54,8 @@ const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) =
     controls.update();
 };
 
-export const Camera = (
-    scene: THREE.Scene,
-    renderer: THREE.WebGLRenderer,
-) => {
+export const Camera = (renderer: THREE.WebGLRenderer) => {
     const camera = new THREE.PerspectiveCamera(55, sizes.width / sizes.height, 0.1, 1000);
-    scene.add(camera);
     camera.name = 'camera0';
 
     const controls = new OrbitControls(camera, renderer.domElement);

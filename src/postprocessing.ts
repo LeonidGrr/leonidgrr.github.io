@@ -31,21 +31,28 @@ const postprocessing = (
     scene: THREE.Scene,
     camera: THREE.PerspectiveCamera,
     renderer: THREE.WebGLRenderer,
+    bloomParams?: {
+        strength?: number,
+        radius?: number,
+        threshold?: number,
+    },
 ) => {
     const params = {
         exposure: 1,
-        bloomStrength: 1.25,
-        bloomThreshold: 0,
-        bloomRadius: 0.1,
+        strength: 1.25,
+        threshold: 0,
+        radius: 0.1,
+        ...bloomParams,
     };
+    setInterval(() => console.log(scene), 5000)
 
     const renderScene = new RenderPass(scene, camera);
 
     const bloomPass = new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
-        params.bloomStrength,
-        params.bloomRadius,
-        params.bloomThreshold,
+        params.strength,
+        params.radius,
+        params.threshold,
     );
 
     const bloomComposer = new EffectComposer(renderer);
@@ -77,6 +84,7 @@ const postprocessing = (
             o.material = darkMaterial;
         }
     };
+
     const restoreMaterial = (obj: THREE.Object3D) => {
         if (obj.type === 'Scene') {
             obj.layers.mask = 0;
@@ -87,14 +95,27 @@ const postprocessing = (
             delete materials[o.uuid];
         }
     };
+
     const renderBloom = () => {
         scene.traverse(darkenNonBloomed);
         bloomComposer.render();
         scene.traverse(restoreMaterial);
     };
 
+    const resizeRenderer = () => {
+        const canvas = renderer.domElement;
+        const pixelRatio = window.devicePixelRatio;
+        const width = canvas.clientWidth * pixelRatio | 0;
+        const height = canvas.clientHeight * pixelRatio | 0;
+        if (canvas.width !== width || canvas.height !== height) {
+          renderer.setSize(width, height, false);
+          bloomComposer.setSize(width, height);
+          finalComposer.setSize(width, height);
+        }
+    };
+    requestAnimationFrame(resizeRenderer);
+
     return {
-        bloomComposer,
         finalComposer,
         renderBloom,
     };

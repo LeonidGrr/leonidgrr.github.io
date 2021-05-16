@@ -22,7 +22,6 @@ export const Desktop = async (
     const desktop = await loader.loadAsync(desktopScene);
     const tooltip = new Tooltip(camera, scene);
 
-    desktop.scene.name = 'desktop';
     desktop.scene.rotateY(-Math.PI / 2);
     desktop.scene.scale.set(12, 12, 12);
     desktop.scene.children.forEach(async child => {
@@ -81,7 +80,8 @@ export const Desktop = async (
     textLight.mesh.rotateY(Math.PI / 6);
     textLight.mesh.rotateX(-Math.PI / 10);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    ambientLight.name = 'ambient_light';
     scene.add(ambientLight);
 
     // StreetLight(new THREE.Vector3(-15, 15, -70), scene);

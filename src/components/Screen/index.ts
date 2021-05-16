@@ -35,6 +35,7 @@ export const Screen = async (
 
     RectAreaLightUniformsLib.init();
     const light = new THREE.RectAreaLight(0x0000ff, 5, 7.05, 4.3);
+    light.name = 'screen_light';
     light.rotateY(Math.PI - Math.PI / 13);
     light.rotateX(Math.PI / 24);
     light.position.set(

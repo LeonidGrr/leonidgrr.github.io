@@ -69,7 +69,7 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
                     </li>
                 </ul>
             </div>
-            <div
+            {/* <div
                 className="description"
                 style={{
                     height: showDescription ? 'auto' : 0,
@@ -79,7 +79,7 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
                 <span aria-label="Description">
                     {titleMap[currentScene].desc}
                 </span>
-            </div>
+            </div> */}
         </>
     );
 };

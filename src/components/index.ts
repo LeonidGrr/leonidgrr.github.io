@@ -13,3 +13,4 @@ export { Desktop } from './Desktop';
 export { Trees } from './Trees';
 export { StreetLight } from './StreetLight';
 export { Venusian } from './Venusian';
+export { RenderingManager } from './RenderingManager';

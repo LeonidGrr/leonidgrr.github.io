@@ -21,6 +21,7 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
         height: 0.3,
     });
     const mesh = new THREE.Mesh(geometry, material);
+    mesh.name="text_mesh"
     mesh.layers.enable(1);
 
     scene.add(mesh)
@@ -28,7 +29,7 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
     const render = () => {
         requestAnimationFrame(render);
         const time = Date.now() * 0.0005;
-        material.emissiveIntensity = Math.cos(time) * 0.5;
+        material.emissiveIntensity *= Math.cos(time) * 0.5;
     };
     requestAnimationFrame(render);
 
