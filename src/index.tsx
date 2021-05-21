@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { ReactGUI } from './ReactGUI';
 import { Loader, RenderingManager, Camera } from './components';
 import Stats from 'stats-js';
+import postprocessing from './postprocessing';
 import * as dat from 'dat.gui';
 
 import './index.scss';
@@ -43,8 +44,11 @@ document.body.appendChild(stats.dom);
 
     // Rendering
     const renderingManager = new RenderingManager(camera, renderer);
-    const handleChangeScene = (sceneName: string) => renderingManager.changeScene(sceneName, camera, renderer);
+    const handleChangeScene = (sceneName: string) => renderingManager.changeScene(sceneName);
 
+    // Post-processing
+    const rendering = postprocessing(renderingManager.scene, camera, renderer);   
+    
     Loader(() => ReactDOM.render(<ReactGUI
         onChangeScene={handleChangeScene}
     />, document.querySelector('#reactRoot')));
@@ -54,8 +58,8 @@ document.body.appendChild(stats.dom);
         time *= 0.001;
 		stats.update();
 
-        renderingManager.rendering.renderBloom();
-        renderingManager.rendering.finalComposer.render();
+        rendering.renderBloom();
+        rendering.finalComposer.render();
     };
     requestAnimationFrame(render);
 })();

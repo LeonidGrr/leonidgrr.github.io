@@ -44,10 +44,7 @@ const postprocessing = (
         radius: 0.1,
         ...bloomParams,
     };
-    setInterval(() => console.log(scene), 5000)
-
     const renderScene = new RenderPass(scene, camera);
-
     const bloomPass = new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
         params.strength,
