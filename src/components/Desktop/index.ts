@@ -37,7 +37,7 @@ export const Desktop = async (
             await Lamp(child as THREE.Mesh, scene);
         }
         if (child.name === 'Keyboard') {
-            await Keyboard(child as THREE.Mesh, camera);
+            await Keyboard(child as THREE.Mesh, camera, tooltip);
         }
         if (child.name === 'Floor') {
             child.receiveShadow = true;

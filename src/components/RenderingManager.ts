@@ -1,23 +1,25 @@
 import * as THREE from 'three';
-import { Desktop, Tooltip } from '.';
+import { Desktop, Tooltip, Camera } from '.';
 
 export class RenderingManager {
     active = 'desktop';
     scene: THREE.Scene;
+    camera: THREE.PerspectiveCamera;
     
-    constructor(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) {
-        // Main scene
+    constructor(renderer: THREE.WebGLRenderer) {
+        // Main scene, camera, tooltips
         this.scene = new THREE.Scene();
         this.scene.name = 'main';
         this.scene.fog = new THREE.FogExp2(0x000000);
         this.scene.background = this.scene.fog.color;
         this.scene.background.convertSRGBToLinear();
-        const tooltip = new Tooltip(camera, this.scene);
+        this.camera = Camera(renderer, this.scene);
+        const tooltip = new Tooltip(this.camera, this.scene);
 
         // Setup desktop scene
         const scene = new THREE.Scene();
         scene.name = 'desktop';
-        Desktop(scene, camera, renderer, tooltip);
+        Desktop(scene, this.camera, renderer, tooltip);
         this.scene.add(scene);
 
         // Setup drillrig scene
@@ -35,7 +37,6 @@ export class RenderingManager {
         scene2.add(mesh);
 
         this.scene.add(scene2);
-
     }
 
     changeScene = (sceneName: string) => {

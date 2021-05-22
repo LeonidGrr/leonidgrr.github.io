@@ -24,7 +24,7 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
     rtScene.add(cube);
 
     // Container mesh
-    const geometry = new THREE.PlaneGeometry(7.15, 4.35);
+    const geometry = new THREE.PlaneGeometry(7.15, 4.325);
     const material = new THREE.MeshStandardMaterial({
         map: renderTarget.texture,
     });

@@ -31,7 +31,6 @@ const changeCamera = (
     camera.getWorldDirection(direction);
     camera.getWorldPosition(controls.target);
     controls.target.addScaledVector(direction, 1);
-    controls.update();
 }
 
 const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
@@ -54,7 +53,7 @@ const setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) =
     controls.update();
 };
 
-export const Camera = (renderer: THREE.WebGLRenderer) => {
+export const Camera = (renderer: THREE.WebGLRenderer, scene: THREE.Scene) => {
     const camera = new THREE.PerspectiveCamera(55, sizes.width / sizes.height, 0.1, 1000);
     camera.name = 'camera0';
 
@@ -67,60 +66,52 @@ export const Camera = (renderer: THREE.WebGLRenderer) => {
     
     setupCamera(camera, controls);
 
-    // const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
-    //     base: [camera.rotation.clone(), camera.position.clone()],
-    //     keyboard: [new THREE.Euler(-0.5, 0, 0), new THREE.Vector3(0, 13, -10.5)],
-    //     screen: [new THREE.Euler(-0.3, -0.05, 0), new THREE.Vector3(0, 13, -10.5)],
-    // };
-    // let currentState = 'base';
-    // let cameraChanged = true;
+    let activeState = 'base';
+    const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
+        base: [camera.rotation.clone(), camera.position.clone()],
+        keyboard: [new THREE.Euler(-0.5, 0, 0), new THREE.Vector3(0, 13, -10.5)],
+        screen: [new THREE.Euler(-0.2, -0.15, 0), new THREE.Vector3(0, 13, -10.5)],
+    };
 
     window.addEventListener('resize', () => {
         setupCamera(camera, controls);
-        // cameraState.base = [camera.rotation.clone(), camera.position.clone()];
+        cameraState.base = [camera.rotation.clone(), camera.position.clone()];
+        activeState = 'base';
     });
 
-    // const raycaster = new THREE.Raycaster();
-    // const targets: {[key: string]: THREE.Object3D} = {};
+    const raycaster = new THREE.Raycaster();
+    const targets: {[key: string]: THREE.Object3D} = {};
 
-    // document.addEventListener('pointerdown', () => {
-    //     if (!targets.keyboard) {
-    //         const keyboard = scene.getObjectByName('plate');
-    //         if (keyboard) targets.keyboard = keyboard;
-    //     }
-    //     if (!targets.screen) {
-    //         const screen = scene.getObjectByName('screen');
-    //         if (screen) targets.screen = screen;
-    //     }
+    document.addEventListener('pointerdown', () => {
+        if (!targets.keyboard) {
+            const keyboard = scene.getObjectByName('plate');
+            if (keyboard) targets.keyboard = keyboard;
+        }
+        if (!targets.screen) {
+            const screen = scene.getObjectByName('screen');
+            if (screen) targets.screen = screen;
+        }
 
-    //     raycaster.setFromCamera(pointer, camera);
-    //     const intersects = raycaster.intersectObjects(Object.values(targets)); 
-    //     if (intersects.length > 0) {
-    //         if (intersects[0].object.name === 'plate') {
-    //             console.log(scene.getObjectByName('plate'))
-    //             if (currentState !== 'keyboard') {
-    //                 currentState = 'keyboard';
-    //                 cameraChanged = false;
-    //             }
-    //         }
-    //         if (intersects[0].object.name === 'screen') {
-    //             console.log(scene.getObjectByName('screen'))
-    //             if (currentState !== 'screen') {
-    //                 currentState = 'screen';
-    //                 cameraChanged = false;
-    //             }
-    //         }
-    //     } else {
-    //         cameraChanged = true;
-    //     }
-    // }, false);
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(Object.values(targets)); 
+        if (intersects.length > 0) {
+            if (intersects[0].object.name === 'plate') {
+                activeState = 'keyboard';
+            }
+            if (intersects[0].object.name === 'screen') {
+                activeState = 'screen';
+            }
+        } else {
+            activeState = 'base';
+        }
+    }, false);
 
     const render = () => {
         requestAnimationFrame(render);
 
-        // if (!cameraChanged) {
-        //     changeCamera(camera, controls, cameraState[currentState][0], cameraState[currentState][1], 0.05);
-        // }
+        if (cameraState[activeState]) {
+            changeCamera(camera, controls, cameraState[activeState][0], cameraState[activeState][1], 0.05);
+        }
         controls.update();
     };
     requestAnimationFrame(render);

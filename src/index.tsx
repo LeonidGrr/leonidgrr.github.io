@@ -40,17 +40,12 @@ document.body.appendChild(stats.dom);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ReinhardToneMapping;
 
-    const camera = Camera(renderer);
-
     // Rendering
-    const renderingManager = new RenderingManager(camera, renderer);
-    const handleChangeScene = (sceneName: string) => renderingManager.changeScene(sceneName);
-
-    // Post-processing
-    const rendering = postprocessing(renderingManager.scene, camera, renderer);   
+    const { scene, camera, changeScene } = new RenderingManager(renderer);
+    const rendering = postprocessing(scene, camera, renderer);   
     
     Loader(() => ReactDOM.render(<ReactGUI
-        onChangeScene={handleChangeScene}
+        onChangeScene={changeScene}
     />, document.querySelector('#reactRoot')));
 
     const render = (time: number) => {

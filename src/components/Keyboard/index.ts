@@ -3,9 +3,10 @@ import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
 import fontTtf from '../../fonts/Prime-Regular.ttf'; 
 import keySound1 from '../../sounds/key1.aac';
 import keySound2 from '../../sounds/key2.aac';
+import { Tooltip } from '../Tooltip';
 import keyCodeMap from './keycodeMap';
 
-export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
+export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: Tooltip) => {
     // Materials
     const keyboardMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0.45,
@@ -75,6 +76,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera) => {
             } else if (child.name === 'plate') {
                 mesh.material = keyboardMaterial;
                 child.castShadow = true;
+                tooltip?.addTarget(child as THREE.Mesh, 'Press any key...');
             } else {
                 mesh.material = switchMaterial;
                 mesh.layers.enable(1);
