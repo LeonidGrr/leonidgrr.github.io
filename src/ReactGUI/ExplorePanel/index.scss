@@ -35,7 +35,7 @@ button, a {
 .explore {
     transform: translateX(-50%);
     position: absolute;
-    top: 0;
+    top: calc(100% - 4rem);
     left: 50%;
     width: 100%;
     display: flex;
@@ -44,7 +44,7 @@ button, a {
     flex-direction: column;
     flex-wrap: nowrap;
     animation: opacity_animation 2s ease-out forwards;
-    z-index: 4;
+    z-index: 5;
 
     &-separator {
         margin-bottom: 1rem;
@@ -52,26 +52,6 @@ button, a {
         height: 1px;
         animation: width_animation 2s ease-out forwards;
     }
-}
-
-.content {
-    background-color: rgba($color: #000000, $alpha: 0.95);
-    z-index: 3;
-    top: 0;
-    left: 5%;
-}
-
-.description {
-    background-color: rgba($color: #000000, $alpha: 0.95);
-    color: #fff;
-    // background-color: rgba($color: #FFFFFF, $alpha: 0.85);
-    z-index: 2;
-    padding: 0.5rem 1.25rem;
-    max-width: 90%;
-    display: flex;
-    justify-content: flex-end;
-    top: 0;
-    right: 5%;
 }
 
 .content, .description {
@@ -109,5 +89,37 @@ button, a {
                 // margin-bottom: 2rem;
             }
         }
+    }
+}
+
+.content {
+    background-color: rgba($color: #000000, $alpha: 0.95);
+    z-index: 5;
+    top: 0;
+    left: 5%;
+    height: 0;
+
+    &--show {
+        height: calc(100% - 10.25rem);
+    }
+}
+
+.description {
+    background-color: rgba($color: #000000, $alpha: 0.95);
+    color: #fff;
+    z-index: 4;
+    padding: 0.5rem 1.25rem;
+    max-width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    right: 5%;
+
+    max-height: 0;
+    height: 0;
+
+    &--show {
+        height: auto;
+        max-height: calc(100% - 10.25rem);
     }
 }

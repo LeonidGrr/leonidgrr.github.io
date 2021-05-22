@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import Header from './Header';
 import ExplorePanel from './ExplorePanel';
-import './index.scss';
 
 type ReactGUIProps = {
     onChangeScene: (sceneName: string) => void,

@@ -3,7 +3,6 @@ import React, {
     useEffect,
     FC,
 } from 'react';
-import { useWindowSize } from '../hooks';
 import './index.scss';
 
 type ExplorePanelProps = {
@@ -18,7 +17,6 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
         currentScene,
         titleMap,
     } = props;
-    const { size, remValue } = useWindowSize();
     const [showPanel, setShowPanel] = useState(false);
     const [showDescription, setShowDescription] = useState<string | null>(null);
 
@@ -38,7 +36,6 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
             <div
                 aria-label="Explore more"
                 className="explore"
-                style={{ top: size[1] - 4 * remValue }}
             >
                 <div className="explore-separator" />
                 <button type="button" onClick={() => setShowPanel(prev => !prev)}>
@@ -47,8 +44,7 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
             </div>
             <div
                 aria-label="Table of content"
-                className="content"
-                style={{ height: showPanel ? size[1] - 10.25 * remValue : 0 }}
+                className={`content ${showPanel ? 'content--show' : ''}`}
             >
                 <ul>
                     {Object.keys(titleMap).map(key => (
@@ -69,13 +65,7 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
                     </li>
                 </ul>
             </div>
-            <div
-                className="description"
-                style={{
-                    height: showDescription ? 'auto' : 0,
-                    maxHeight: showDescription ? size[1] - 10.25 * remValue : 0
-                }}
-            >
+            <div className={`description ${showDescription ? 'description--show' : ''}`}>
                 <span aria-label="Description">
                     {titleMap[currentScene].desc}
                 </span>

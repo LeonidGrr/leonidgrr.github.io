@@ -67,6 +67,7 @@ html, body {
     font-size: 16px;
     color: black;
     background-color: white;
+    position: relative;
 }
 
 h1, h2, h3, h4, h5, h6, p, ol, ul {
@@ -77,17 +78,24 @@ canvas.webgl {
     width: 100%;
     height: 100%;
     user-select: none;
+    position: absolute;
+    z-index: 1;
 }
 
-div.terminal {
-    position: absolute;
-    margin: 3rem;
-    top: 0;
-    right: 0;
-    width: 30vw;
-    height: 25vh;
-    background-color: rgba(95, 95, 95, 0.15);
+#reactRoot {
+    width: 0;
+    height: 0;
 }
+
+// div.terminal {
+//     position: absolute;
+//     margin: 3rem;
+//     top: 0;
+//     right: 0;
+//     width: 30vw;
+//     height: 25vh;
+//     background-color: rgba(95, 95, 95, 0.15);
+// }
 
 .loader {
     &-wrapper {
