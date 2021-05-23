@@ -69,8 +69,7 @@ export const Camera = (renderer: THREE.WebGLRenderer, scene: THREE.Scene) => {
     let activeState = 'base';
     const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
         base: [camera.rotation.clone(), camera.position.clone()],
-        keyboard: [new THREE.Euler(-0.5, 0, 0), new THREE.Vector3(0, 13, -10.5)],
-        screen: [new THREE.Euler(-0.2, -0.15, 0), new THREE.Vector3(0, 13, -10.5)],
+        screen: [new THREE.Euler(-0.2, -0.225, 0), new THREE.Vector3(1.5, 13.5, -10.75)],
     };
 
     window.addEventListener('resize', () => {
@@ -83,10 +82,6 @@ export const Camera = (renderer: THREE.WebGLRenderer, scene: THREE.Scene) => {
     const targets: {[key: string]: THREE.Object3D} = {};
 
     document.addEventListener('pointerdown', () => {
-        if (!targets.keyboard) {
-            const keyboard = scene.getObjectByName('plate');
-            if (keyboard) targets.keyboard = keyboard;
-        }
         if (!targets.screen) {
             const screen = scene.getObjectByName('screen');
             if (screen) targets.screen = screen;
@@ -95,9 +90,6 @@ export const Camera = (renderer: THREE.WebGLRenderer, scene: THREE.Scene) => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(Object.values(targets)); 
         if (intersects.length > 0) {
-            if (intersects[0].object.name === 'plate') {
-                activeState = 'keyboard';
-            }
             if (intersects[0].object.name === 'screen') {
                 activeState = 'screen';
             }
