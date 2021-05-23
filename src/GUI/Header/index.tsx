@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
 import './index.scss';
 
 type HeaderProps = {
     header: string,
 };
 
-const Header: FC<HeaderProps> = props => {
+const Header = (props: HeaderProps) => {
     const { header } = props;
     return (
         <header>

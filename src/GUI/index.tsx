@@ -1,13 +1,9 @@
-import React, {
-    FC,
-    useContext,
-    useState,
-    useEffect,
-} from 'react';
+import * as THREE from 'three';
+import { useState } from 'preact/hooks';
 import Header from './Header';
 import ExplorePanel from './ExplorePanel';
 
-type ReactGUIProps = {
+type GUIProps = {
     onChangeScene: (sceneName: string) => void,
 };
 
@@ -21,9 +17,9 @@ const titleMap: {[key: string]: { name: string, header: string, desc: string }} 
     },
     drillrig: {
         name: 'Some day i will finish this page...',
-        header: 'Some day i will finish this page...',
+        header: 'Work in progress',
         desc: `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet consectetur adipiscing. Dui ut ornare lectus sit amet est placerat in. Euismod in pellentesque massa placerat duis. Amet mauris commodo quis imperdiet. Commodo nulla facilisi nullam vehicula ipsum. Velit ut tortor pretium viverra suspendisse. Mi tempus imperdiet nulla malesuada pellentesque. A diam maecenas sed enim ut sem viverra aliquet. Nunc mi ipsum faucibus vitae aliquet nec. Vulputate odio ut enim blandit. Dui faucibus in ornare quam. Ornare aenean euismod elementum nisi quis eleifend quam adipiscing.
+            Some day i will finish this page...
         `,
     },
     // drillrig: {
@@ -49,7 +45,7 @@ const titleMap: {[key: string]: { name: string, header: string, desc: string }} 
     // },
 };
 
-export const ReactGUI: FC<ReactGUIProps> = props => {
+export const GUI = (props: GUIProps)  => {
     const {
         onChangeScene,
     } = props;
@@ -63,13 +59,13 @@ export const ReactGUI: FC<ReactGUIProps> = props => {
     };
 
     return (
-        <React.StrictMode>
+        <>
             <Header header={titleMap[currentScene].header} />
             <ExplorePanel
                 currentScene={currentScene}
                 onChangeScene={handleChangeScene}
                 titleMap={titleMap}
             />
-        </React.StrictMode>
+        </>
     );
 };

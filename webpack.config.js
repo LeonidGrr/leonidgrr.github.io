@@ -4,7 +4,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -87,9 +87,17 @@ module.exports = {
         splitChunks: {
             chunks: 'all',   
         },
+        minimize: true,
+        minimizer: [new TerserPlugin({
+            parallel: true,
+        })],
     },
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
+        alias: {
+            react: 'preact-compat',
+            'react-dom': 'preact-compat',
+        }
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -113,11 +121,5 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8,
         }),
-        // new CopyPlugin({
-        //     patterns: [
-        //         { from: path.resolve(__dirname, 'src', 'models'), to: 'models' },
-        //         { from: path.resolve(__dirname, 'src', 'textures'), to: 'textures' },
-        //     ],
-        // }),
     ],
 };

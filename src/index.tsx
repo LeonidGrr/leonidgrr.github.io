@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ReactGUI } from './ReactGUI';
+import { render } from 'preact';
+import { GUI } from './GUI';
 import { Loader, RenderingManager, Camera } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
@@ -42,19 +41,20 @@ document.body.appendChild(stats.dom);
 
     // Rendering
     const { scene, camera, changeScene } = new RenderingManager(renderer);
-    const rendering = postprocessing(scene, camera, renderer);   
     
-    Loader(() => ReactDOM.render(<ReactGUI
+    Loader(() => render(<GUI
         onChangeScene={changeScene}
-    />, document.querySelector('#reactRoot')));
+    />, document.querySelector('#preactRoot')!));
 
-    const render = (time: number) => {
-        requestAnimationFrame(render);
+    // Rendering
+    const rendering = postprocessing(scene, camera, renderer);   
+    const renderLoop = (time: number) => {
+        requestAnimationFrame(renderLoop);
         time *= 0.001;
 		stats.update();
 
         rendering.renderBloom();
         rendering.finalComposer.render();
     };
-    requestAnimationFrame(render);
+    requestAnimationFrame(renderLoop);
 })();

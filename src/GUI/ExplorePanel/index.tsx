@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    FC,
-} from 'react';
+import { useState, useEffect } from 'preact/hooks';
 import './index.scss';
 
 type ExplorePanelProps = {
@@ -11,7 +7,7 @@ type ExplorePanelProps = {
     titleMap: {[key: string]: { name: string, desc: string }}
 }
 
-const ExplorePanel: FC<ExplorePanelProps> = props => {
+const ExplorePanel = (props: ExplorePanelProps) => {
     const {
         onChangeScene,
         currentScene,
@@ -20,7 +16,7 @@ const ExplorePanel: FC<ExplorePanelProps> = props => {
     const [showPanel, setShowPanel] = useState(false);
     const [showDescription, setShowDescription] = useState<string | null>(null);
 
-    const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const handlePointerDown = (e: any) => {
         const { key } = e.currentTarget.dataset;
         if (key && currentScene !== key) {
             setShowPanel(false);

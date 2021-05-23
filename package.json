@@ -13,8 +13,6 @@
   },
   "devDependencies": {
     "@types/dat.gui": "^0.7.6",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
     "@types/three": "^0.127.0",
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^4.0.1",
@@ -35,8 +33,8 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "preact": "^10.5.13",
+    "preact-compat": "^3.19.0",
     "stats-js": "^1.0.1",
     "three": "^0.127.0"
   }
