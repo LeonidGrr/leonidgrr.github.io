@@ -8,10 +8,10 @@ import {
     Rain,
     Trees,
     Tooltip,
-} from '..';
-import { TextLight } from '..';
-import desktopScene from '../../models/desktopScene.glb';
-import background from '../../textures/background.png';
+} from '.';
+import { TextLight } from '.';
+import desktopScene from '../models/desktopScene.glb';
+import background from '../textures/background.png';
 
 export const Desktop = async (
     scene: THREE.Scene,

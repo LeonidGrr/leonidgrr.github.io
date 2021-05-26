@@ -1,31 +1,50 @@
 import { useState, useEffect } from 'preact/hooks';
+import { Config } from '../index';
 import './index.scss';
 
 type ExplorePanelProps = {
     onChangeScene: (key: string) => void,
+    onChangeCamera: (key: string) => void,
     currentScene: string,
-    titleMap: {[key: string]: { name: string, desc: string }}
+    currentCamera: string,
+    titleMap: Config,
 }
 
 const ExplorePanel = (props: ExplorePanelProps) => {
     const {
         onChangeScene,
+        onChangeCamera,
         currentScene,
+        currentCamera,
         titleMap,
     } = props;
     const [showPanel, setShowPanel] = useState(false);
     const [showDescription, setShowDescription] = useState<string | null>(null);
 
-    const handlePointerDown = (e: any) => {
+    const handleScene = (e: any) => {
         const { key } = e.currentTarget.dataset;
         if (key && currentScene !== key) {
             setShowPanel(false);
             setShowDescription(null)
             onChangeScene(key);
+        } else {
+            onChangeCamera('base');
         }
     };
 
-    useEffect(() => setShowDescription(currentScene), [currentScene]);
+    const handleCamera = (e: any) => {
+        e.stopPropagation();
+        const { key } = e.currentTarget.dataset;
+        if (key && currentCamera !== key) {
+            setShowDescription(null)
+            onChangeCamera(key);
+        }
+    };
+
+    useEffect(() => {
+        setShowDescription(titleMap[currentScene]?.sub[currentCamera]?.desc
+        || titleMap[currentScene]?.desc);
+    }, [currentScene, currentCamera]);
 
     return (
         <>
@@ -42,16 +61,31 @@ const ExplorePanel = (props: ExplorePanelProps) => {
                 aria-label="Table of content"
                 className={`content ${showPanel ? 'content--show' : ''}`}
             >
-                <ul>
+                <ul className="scenes">
                     {Object.keys(titleMap).map(key => (
                         <li key={key}>
                             <button
                                 data-key={key}
                                 type="button"
-                                onPointerDown={handlePointerDown}
+                                onPointerDown={handleScene}
                             >
                                 {titleMap[key].name}
                             </button>
+                            <ul className="cameras">
+                                {currentScene === key && (
+                                    Object.keys(titleMap[key]?.sub).map(key2 => (
+                                        <li key={key2}>
+                                            <button
+                                                data-key={key2}
+                                                type="button"
+                                                onPointerDown={handleCamera}
+                                            >
+                                                - {titleMap[key]?.sub[key2].name}
+                                            </button>
+                                        </li>
+                                    )
+                                ))}
+                            </ul>
                         </li>
                     ))}
                     <li className="links">
@@ -63,7 +97,7 @@ const ExplorePanel = (props: ExplorePanelProps) => {
             </div>
             <div className={`description ${showDescription ? 'description--show' : ''}`}>
                 <span aria-label="Description">
-                    {titleMap[currentScene].desc}
+                    {showDescription}
                 </span>
             </div>
         </>

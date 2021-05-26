@@ -36,6 +36,7 @@
     "preact": "^10.5.13",
     "preact-compat": "^3.19.0",
     "stats-js": "^1.0.1",
-    "three": "^0.127.0"
+    "three": "^0.127.0",
+    "web-worker": "^1.0.0"
   }
 }

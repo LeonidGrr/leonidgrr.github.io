@@ -1,25 +1,33 @@
 import * as THREE from 'three';
-import { Desktop, Tooltip, Camera } from '.';
+import { Desktop, Tooltip, CameraManager } from '.';
+
+const pointer = new THREE.Vector2();
+document.addEventListener('mousemove', (e: MouseEvent) => {
+    pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+    pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
+});
 
 export class RenderingManager {
-    active = 'desktop';
+    activeScene = 'desktop';
     scene: THREE.Scene;
-    camera: THREE.PerspectiveCamera;
+    cameraManager: CameraManager;
     
-    constructor(renderer: THREE.WebGLRenderer) {
+    constructor(renderer: THREE.WebGLRenderer, cameraManager: CameraManager) {
+        this.cameraManager = cameraManager;
+
         // Main scene, camera, tooltips
         this.scene = new THREE.Scene();
         this.scene.name = 'main';
         this.scene.fog = new THREE.FogExp2(0x000000);
         this.scene.background = this.scene.fog.color;
         this.scene.background.convertSRGBToLinear();
-        this.camera = Camera(renderer, this.scene);
-        const tooltip = new Tooltip(this.camera, this.scene);
+
+        const tooltip = new Tooltip(this.cameraManager.camera, this.scene);
 
         // Setup desktop scene
         const scene = new THREE.Scene();
         scene.name = 'desktop';
-        Desktop(scene, this.camera, renderer, tooltip);
+        Desktop(scene, this.cameraManager.camera, renderer, tooltip);
         this.scene.add(scene);
 
         // Setup drillrig scene
@@ -37,72 +45,48 @@ export class RenderingManager {
         scene2.add(mesh);
 
         this.scene.add(scene2);
+
+        this.detectClick();
+    }
+
+    detectClick = () => {
+        const raycaster = new THREE.Raycaster();
+        const targets: {[key: string]: THREE.Object3D} = {};
+
+        document.addEventListener('pointerdown', () => {
+            if (!targets.screen) {
+                const screen = this.scene.getObjectByName('screen');
+                if (screen) targets.screen = screen;
+            }
+
+            raycaster.setFromCamera(pointer, this.cameraManager.camera);
+            const intersects = raycaster.intersectObjects(Object.values(targets)); 
+            if (intersects.length > 0) {
+                if (intersects[0].object.name === 'screen') {
+                    this.cameraManager.state = 'screen';
+                }
+            } else {
+                this.cameraManager.state = 'base';
+            }
+        }, false);
+    }
+
+    changeCamera = (cameraState: string) => {
+        this.cameraManager.state = cameraState;
     }
 
     changeScene = (sceneName: string) => {
-        const current = this.scene.children.find(s => s.name === this.active);
+        const current = this.scene.children.find(s => s.name === this.activeScene);
         const next = this.scene.children.find(s => s.name === sceneName);
 
         if (current && next) {
-            this.active = sceneName;
+            this.activeScene = sceneName;
             this.switchScenes(current as THREE.Scene, next as THREE.Scene);
         }      
-    };
+    }
 
     switchScenes = (currentScene: THREE.Scene, nextScene: THREE.Scene) => {
         currentScene.visible = false;
         nextScene.visible = true;
-
-        // switch (currentScene.name) {
-        //     case 'desktop': {
-        //         const light1 = this.scene?.getObjectByName('lamp_light') as THREE.Light;
-        //         const light2 = this.scene?.getObjectByName('screen_light') as THREE.Light;
-        //         const light3 = this.scene?.getObjectByName('ambient_light') as THREE.Light;
-        //         const lamp = this.scene?.getObjectByName('lamp_mesh') as THREE.Mesh;
-        //         const lampMaterial = lamp.material as THREE.MeshPhongMaterial;
-        //         const lights = [light1, light2, light3];
-    
-        //         let requestId = null;
-        //         let animation = () => {
-        //             requestId = null;
-        
-        //             lights.forEach(l => {
-        //                 if (l?.intensity > 0) {
-        //                     l.intensity -= 0.01;
-        //                 }
-        //             });
-    
-        //             if (lampMaterial?.emissiveIntensity > 0) {
-        //                 lampMaterial.emissiveIntensity -= 0.01;
-        //             }
-
-        //             if (!requestId) {
-        //                 requestId = requestAnimationFrame(animation);
-        //             }
-                   
-        //             if (!lights.some(l => l.intensity > 0)) {
-        //                 if (requestId) {
-        //                     cancelAnimationFrame(requestId);
-        //                     requestId = null;
-                            
-        //                     setTimeout(() => {
-        //                         currentScene.visible = false;
-        //                         this.startScene(nextScene);
-        //                     }, 1500);
-        //                 }
-        //             }            
-        //         };
-        //         requestId = requestAnimationFrame(animation);
-        //         break;
-        //     }
-        //     case 'drillrig': {
-        //         currentScene.visible = false;
-        //         this.startScene(nextScene);
-        //         break;
-        //     }
-        //     default: {
-        //         console.log('No such scenes!');
-        //     }
-        // }
     }
 }

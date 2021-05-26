@@ -1,19 +1,36 @@
-import * as THREE from 'three';
 import { useState } from 'preact/hooks';
 import Header from './Header';
 import ExplorePanel from './ExplorePanel';
+import { RenderingManager } from '../components';
 
 type GUIProps = {
-    onChangeScene: (sceneName: string) => void,
+    changeScene: (sceneName: string) => void,
+    changeCamera: (cameraState: string) => void,
 };
 
-const titleMap: {[key: string]: { name: string, header: string, desc: string }} = {
+export type Config = {[key: string]: {
+    name: string,
+    header: string,
+    desc: string,
+    sub: {[key: string]: {
+        name: string,
+        desc: string,
+    }},
+}};
+
+const titleMap: Config = {
     desktop: {
         name: 'My dev lair',
         header: 'my dev lair',
         desc: `
             Hello! This is just a little personal page. Feel free to tap and click around.
         `,
+        sub: {
+            screen: {
+                name: 'Screen',
+                desc: 'screen',
+            },
+        }
     },
     drillrig: {
         name: 'Some day i will finish this page...',
@@ -21,6 +38,7 @@ const titleMap: {[key: string]: { name: string, header: string, desc: string }} 
         desc: `
             Some day i will finish this page...
         `,
+        sub: {},
     },
     // drillrig: {
     //     name: 'Before software development!',
@@ -47,14 +65,24 @@ const titleMap: {[key: string]: { name: string, header: string, desc: string }} 
 
 export const GUI = (props: GUIProps)  => {
     const {
-        onChangeScene,
+        changeScene,
+        changeCamera,
     } = props;
 
     const [currentScene, setCurrentScene] = useState('desktop');
     const handleChangeScene = (key: string) => {
         if (key && currentScene !== key) {
-            onChangeScene(key);
+            changeScene(key);
             setCurrentScene(key);
+            setCurrentCamera('base');
+        }
+    };
+
+    const [currentCamera, setCurrentCamera] = useState('base');
+    const handleChangeCamera = (key: string) => {
+        if (key && currentCamera !== key) {
+            changeCamera(key);
+            setCurrentCamera(key);
         }
     };
 
@@ -63,7 +91,9 @@ export const GUI = (props: GUIProps)  => {
             <Header header={titleMap[currentScene].header} />
             <ExplorePanel
                 currentScene={currentScene}
+                currentCamera={currentCamera}
                 onChangeScene={handleChangeScene}
+                onChangeCamera={handleChangeCamera}
                 titleMap={titleMap}
             />
         </>

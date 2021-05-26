@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { render } from 'preact';
 import { GUI } from './GUI';
-import { Loader, RenderingManager, Camera } from './components';
+import { Loader, RenderingManager, CameraManager } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
 import * as dat from 'dat.gui';
@@ -39,15 +39,23 @@ document.body.appendChild(stats.dom);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ReinhardToneMapping;
 
-    // Rendering
-    const { scene, camera, changeScene } = new RenderingManager(renderer);
-    
+    // Scene and camera manager
+    const cameraManager = new CameraManager(renderer);
+    const {
+        scene,
+        changeScene,
+        changeCamera,
+        activeScene,
+    } = new RenderingManager(renderer, cameraManager);
+
+    // GUI
     Loader(() => render(<GUI
-        onChangeScene={changeScene}
+        changeScene={changeScene}
+        changeCamera={changeCamera}
     />, document.querySelector('#preactRoot')!));
 
     // Rendering
-    const rendering = postprocessing(scene, camera, renderer);   
+    const rendering = postprocessing(scene, cameraManager.camera, renderer);   
     const renderLoop = (time: number) => {
         requestAnimationFrame(renderLoop);
         time *= 0.001;

@@ -66,7 +66,7 @@ button, a {
     justify-content: flex-start;
     overflow: hidden;
     
-    ul {
+    .scenes {
         min-width: 14rem;
         margin: 0 1rem 1rem 0rem;
         display: flex;
@@ -98,6 +98,7 @@ button, a {
     top: 0;
     left: 5%;
     height: 0;
+    padding: 0.5rem 1rem;
 
     &--show {
         height: calc(100% - 10.25rem);
