@@ -10,7 +10,7 @@ import {
     Tooltip,
 } from '.';
 import { TextLight } from '.';
-import desktopScene from '../models/desktopScene.glb';
+import desktopScene from '../models/desktopSceneTmp.glb';
 import background from '../textures/background.png';
 
 export const Desktop = async (
