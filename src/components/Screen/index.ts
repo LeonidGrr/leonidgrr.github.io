@@ -31,7 +31,7 @@ export const Screen = async (
     rtObject.rotateX(-Math.PI / 24);
     scene.add(rtObject);
 
-    tooltip?.addTarget(rtObject.children[0] as THREE.Mesh, 'Screen here!', new THREE.Vector3(0, 2, 0));
+    tooltip.addTarget(rtObject.children[0] as THREE.Mesh, 'Screen here!', new THREE.Vector3(0, 2, 0));
 
     RectAreaLightUniformsLib.init();
     const light = new THREE.RectAreaLight(0x0000ff, 5, 7.05, 4.3);

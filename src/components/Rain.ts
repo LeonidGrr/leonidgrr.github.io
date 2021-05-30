@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import raindrop from '../../textures/raindrop.png';
-import thunder1 from '../../sounds/thunder.aac';
-import rain from '../../sounds/rain.aac';
+import raindrop from '../textures/raindrop.png';
+import thunder1 from '../sounds/thunder.aac';
+import rain from '../sounds/rain.aac';
 
 export const Rain = async ({
         position = new THREE.Vector3(),
