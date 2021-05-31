@@ -4,27 +4,13 @@ import Stats from 'stats-js';
 import postprocessing from './postprocessing';
 import * as dat from 'dat.gui';
 
-// if (!window.WebGLRenderingContext) {
-//     // the browser doesn't even know what WebGL is
-//     const link = new Location;
-//     link.href = "http://get.webgl.org";
-//     window.location = link;
-// } else {
-//     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
-//     const context = canvas.getContext("webgl");
-//     if (!context) {
-//         // browser supports WebGL but initialization failed.
-//         const link = new Location;
-//         link.href = "http://get.webgl.org/troubleshooting";
-//         window.location = link;
-//     }
-// }
-
 const stats = new Stats();
 document.body.appendChild(stats.dom);
 // const gui = new dat.GUI();
 
-export const init = () => {
+export const init = (
+    setCurrentCamera: (name: string) => void,
+) => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({
         canvas,
@@ -41,8 +27,7 @@ export const init = () => {
         scene,
         changeScene,
         changeCamera,
-        activeScene,
-    } = new RenderingManager(renderer, cameraManager);
+    } = new RenderingManager(renderer, cameraManager, setCurrentCamera);
 
     // Rendering
     const rendering = postprocessing(scene, cameraManager.camera, renderer);   
@@ -55,4 +40,9 @@ export const init = () => {
         rendering.finalComposer.render();
     };
     requestAnimationFrame(renderLoop);
+
+    return {
+        changeScene,
+        changeCamera,
+    };
 };

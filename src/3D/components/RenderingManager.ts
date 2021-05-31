@@ -12,7 +12,11 @@ export class RenderingManager {
     scene: THREE.Scene;
     cameraManager: CameraManager;
     
-    constructor(renderer: THREE.WebGLRenderer, cameraManager: CameraManager) {
+    constructor(
+        renderer: THREE.WebGLRenderer,
+        cameraManager: CameraManager,
+        setCurrentCamera: (name: string) => void,
+    ) {
         this.cameraManager = cameraManager;
 
         // Main scene, camera, tooltips
@@ -46,10 +50,10 @@ export class RenderingManager {
 
         this.scene.add(scene2);
 
-        this.detectClick();
+        this.detectClick(setCurrentCamera);
     }
 
-    detectClick = () => {
+    detectClick = (setCurrentCamera: (name: string) => void) => {
         const raycaster = new THREE.Raycaster();
         const targets: {[key: string]: THREE.Object3D} = {};
 
@@ -64,16 +68,16 @@ export class RenderingManager {
             if (intersects.length > 0) {
                 if (intersects[0].object.name === 'screen') {
                     this.cameraManager.state = 'screen';
+                    setCurrentCamera('screen')
                 }
             } else {
                 this.cameraManager.state = 'base';
+                setCurrentCamera('base')
             }
         }, false);
     }
 
-    changeCamera = (cameraState: string) => {
-        this.cameraManager.state = cameraState;
-    }
+    changeCamera = (cameraState: string) => this.cameraManager.state = cameraState;
 
     changeScene = (sceneName: string) => {
         const current = this.scene.children.find(s => s.name === this.activeScene);

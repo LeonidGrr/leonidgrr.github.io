@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 
 import Header from './Header';
 import ExplorePanel from './ExplorePanel';
@@ -31,7 +31,7 @@ const titleMap: Config = {
                 name: 'Screen',
                 desc: 'screen',
             },
-        }
+        },
     },
     drillrig: {
         name: 'Some day i will finish this page...',
@@ -65,6 +65,7 @@ const titleMap: Config = {
 };
 
 export const GUI = ()  => {
+    const handlersRef = useRef<any>(null);
     const [loaded, setLoaded] = useState(false);
     const [currentScene, setCurrentScene] = useState('desktop');
     const handleChangeScene = (key: string) => {
@@ -83,7 +84,37 @@ export const GUI = ()  => {
         }
     };
 
-    useEffect(() => init(), []);
+    useEffect(() => {
+        const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
+        const context = canvas.getContext("webgl");
+        if (!window.WebGLRenderingContext) {
+            // the browser doesn't even know what WebGL is
+            // const link = new Location;
+            // link.href = "http://get.webgl.org";
+            // window.location = link;
+        } else if (!context) {
+            // browser supports WebGL but initialization failed.
+            // const link = new Location;
+            // link.href = "http://get.webgl.org/troubleshooting";
+            // window.location = link;
+        } else {
+            handlersRef.current = init(setCurrentCamera);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (handlersRef.current) {
+            const { changeScene } = handlersRef.current;
+            changeScene(currentScene);
+        }        
+    }, [handlersRef.current, currentScene]);
+
+    useEffect(() => {
+        if (handlersRef.current) {
+            const { changeCamera } = handlersRef.current;
+            changeCamera(currentCamera);
+        }        
+    }, [handlersRef.current, currentCamera]);
 
     return (
         <>

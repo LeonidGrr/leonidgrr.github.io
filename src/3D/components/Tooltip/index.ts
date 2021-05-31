@@ -76,7 +76,9 @@ export class Tooltip {
     }
 
     removeTarget = (uuid: string) => {
-        this.tooltips[uuid].element.style.opacity = '0';
-        delete this.tooltips[uuid];
+        if (this.tooltips[uuid]) {
+            this.tooltips[uuid].element.style.opacity = '0';
+            delete this.tooltips[uuid];
+        }
     }
 };

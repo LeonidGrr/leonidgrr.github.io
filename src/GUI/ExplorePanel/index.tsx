@@ -24,7 +24,6 @@ const ExplorePanel = (props: ExplorePanelProps) => {
     const handleScene = (e: any) => {
         const { key } = e.currentTarget.dataset;
         if (key && currentScene !== key) {
-            setShowPanel(false);
             setShowDescription(null)
             onChangeScene(key);
         } else {
