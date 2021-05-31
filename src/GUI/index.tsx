@@ -1,12 +1,13 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
+
 import Header from './Header';
 import ExplorePanel from './ExplorePanel';
-import { RenderingManager } from '../components';
+import Loader from './Loader';
+import { init } from '../3D'
+import './index.scss';
 
-type GUIProps = {
-    changeScene: (sceneName: string) => void,
-    changeCamera: (cameraState: string) => void,
-};
+const changeScene = (key: string) => {};
+const changeCamera = (key: string) => {};
 
 export type Config = {[key: string]: {
     name: string,
@@ -63,12 +64,8 @@ const titleMap: Config = {
     // },
 };
 
-export const GUI = (props: GUIProps)  => {
-    const {
-        changeScene,
-        changeCamera,
-    } = props;
-
+export const GUI = ()  => {
+    const [loaded, setLoaded] = useState(false);
     const [currentScene, setCurrentScene] = useState('desktop');
     const handleChangeScene = (key: string) => {
         if (key && currentScene !== key) {
@@ -86,16 +83,25 @@ export const GUI = (props: GUIProps)  => {
         }
     };
 
+    useEffect(() => init(), []);
+
     return (
         <>
-            <Header header={titleMap[currentScene].header} />
-            <ExplorePanel
-                currentScene={currentScene}
-                currentCamera={currentCamera}
-                onChangeScene={handleChangeScene}
-                onChangeCamera={handleChangeCamera}
-                titleMap={titleMap}
-            />
+            {loaded && (
+                <>
+                    <Header header={titleMap[currentScene].header} />
+                    <ExplorePanel
+                        currentScene={currentScene}
+                        currentCamera={currentCamera}
+                        onChangeScene={handleChangeScene}
+                        onChangeCamera={handleChangeCamera}
+                        titleMap={titleMap}
+                    />
+                </>
+            )}
+            
+            <canvas className="webgl" tabIndex={1} />
+            <Loader onLoad={() => setLoaded(true)} />
         </>
     );
 };

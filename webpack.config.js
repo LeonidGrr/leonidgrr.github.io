@@ -61,7 +61,6 @@ module.exports = {
             },
             {   
                 test: /.(jpe?g|png)$/i,
-                include: path.resolve(__dirname, 'src', 'textures'),
                 type: 'asset/resource',
                 generator: {
                     filename: 'textures/[hash][ext][query]',

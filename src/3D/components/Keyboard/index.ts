@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
-import fontTtf from '../../fonts/Prime-Regular.ttf'; 
+import fontTtf from '../../../fonts/Prime-Regular.ttf'; 
 import keySound1 from '../../sounds/key1.aac';
 import keySound2 from '../../sounds/key2.aac';
 import { Tooltip } from '../Tooltip';

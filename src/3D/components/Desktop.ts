@@ -9,8 +9,8 @@ import {
     Trees,
     Tooltip,
     Windows,
+    TextLight,
 } from '.';
-import { TextLight } from '.';
 import desktopScene from '../models/desktopScene.glb';
 import background from '../textures/background.png';
 
