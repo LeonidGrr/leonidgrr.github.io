@@ -73,5 +73,10 @@ export class Tooltip {
 
         mesh.add(tooltip);
         this.tooltips[mesh.uuid] = tooltip;
-    };
+    }
+
+    removeTarget = (uuid: string) => {
+        this.tooltips[uuid].element.style.opacity = '0';
+        delete this.tooltips[uuid];
+    }
 };

@@ -13,5 +13,5 @@ export { Desktop } from './Desktop';
 export { Trees } from './Trees';
 export { StreetLight } from './StreetLight';
 export { Venusian } from './Venusian';
-export { Window } from './Window';
+export { Windows } from './Windows';
 export { RenderingManager } from './RenderingManager';

@@ -8,7 +8,7 @@ import {
     Rain,
     Trees,
     Tooltip,
-    Window,
+    Windows,
 } from '.';
 import { TextLight } from '.';
 import desktopScene from '../models/desktopScene.glb';
@@ -54,16 +54,8 @@ export const Desktop = async (
         if (child.name === 'Tree') {
             Trees(child as THREE.Mesh, desktop.scene);
         }
-        if (child.name.includes('Window')) {
-            child.traverse(function (c) {
-                if ((c as THREE.Mesh).isMesh) {
-                    c.castShadow = true;
-                    c.receiveShadow = true;
-                }
-            });
-        }
-        if (child.name === 'Window') {
-            Window(child as THREE.Mesh, tooltip);
+        if (child.name === 'Windows') {
+            Windows(child as THREE.Mesh, camera, tooltip);
         }
         if (child.name === 'Room') {
             child.traverse(c => {
