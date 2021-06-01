@@ -1,12 +1,6 @@
 import * as THREE from 'three';
 import { Desktop, Tooltip, CameraManager } from '.';
 
-const pointer = new THREE.Vector2();
-document.addEventListener('mousemove', (e: MouseEvent) => {
-    pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
-    pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
-});
-
 export class RenderingManager {
     activeScene = 'desktop';
     scene: THREE.Scene;
@@ -56,13 +50,17 @@ export class RenderingManager {
     detectClick = (setCurrentCamera: (name: string) => void) => {
         const raycaster = new THREE.Raycaster();
         const targets: {[key: string]: THREE.Object3D} = {};
+        const pointer = new THREE.Vector2();
+        document.addEventListener('mousemove', (e: MouseEvent) => {
+            pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+            pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
+        });
 
         document.addEventListener('pointerdown', () => {
             if (!targets.screen) {
                 const screen = this.scene.getObjectByName('screen');
                 if (screen) targets.screen = screen;
             }
-
             raycaster.setFromCamera(pointer, this.cameraManager.camera);
             const intersects = raycaster.intersectObjects(Object.values(targets)); 
             if (intersects.length > 0) {

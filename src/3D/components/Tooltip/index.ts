@@ -21,13 +21,10 @@ export class Tooltip {
 
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-        document.addEventListener('pointermove', (e: MouseEvent) => {
-            // the following line would stop any other event handler from firing
-            // (such as the mouse's TrackballControls)
-            // event.preventDefault();
+        document.addEventListener('mousemove', (e: MouseEvent) => {
             pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
             pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
-        }, false);
+        });
 
         window.addEventListener('resize', () => {
             labelRenderer.setSize(document.body.clientWidth, document.body.clientHeight);
