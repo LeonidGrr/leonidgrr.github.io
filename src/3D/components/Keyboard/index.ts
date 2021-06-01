@@ -76,7 +76,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
             } else if (child.name === 'plate') {
                 mesh.material = keyboardMaterial;
                 child.castShadow = true;
-                tooltip?.addTarget(child as THREE.Mesh, 'Press any key...');
+                tooltip?.addTarget(child as THREE.Mesh, 'Press any key...', new THREE.Vector3(0, -0.0175, 0));
             } else {
                 mesh.material = switchMaterial;
                 mesh.layers.enable(1);

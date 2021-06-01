@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import {
     Keyboard,
     Screen,
@@ -11,7 +12,7 @@ import {
     Windows,
     TextLight,
 } from '.';
-import desktopScene from '../models/desktopScene.glb';
+import desktopScene from '../models/desktopSceneDraco.glb';
 import background from '../textures/background.png';
 
 export const Desktop = async (
@@ -20,7 +21,13 @@ export const Desktop = async (
     renderer: THREE.WebGLRenderer,
     tooltip: Tooltip,
 ) => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/draco/gltf/');
+    dracoLoader.preload();
+
     const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+
     const desktop = await loader.loadAsync(desktopScene);
 
     desktop.scene.rotateY(-Math.PI / 2);

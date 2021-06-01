@@ -7,7 +7,8 @@ type LoaderProps = {
 }
 const Loader = (props: LoaderProps) => {
     const { onLoad } = props;
-    const [loaded, setLoaded] = useState(0);
+    const [loaded, setLoaded] = useState(false);
+    const [progress, setProgress] = useState(0);
     useEffect(() => {
         THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
             console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
@@ -15,12 +16,15 @@ const Loader = (props: LoaderProps) => {
     
         THREE.DefaultLoadingManager.onLoad = function() {
             console.log('Loading Complete!');
-            setTimeout(() => onLoad(), 3000);
+            setTimeout(() => {
+                setLoaded(true);
+                onLoad();
+            }, 3000);
         };
         
         THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
             console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-            setLoaded(itemsLoaded/itemsTotal * 100);
+            setProgress(itemsLoaded/itemsTotal * 100);
         };
         
         THREE.DefaultLoadingManager.onError = function(url) {
@@ -29,10 +33,10 @@ const Loader = (props: LoaderProps) => {
     }, []);
 
     return (
-        <div className={`loader-wrapper ${loaded === 100 ? 'fade-out' : ''}`}>
+        <div className={`loader-wrapper ${loaded ? 'fade-out' : ''}`}>
             <div className="loader-progress">
                 <label for="loader">Loading assets</label>
-                <progress id="loader" max="100" value={loaded}></progress>
+                <progress id="loader" max="100" value={progress}></progress>
             </div>
         </div>
     );

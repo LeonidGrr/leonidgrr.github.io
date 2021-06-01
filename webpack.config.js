@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: './src/index.tsx',
@@ -123,5 +124,10 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8,
         }),
+        new CopyPlugin({
+            patterns: [
+              { from: path.join(__dirname, '/static'), to: path.join(__dirname, '/dist'), },
+            ],
+          }),
     ],
 };
