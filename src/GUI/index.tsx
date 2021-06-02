@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 
 import Header from './Header';
-import ExplorePanel from './ExplorePanel';
+import Explore from './Explore';
 import Loader from './Loader';
+import NoWebGL from './NoWebGL';
 import { init } from '../3D'
 import './index.scss';
-
-const changeScene = (key: string) => {};
-const changeCamera = (key: string) => {};
 
 export type Config = {[key: string]: {
     name: string,
@@ -68,19 +66,18 @@ export const GUI = ()  => {
     const handlersRef = useRef<any>(null);
     const [loaded, setLoaded] = useState(false);
     const [currentScene, setCurrentScene] = useState('desktop');
+    const [webGLAvailible, setWebGLAvailible] = useState(true);
     const handleChangeScene = (key: string) => {
         if (key && currentScene !== key) {
-            changeScene(key);
             setCurrentScene(key);
-            setCurrentCamera('base');
+            setCameraDOM('base');
         }
     };
 
-    const [currentCamera, setCurrentCamera] = useState('base');
+    const [currentCamera, setCameraDOM] = useState('base');
     const handleChangeCamera = (key: string) => {
         if (key && currentCamera !== key) {
-            changeCamera(key);
-            setCurrentCamera(key);
+            setCameraDOM(key);
         }
     };
 
@@ -88,31 +85,27 @@ export const GUI = ()  => {
         const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
         const context = canvas.getContext("webgl");
         if (!window.WebGLRenderingContext) {
-            // the browser doesn't even know what WebGL is
-            // const link = new Location;
-            // link.href = "http://get.webgl.org";
-            // window.location = link;
+            setWebGLAvailible(false);
+            setLoaded(true);
         } else if (!context) {
-            // browser supports WebGL but initialization failed.
-            // const link = new Location;
-            // link.href = "http://get.webgl.org/troubleshooting";
-            // window.location = link;
+            setWebGLAvailible(false);
+            setLoaded(true);
         } else {
-            handlersRef.current = init(setCurrentCamera);
+            handlersRef.current = init(setCameraDOM);
         }
     }, []);
 
     useEffect(() => {
         if (handlersRef.current) {
-            const { changeScene } = handlersRef.current;
-            changeScene(currentScene);
+            const { setSceneWebGL } = handlersRef.current;
+            setSceneWebGL(currentScene);
         }        
     }, [handlersRef.current, currentScene]);
 
     useEffect(() => {
         if (handlersRef.current) {
-            const { changeCamera } = handlersRef.current;
-            changeCamera(currentCamera);
+            const { setCameraWebGL } = handlersRef.current;
+            setCameraWebGL(currentCamera);
         }        
     }, [handlersRef.current, currentCamera]);
 
@@ -121,7 +114,7 @@ export const GUI = ()  => {
             {loaded && (
                 <>
                     <Header header={titleMap[currentScene].header} />
-                    <ExplorePanel
+                    <Explore
                         currentScene={currentScene}
                         currentCamera={currentCamera}
                         onChangeScene={handleChangeScene}
@@ -130,9 +123,15 @@ export const GUI = ()  => {
                     />
                 </>
             )}
-            
-            <canvas className="webgl" tabIndex={1} />
-            <Loader onLoad={() => setLoaded(true)} />
+            {webGLAvailible
+                ? (
+                    <>    
+                        <canvas className="webgl" tabIndex={1} />
+                        <Loader onLoad={() => setLoaded(true)} />
+                    </>
+                )
+                : <NoWebGL />
+            }
         </>
     );
 };

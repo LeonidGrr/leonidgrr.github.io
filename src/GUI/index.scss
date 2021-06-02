@@ -86,3 +86,30 @@ canvas.webgl {
     position: absolute;
     z-index: 1;
 }
+
+button {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
+    justify-content: start;
+}
+
+button, a {
+    font-family: PrimeLight, sans-serif;
+    background: none;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 1.35rem;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: blue;
+    }
+
+    &:focus {
+        color: blue;
+        text-decoration: underline;
+    }
+}

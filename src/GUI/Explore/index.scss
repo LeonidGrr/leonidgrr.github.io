@@ -8,30 +8,6 @@
     to { width: 90%; }
 }
 
-button, a {
-    font-family: PrimeLight, sans-serif;
-    background: none;
-    color: #fff;
-    border: none;
-    outline: none;
-    font-size: 1.35rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: start;
-    justify-content: start;
-
-    &:hover {
-        color: blue;
-    }
-
-    &:focus {
-        color: blue;
-        text-decoration: underline;
-    }
-}
-
 .explore {
     transform: translateX(-50%);
     position: absolute;

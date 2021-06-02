@@ -8,9 +8,7 @@ const stats = new Stats();
 document.body.appendChild(stats.dom);
 // const gui = new dat.GUI();
 
-export const init = (
-    setCurrentCamera: (name: string) => void,
-) => {
+export const init = (setCameraDOM: (name: string) => void) => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({
         canvas,
@@ -25,9 +23,9 @@ export const init = (
     const cameraManager = new CameraManager(renderer);
     const {
         scene,
-        changeScene,
-        changeCamera,
-    } = new RenderingManager(renderer, cameraManager, setCurrentCamera);
+        setSceneWebGL,
+        setCameraWebGL,
+    } = new RenderingManager(renderer, cameraManager, setCameraDOM);
 
     // Rendering
     const rendering = postprocessing(scene, cameraManager.camera, renderer);   
@@ -42,7 +40,7 @@ export const init = (
     requestAnimationFrame(renderLoop);
 
     return {
-        changeScene,
-        changeCamera,
+        setSceneWebGL,
+        setCameraWebGL,
     };
 };

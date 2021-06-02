@@ -9,7 +9,7 @@ export class RenderingManager {
     constructor(
         renderer: THREE.WebGLRenderer,
         cameraManager: CameraManager,
-        setCurrentCamera: (name: string) => void,
+        setCameraDOM: (name: string) => void,
     ) {
         this.cameraManager = cameraManager;
 
@@ -44,10 +44,10 @@ export class RenderingManager {
 
         this.scene.add(scene2);
 
-        this.detectClick(setCurrentCamera);
+        this.detectClick(setCameraDOM);
     }
 
-    detectClick = (setCurrentCamera: (name: string) => void) => {
+    detectClick = (setCameraDOM: (name: string) => void) => {
         const raycaster = new THREE.Raycaster();
         const targets: {[key: string]: THREE.Object3D} = {};
         const pointer = new THREE.Vector2();
@@ -66,18 +66,18 @@ export class RenderingManager {
             if (intersects.length > 0) {
                 if (intersects[0].object.name === 'screen') {
                     this.cameraManager.state = 'screen';
-                    setCurrentCamera('screen')
+                    setCameraDOM('screen')
                 }
             } else {
                 this.cameraManager.state = 'base';
-                setCurrentCamera('base')
+                setCameraDOM('base')
             }
         }, false);
     }
 
-    changeCamera = (cameraState: string) => this.cameraManager.state = cameraState;
+    setCameraWebGL = (cameraState: string) => this.cameraManager.state = cameraState;
 
-    changeScene = (sceneName: string) => {
+    setSceneWebGL = (sceneName: string) => {
         const current = this.scene.children.find(s => s.name === this.activeScene);
         const next = this.scene.children.find(s => s.name === sceneName);
 

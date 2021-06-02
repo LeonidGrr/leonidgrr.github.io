@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'preact/hooks';
+import {
+    useState,
+    useEffect,
+    useMemo,
+    useRef,
+} from 'preact/hooks';
 import { Config } from '../index';
 import './index.scss';
 
@@ -10,7 +15,7 @@ type ExplorePanelProps = {
     titleMap: Config,
 }
 
-const ExplorePanel = (props: ExplorePanelProps) => {
+const Explore = (props: ExplorePanelProps) => {
     const {
         onChangeScene,
         onChangeCamera,
@@ -18,16 +23,27 @@ const ExplorePanel = (props: ExplorePanelProps) => {
         currentCamera,
         titleMap,
     } = props;
-    const [showPanel, setShowPanel] = useState(false);
+    const [showContent, setShowContent] = useState(false);
     const [showDescription, setShowDescription] = useState<string | null>(null);
+
+    const contentRef = useRef<null | HTMLDivElement>(null);
+    const isSmallScreen = () => {
+        if (contentRef.current) {
+            return contentRef.current.offsetWidth >= document.body.clientWidth / 2;
+        }
+        return false;
+    };
 
     const handleScene = (e: any) => {
         const { key } = e.currentTarget.dataset;
         if (key && currentScene !== key) {
-            setShowDescription(null)
+            setShowContent(false);
             onChangeScene(key);
         } else {
             onChangeCamera('base');
+            if (isSmallScreen()) {
+                setShowContent(false);
+            }
         }
     };
 
@@ -35,9 +51,16 @@ const ExplorePanel = (props: ExplorePanelProps) => {
         e.stopPropagation();
         const { key } = e.currentTarget.dataset;
         if (key && currentCamera !== key) {
-            setShowDescription(null)
             onChangeCamera(key);
+            if (isSmallScreen()) {
+                setShowContent(false);
+            }
         }
+    };
+
+    const handleShowContent = (e: any) => {
+        e.stopPropagation();
+        setShowContent(prev => !prev);
     };
 
     useEffect(() => {
@@ -52,13 +75,14 @@ const ExplorePanel = (props: ExplorePanelProps) => {
                 className="explore"
             >
                 <div className="explore-separator" />
-                <button type="button" onClick={() => setShowPanel(prev => !prev)}>
+                <button type="button" onClick={handleShowContent}>
                     Explore more
                 </button>
             </div>
             <div
                 aria-label="Table of content"
-                className={`content ${showPanel ? 'content--show' : ''}`}
+                ref={contentRef}
+                className={`content ${showContent ? 'content--show' : ''}`}
             >
                 <ul className="scenes">
                     {Object.keys(titleMap).map(key => (
@@ -103,4 +127,4 @@ const ExplorePanel = (props: ExplorePanelProps) => {
     );
 };
 
-export default ExplorePanel;
+export default Explore;
