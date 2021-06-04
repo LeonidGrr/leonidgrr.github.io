@@ -25,7 +25,7 @@ export const ParticlePointer = (targets?: THREE.Mesh[]) => {
     const raycaster = new THREE.Raycaster();
     const positions = particles.geometry.attributes.position;
     const pointer = new THREE.Vector3(0, 0, 0);
-    document.addEventListener('mousemove', e => {
+    document.addEventListener('pointermove', e => {
         pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (e.clientY / window.innerHeight) * 2 + 1;
     });

@@ -86,12 +86,6 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
     mesh.add(sound1);
     mesh.add(sound2);
 
-    // Events
-    const pointer = new THREE.Vector2();
-    const onPointerMove = (e: MouseEvent) => {
-        pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
-        pointer.y = - (e.clientY / document.body.clientHeight) * 2 + 1;
-    };
     const raycaster = new THREE.Raycaster();
     const keysPressed: {[key: string]: boolean} = {};
     const animateKeyPress = (key: THREE.Object3D) => {
@@ -121,7 +115,10 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
         }
     };
 
-    const pointerDownHandler = (e: MouseEvent | TouchEvent) => {
+    const pointer = new THREE.Vector2();
+    const pointerDownHandler = (e: PointerEvent) => {
+        pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+        pointer.y = - (e.clientY / document.body.clientHeight) * 2 + 1;
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keyMeshes); 
         if (intersects.length > 0) {
@@ -142,7 +139,6 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
         }
     };
 
-    window.addEventListener('pointerdown', pointerDownHandler, false);
-    window.addEventListener('keydown', keyPressHandler);
-    window.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerdown', pointerDownHandler, false);
+    document.addEventListener('keydown', keyPressHandler);
 };

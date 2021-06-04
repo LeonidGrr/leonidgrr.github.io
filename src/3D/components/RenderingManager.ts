@@ -51,12 +51,10 @@ export class RenderingManager {
         const raycaster = new THREE.Raycaster();
         const targets: {[key: string]: THREE.Object3D} = {};
         const pointer = new THREE.Vector2();
-        document.addEventListener('mousemove', (e: MouseEvent) => {
+
+        document.addEventListener('pointerdown', (e: PointerEvent) => {
             pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
             pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
-        });
-
-        document.addEventListener('pointerdown', () => {
             if (!targets.screen) {
                 const screen = this.scene.getObjectByName('screen');
                 if (screen) targets.screen = screen;

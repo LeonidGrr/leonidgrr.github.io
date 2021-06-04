@@ -21,7 +21,7 @@ export class Tooltip {
 
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-        document.addEventListener('mousemove', (e: MouseEvent) => {
+        document.addEventListener('pointermove', (e: PointerEvent) => {
             pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
             pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
         });

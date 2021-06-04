@@ -41,9 +41,9 @@ const Explore = (props: ExplorePanelProps) => {
             onChangeScene(key);
         } else {
             onChangeCamera('base');
-            if (isSmallScreen()) {
-                setShowContent(false);
-            }
+        }
+        if (isSmallScreen()) {
+            setShowContent(false);
         }
     };
 

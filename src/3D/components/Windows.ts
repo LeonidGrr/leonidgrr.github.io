@@ -1,12 +1,6 @@
 import * as THREE from 'three';
 import { Tooltip } from './Tooltip';
 
-const pointer = new THREE.Vector2();
-document.addEventListener('mousemove', (e: MouseEvent) => {
-    pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
-    pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
-});
-
 export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,tooltip: Tooltip) => {
     const glassMaterial = new THREE.MeshStandardMaterial({
         opacity: 0.3,
@@ -36,7 +30,10 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
     });
 
     const raycaster = new THREE.Raycaster();
-    document.addEventListener('pointerdown', () => {
+    const pointer = new THREE.Vector2();
+    document.addEventListener('pointerdown', (e: PointerEvent) => {
+        pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
+        pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(targets);
         if (intersects.length > 0) {
