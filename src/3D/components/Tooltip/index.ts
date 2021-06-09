@@ -30,13 +30,11 @@ export class Tooltip {
             labelRenderer.setSize(document.body.clientWidth, document.body.clientHeight);
         });
 
-        let intersected: string | null = null;
         const render = () => {
             raycaster.setFromCamera(pointer, camera);
             const intersects = raycaster.intersectObjects(this.targets); 
             if (intersects.length > 0) {
-                intersected = intersects[0].object.uuid;
-                const tooltip = this.tooltips[intersected];
+                const tooltip = this.tooltips[intersects[0].object.uuid];
                 let isVisible = true;
                 intersects[0].object.traverseAncestors(a => {
                     if (a.visible === false) {
@@ -46,12 +44,10 @@ export class Tooltip {
                 if (tooltip && isVisible) {
                     tooltip.element.style.opacity = '1';
                 }
-            } else if (intersected) {
-                const tooltip = this.tooltips[intersected];
-                if (tooltip) {
-                    tooltip.element.style.opacity = '0';
+            } else {
+                for (const tooltip in this.tooltips) {
+                    this.tooltips[tooltip].element.style.opacity = '0';
                 }
-                intersected = null;
             }
 
             labelRenderer.render(scene, camera);

@@ -32,7 +32,7 @@
 
 .content, .description {
     animation: opacity_animation 2s ease-out forwards;
-    margin-top: 5rem;
+    margin-top: 5.25rem;
     transition: height 0.15s ease-out;
     position: absolute;
     backdrop-filter: blur(1px);
@@ -65,19 +65,19 @@
 }
 
 .content {
-    background-color: rgba(10, 10, 10, 0.9);
+    background-color: rgba(25, 25, 25, 1);
     z-index: 5;
     top: 0;
     left: 5%;
     height: 0;
 
     &--show {
-        height: calc(100% - 10.25rem);
+        height: calc(100% - 10.5rem);
     }
 }
 
 .description {
-    background-color: rgba(10, 10, 10, 0.9);
+    background: rgba(0, 0, 0, 0.5);
     color: #fff;
     z-index: 4;
     padding: 0.5rem 1.25rem;

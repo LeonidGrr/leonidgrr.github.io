@@ -22,12 +22,12 @@ const titleMap: Config = {
         name: 'My dev lair',
         header: 'my dev lair',
         desc: `
-            Hello! This is just a little personal page. Feel free to tap and click around.
+            Hello! Nice to see your here! This is just a little personal page. Feel free to tap and click around.
         `,
         sub: {
             screen: {
                 name: 'Screen',
-                desc: 'screen',
+                desc: 'For now this is just an example of THREEJS render target...',
             },
         },
     },
@@ -60,6 +60,14 @@ const titleMap: Config = {
     //         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet consectetur adipiscing. Dui ut ornare lectus sit amet est placerat in. Euismod in pellentesque massa placerat duis. Amet mauris commodo quis imperdiet. Commodo nulla facilisi nullam vehicula ipsum. Velit ut tortor pretium viverra suspendisse. Mi tempus imperdiet nulla malesuada pellentesque. A diam maecenas sed enim ut sem viverra aliquet. Nunc mi ipsum faucibus vitae aliquet nec. Vulputate odio ut enim blandit. Dui faucibus in ornare quam. Ornare aenean euismod elementum nisi quis eleifend quam adipiscing.
     //     `,
     // },
+    about: {
+        name: 'About',
+        header: 'About',
+        desc: `
+            My name is Leonid Grebenschikov, I am a just humble programmer. Trying to learn something in a spare time.
+        `,
+        sub: {},
+    },
 };
 
 export const GUI = ()  => {
