@@ -10,26 +10,24 @@ const Loader = (props: LoaderProps) => {
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
     useEffect(() => {
-        THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
-            console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-        };
+        // THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
+            // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+        // };
     
         THREE.DefaultLoadingManager.onLoad = function() {
-            console.log('Loading Complete!');
-            setTimeout(() => {
+            // console.log('Loading Complete!');
                 setLoaded(true);
                 onLoad();
-            }, 3000);
         };
         
         THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
-            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            // console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
             setProgress(itemsLoaded/itemsTotal * 100);
         };
         
-        THREE.DefaultLoadingManager.onError = function(url) {
-            console.log('There was an error loading ' + url);
-        };
+        // THREE.DefaultLoadingManager.onError = function(url) {
+            // console.log('There was an error loading ' + url);
+        // };
     }, []);
 
     return (
