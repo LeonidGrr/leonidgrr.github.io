@@ -99,7 +99,7 @@ export const GUI = ()  => {
             setWebGLAvailible(false);
             setLoaded(true);
         } else {
-            handlersRef.current = init(setCameraDOM);
+            setTimeout(() => handlersRef.current = init(setCameraDOM), 1500);
         }
     }, []);
 
@@ -119,7 +119,7 @@ export const GUI = ()  => {
 
     return (
         <>
-            {loaded && (
+            {/* {loaded && ( */}
                 <>
                     <Header header={titleMap[currentScene].header} />
                     <Explore
@@ -130,7 +130,7 @@ export const GUI = ()  => {
                         titleMap={titleMap}
                     />
                 </>
-            )}
+            {/* )} */}
             {webGLAvailible
                 ? (
                     <>    

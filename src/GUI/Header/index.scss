@@ -19,7 +19,7 @@ header {
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: nowrap;
-    animation: opacity_animation 2s ease-out forwards;
+    animation: opacity_animation 1.5s ease-out forwards;
 
     h1 {
         font-family: CinzelRegular, sans-serif;
@@ -31,6 +31,6 @@ header {
         content: '';
         background: #fff;
         height: 1px;
-        animation: width_animation 2s ease-out forwards;
+        animation: width_animation 1.5s ease-out forwards;
     }
 }

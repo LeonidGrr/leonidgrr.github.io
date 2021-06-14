@@ -110,7 +110,7 @@ module.exports = {
         new CompressionPlugin({
             algorithm: 'gzip',
             filename: '[path].gz[query]',
-            test: /\.(css|html|js|svg|ttf)$/,
+            test: /\.(css|html|js|svg|ttf|png|glb|woff|woff2)$/,
             threshold: 10240,
             minRatio: 0.8,
         }),
@@ -120,7 +120,7 @@ module.exports = {
                 level: 11,
             },
             filename: '[path].br[query]',
-            test: /\.(css|html|js|svg|ttf)$/,
+            test: /\.(css|html|js|svg|ttf|png|glb|woff|woff2)$/,
             threshold: 10240,
             minRatio: 0.8,
         }),
