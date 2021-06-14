@@ -72,7 +72,6 @@ const titleMap: Config = {
 
 export const GUI = ()  => {
     const handlersRef = useRef<any>(null);
-    const [loaded, setLoaded] = useState(false);
     const [currentScene, setCurrentScene] = useState('desktop');
     const [webGLAvailible, setWebGLAvailible] = useState(true);
     const handleChangeScene = (key: string) => {
@@ -94,10 +93,8 @@ export const GUI = ()  => {
         const context = canvas.getContext("webgl");
         if (!window.WebGLRenderingContext) {
             setWebGLAvailible(false);
-            setLoaded(true);
         } else if (!context) {
             setWebGLAvailible(false);
-            setLoaded(true);
         } else {
             setTimeout(() => handlersRef.current = init(setCameraDOM), 1500);
         }
@@ -119,23 +116,19 @@ export const GUI = ()  => {
 
     return (
         <>
-            {/* {loaded && ( */}
-                <>
-                    <Header header={titleMap[currentScene].header} />
-                    <Explore
-                        currentScene={currentScene}
-                        currentCamera={currentCamera}
-                        onChangeScene={handleChangeScene}
-                        onChangeCamera={handleChangeCamera}
-                        titleMap={titleMap}
-                    />
-                </>
-            {/* )} */}
+            <Header header={titleMap[currentScene].header} />
+            <Explore
+                currentScene={currentScene}
+                currentCamera={currentCamera}
+                onChangeScene={handleChangeScene}
+                onChangeCamera={handleChangeCamera}
+                titleMap={titleMap}
+            />
             {webGLAvailible
                 ? (
                     <>    
                         <canvas className="webgl" tabIndex={1} />
-                        <Loader onLoad={() => setLoaded(true)} />
+                        <Loader />
                     </>
                 )
                 : <NoWebGL />

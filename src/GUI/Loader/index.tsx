@@ -2,11 +2,7 @@ import { useState, useEffect } from 'preact/hooks';
 import * as THREE from 'three';
 import './index.scss';
 
-type LoaderProps = {
-    onLoad: () => void,
-}
-const Loader = (props: LoaderProps) => {
-    const { onLoad } = props;
+const Loader = () => {
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
     useEffect(() => {
@@ -17,7 +13,6 @@ const Loader = (props: LoaderProps) => {
         THREE.DefaultLoadingManager.onLoad = function() {
             // console.log('Loading Complete!');
                 setLoaded(true);
-                onLoad();
         };
         
         THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
