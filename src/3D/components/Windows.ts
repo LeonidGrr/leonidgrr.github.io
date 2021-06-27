@@ -13,9 +13,11 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
     const targets: THREE.Mesh[] = [];
     let opened = true;
     let windowRef: THREE.Mesh | null = null;
+
     mesh.traverse(function (c) {
         if (c.name === 'Window') {
             windowRef = c as THREE.Mesh;
+            windowRef!.rotation.y -= 0.05;
         }
         if (c.name === 'Plane') {
             targets.push(c as THREE.Mesh);
@@ -43,7 +45,6 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
     });
 
     if (windowRef) {
-        windowRef!.rotation.y -= 0.05;
         const clock = new THREE.Clock();
         const render = () => {
             if (opened) {
