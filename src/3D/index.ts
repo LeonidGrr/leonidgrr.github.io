@@ -2,11 +2,9 @@ import * as THREE from 'three';
 import { RenderingManager, CameraManager } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
-import * as dat from 'dat.gui';
 
 const stats = new Stats();
 document.body.appendChild(stats.dom);
-// const gui = new dat.GUI();
 
 export const init = (setCameraDOM: (name: string) => void) => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;

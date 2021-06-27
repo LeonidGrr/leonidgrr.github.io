@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { BoidsUI } from '.';
 
 export const Boids = (
     wasm: any,
@@ -50,11 +49,6 @@ export const Boids = (
         data,
         config,
     );
-
-    const boidsUI = new BoidsUI((value: number, key: string) => {
-        config[key] = value;
-        boids.update_config(config);
-    }, config);
 
     const update = (time: number) => {
         boids.boids_iteration(time)
