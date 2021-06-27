@@ -1,7 +1,6 @@
 export { TextLight } from './TextLight';
 export { SphereLight } from './SphereLight';
 export { CameraManager } from './CameraManager';
-export { Sky } from './Sky';
 export { Coffee } from './Coffee';
 export { Tooltip } from './Tooltip';
 export { Keyboard } from './Keyboard';
