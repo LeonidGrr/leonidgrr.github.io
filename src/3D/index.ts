@@ -21,7 +21,6 @@ export const init = (setCameraDOM: (name: string) => void) => {
     const cameraManager = new CameraManager(renderer);
     const {
         scene,
-        setSceneWebGL,
         setCameraWebGL,
     } = new RenderingManager(renderer, cameraManager, setCameraDOM);
 
@@ -37,8 +36,5 @@ export const init = (setCameraDOM: (name: string) => void) => {
     };
     requestAnimationFrame(renderLoop);
 
-    return {
-        setSceneWebGL,
-        setCameraWebGL,
-    };
+    return { setCameraWebGL };
 };

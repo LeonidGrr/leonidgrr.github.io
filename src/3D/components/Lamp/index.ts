@@ -28,5 +28,6 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
     light.position.set(-5.32, 13.95, -17.9);
     light.castShadow = true;
     light.add(sphere);
+
     scene.add(light);
 };

@@ -1,25 +1,20 @@
 import {
     useState,
     useEffect,
-    useMemo,
     useRef,
 } from 'preact/hooks';
 import { Config } from '../index';
 import './index.scss';
 
 type ExplorePanelProps = {
-    onChangeScene: (key: string) => void,
     onChangeCamera: (key: string) => void,
-    currentScene: string,
     currentCamera: string,
     titleMap: Config,
 }
 
 const Explore = (props: ExplorePanelProps) => {
     const {
-        onChangeScene,
         onChangeCamera,
-        currentScene,
         currentCamera,
         titleMap,
     } = props;
@@ -32,19 +27,6 @@ const Explore = (props: ExplorePanelProps) => {
             return contentRef.current.offsetWidth >= document.body.clientWidth / 2;
         }
         return false;
-    };
-
-    const handleScene = (e: any) => {
-        const { key } = e.currentTarget.dataset;
-        if (key && currentScene !== key) {
-            setShowContent(false);
-            onChangeScene(key);
-        } else {
-            onChangeCamera('base');
-        }
-        if (isSmallScreen()) {
-            setShowContent(false);
-        }
     };
 
     const handleCamera = (e: any) => {
@@ -64,9 +46,9 @@ const Explore = (props: ExplorePanelProps) => {
     };
 
     useEffect(() => {
-        setShowDescription(titleMap[currentScene]?.sub[currentCamera]?.desc
-        || titleMap[currentScene]?.desc);
-    }, [currentScene, currentCamera]);
+        setShowDescription(titleMap?.sub[currentCamera]?.desc
+        || titleMap?.desc);
+    }, [currentCamera]);
 
     return (
         <>
@@ -79,7 +61,7 @@ const Explore = (props: ExplorePanelProps) => {
                     Explore more
                 </button>
             </div>
-            <div
+            {/* <div
                 aria-label="Table of content"
                 ref={contentRef}
                 className={`content ${showContent ? 'content--show' : ''}`}
@@ -117,7 +99,7 @@ const Explore = (props: ExplorePanelProps) => {
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> */}
             <div className={`description ${showDescription ? 'description--show' : ''}`}>
                 <span aria-label="Description">
                     {showDescription}

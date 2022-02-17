@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import fontTtf from '../../../fonts/Prime-Regular.ttf'; 
 import keySound1 from '../../sounds/key1.aac';
 import keySound2 from '../../sounds/key2.aac';
@@ -36,7 +38,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
 
     // Font
     const ttfLoader = new TTFLoader();
-    const fontLoader = new THREE.FontLoader()
+    const fontLoader = new FontLoader()
     let font = await ttfLoader.loadAsync(fontTtf);
     font = fontLoader.parse(font);
     const textMaterial = new THREE.MeshPhongMaterial({
@@ -59,8 +61,8 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
                     return value.name === mesh.name;
                 });
 
-                const textGeometry = new THREE.TextGeometry(key?.char || '', {
-                    font: font as THREE.Font,
+                const textGeometry = new TextGeometry(key?.char || '', {
+                    font: font as any,
                     size: 0.005,
                     height: 0.0025,
                 });

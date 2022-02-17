@@ -11,6 +11,7 @@ import {
     Tooltip,
     Windows,
     TextLight,
+    StreetLight,
 } from '.';
 import desktopScene from '../models/desktopSceneDraco.glb';
 import background from '../textures/background.png';
@@ -95,7 +96,7 @@ export const Desktop = async (
     ambientLight.name = 'ambient_light';
     scene.add(ambientLight);
 
-    // StreetLight(new THREE.Vector3(-15, 15, -70), scene);
+    StreetLight(new THREE.Vector3(-15, 15, -70), scene);
 
     // const spotLight = new THREE.SpotLight(0xffffff, 5);
     // spotLight.position.set(-5, 40, 40);

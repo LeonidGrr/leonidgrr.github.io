@@ -28,22 +28,6 @@ export class RenderingManager {
         Desktop(scene, this.cameraManager.camera, renderer, tooltip);
         this.scene.add(scene);
 
-        // Setup drillrig scene
-        const scene2 = new THREE.Scene();
-        scene2.name = 'drillrig';
-        scene2.visible = false;
-        const geometry = new THREE.BoxGeometry(3, 3, 3);
-        const material = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            wireframe: true,
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.z = -10;
-        mesh.position.y = 10;
-        scene2.add(mesh);
-
-        this.scene.add(scene2);
-
         this.detectClick(setCameraDOM);
     }
 
@@ -74,19 +58,4 @@ export class RenderingManager {
     }
 
     setCameraWebGL = (cameraState: string) => this.cameraManager.state = cameraState;
-
-    setSceneWebGL = (sceneName: string) => {
-        const current = this.scene.children.find(s => s.name === this.activeScene);
-        const next = this.scene.children.find(s => s.name === sceneName);
-
-        if (current && next) {
-            this.activeScene = sceneName;
-            this.switchScenes(current as THREE.Scene, next as THREE.Scene);
-        }      
-    }
-
-    switchScenes = (currentScene: THREE.Scene, nextScene: THREE.Scene) => {
-        currentScene.visible = false;
-        nextScene.visible = true;
-    }
 }
