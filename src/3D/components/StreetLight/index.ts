@@ -10,13 +10,13 @@ export const StreetLight = (scene: THREE.Scene) => {
     const sphere = new THREE.Mesh(geometry, material);
     sphere.layers.enable(1);
 
-    const light = new THREE.PointLight(0xf6cd8b, 20, 50, 1);
+    const light = new THREE.PointLight(0xf6cd8b, 20, 100, 1);
     light.castShadow = true;
-    light.position.set(0, -10, -80);
+    light.position.set(0, -10, -70);
     light.add(sphere);
     scene.add(light);
 
-    const sphereSize = 2;
+    const sphereSize = 1;
     const pointLightHelper = new THREE.PointLightHelper( light, sphereSize );
     scene.add(pointLightHelper);
 
