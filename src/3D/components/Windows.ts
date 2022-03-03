@@ -48,7 +48,7 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
         const clock = new THREE.Clock();
         const render = () => {
             if (opened) {
-                windowRef!.rotation.y += Math.sin(clock.getElapsedTime()) * 0.001;
+                windowRef!.rotation.y += Math.sin(clock.getElapsedTime()) * 0.00025;
             } else if (windowRef!.rotation.y < 0) {
                 windowRef!.rotation.y += 0.02;
             }

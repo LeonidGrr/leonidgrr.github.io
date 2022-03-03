@@ -88,6 +88,8 @@
     right: 5%;
     max-height: 0;
     height: 0;
+    white-space: pre;
+    text-align: right;
 
     &--show {
         height: auto;

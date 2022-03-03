@@ -20,7 +20,8 @@ const titleMap: Config = {
     name: 'My dev lair',
     header: 'my dev lair',
     desc: `
-        Hello! Nice to see your here! My name is Leonid Grebenschikov, I am a just humble programmer trying to learn something in a spare time. And this is just a little personal page. Feel free to tap and click around.
+        Hello! Nice to see your here! My name is Leonid Grebenschikov, I am a just humble programmer trying to learn something in a spare time.\n
+        This is little demo page. Feel free to tap and click around.\n
     `,
     sub: {
         screen: {

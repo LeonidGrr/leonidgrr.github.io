@@ -87,34 +87,13 @@ export const Desktop = async (
         maxZ: 50,
     }, camera, scene);
 
-    const textLight = await TextLight('Hello world!', scene);
-    textLight.mesh.position.set(-9.5, 10, -22);
-    textLight.mesh.rotateY(Math.PI / 6);
-    textLight.mesh.rotateX(-Math.PI / 10);
+    await TextLight('Hello world!', scene);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     ambientLight.name = 'ambient_light';
     scene.add(ambientLight);
 
-    StreetLight(new THREE.Vector3(-15, 15, -70), scene);
-
-    // const spotLight = new THREE.SpotLight(0xffffff, 5);
-    // spotLight.position.set(-5, 40, 40);
-    // // spotLight.angle = Math.PI / 3;
-    // // spotLight.penumbra = 1;
-    // // spotLight.decay = 1;
-    // // spotLight.distance = 200;
-
-    // spotLight.castShadow = true;
-    // spotLight.shadow.mapSize.width = 512;
-    // spotLight.shadow.mapSize.height = 512;
-    // spotLight.shadow.camera.near = 1;
-    // spotLight.shadow.camera.far = 50;
-    // spotLight.shadow.focus = 1;
-    // scene.add(spotLight);
-
-    // const h = new THREE.SpotLightHelper(spotLight);
-    // scene.add(h);
+    StreetLight(scene);
 
     const textureLoader = new THREE.TextureLoader();
     const backgroundTexture = textureLoader.load(background);
@@ -124,6 +103,6 @@ export const Desktop = async (
     const backgroundGeometry = new THREE.PlaneBufferGeometry(500, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-    backgroundMesh.position.z = -300;
+    backgroundMesh.position.z = -400;
     scene.add(backgroundMesh);
 }

@@ -19,21 +19,25 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
 
     const geometry = new TextGeometry(text, {
         font: font as any,
-        size: 1.2,
+        size: 0.5,
         height: 0.3,
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.name="text_mesh"
     mesh.layers.enable(1);
 
+    mesh.position.set(-9, 9, -16);
+    mesh.rotateY(Math.PI / 6);
+    mesh.rotateX(-Math.PI / 10);
+
     scene.add(mesh)
 
+    const clock = new THREE.Clock();
     const render = () => {
         requestAnimationFrame(render);
-        const time = Date.now() * 0.0005;
-        material.emissiveIntensity *= Math.cos(time) * 0.5;
+        const sin = Math.sin(clock.getElapsedTime());
+        material.emissiveIntensity *= sin * 0.5;
+        mesh.position.y += sin * Math.random() * 0.0005;
     };
     requestAnimationFrame(render);
-
-    return { mesh }
 };
