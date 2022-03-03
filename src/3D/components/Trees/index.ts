@@ -47,8 +47,8 @@ export const Trees = (mesh: THREE.Mesh, parent: THREE.Group) => {
     const render = () => {
         requestAnimationFrame(render);
         [mesh, tree2, tree3, tree3, tree4, tree5].forEach(t => {
-            t.rotation.y += Math.sin(clock.getElapsedTime() * Math.random() * 0.05) * Math.random() * 0.0005;
-            t.rotation.z += Math.sin(clock.getElapsedTime()) * Math.random() * 0.00025;
+            t.rotation.y += Math.sin(clock.getElapsedTime() * Math.random() * 0.05) * Math.random() * 0.001;
+            t.rotation.z += Math.sin(clock.getElapsedTime()) * Math.random() * 0.00015;
         });
     };
     requestAnimationFrame(render);
