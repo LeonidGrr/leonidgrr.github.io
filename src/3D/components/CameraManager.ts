@@ -70,7 +70,7 @@ export class CameraManager {
 
         if (camera.aspect > 1) {
             camera.position.set(0, 15, -3);
-            camera.rotation.set(-0.185, 0, 0);
+            camera.rotation.set(-0.135, 0, 0);
         } else {
             camera.position.set(14, 17, 4);
             camera.rotation.set(0, 0.55, 0);

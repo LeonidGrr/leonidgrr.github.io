@@ -19,10 +19,7 @@ export type Config = {
 const titleMap: Config = {
     name: 'My dev lair',
     header: 'my dev lair',
-    desc: `
-        Hello! Nice to see your here! My name is Leonid Grebenschikov, I am a just humble programmer trying to learn something in a spare time.\n
-        This is little demo page. Feel free to tap and click around.\n
-    `,
+    desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around. `,
     sub: {
         screen: {
             name: 'Screen',
