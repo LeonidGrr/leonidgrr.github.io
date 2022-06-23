@@ -9,6 +9,10 @@ import { Tooltip } from '../Tooltip';
 import keyCodeMap from './keycodeMap';
 
 export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: Tooltip) => {
+    mesh.position.z -= 0.245;
+    mesh.position.x -= 0.255;
+    mesh.rotateY(-0.25);
+
     // Materials
     const keyboardMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0.45,

@@ -1,7 +1,7 @@
 import* as THREE from 'three';
 
-import venusianVert from '../shaders/venusian-vert.glsl';
-import venusianFrag from '../shaders/venusian-frag.glsl';
+import venusianVert from './shaders/venusian-vert.glsl';
+import venusianFrag from './shaders/venusian-frag.glsl';
 
 export const Venusian = (position: THREE.Vector3, scene: THREE.Scene) => {
     const geometry = new THREE.SphereBufferGeometry(5, 16, 16);

@@ -24,7 +24,7 @@ export class CameraManager {
 
         const cameraState: {[key: string]: [THREE.Euler, THREE.Vector3]} = {
             base: [this.camera.rotation.clone(), this.camera.position.clone()],
-            screen: [new THREE.Euler(-0.2, -0.225, 0), new THREE.Vector3(1.5, 13.5, -10.75)],
+            screen: [new THREE.Euler(-0.275, -0.225, 0), new THREE.Vector3(1.5, 13.5, -10.75)],
         };
 
         window.addEventListener('resize', () => {

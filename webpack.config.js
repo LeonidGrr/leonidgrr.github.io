@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -13,9 +12,10 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
         wasmLoading: 'fetch',
+        clean: true,
     },
     devServer: {
-        contentBase: path.join(__dirname, '/dist'),
+        static: path.join(__dirname, '/dist'),
         hot: true,
         compress: true,
     },
@@ -97,13 +97,14 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
-        alias: {
-            react: 'preact-compat',
-            'react-dom': 'preact-compat',
-        }
+        alias: { 
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",
+            "react/jsx-runtime": "preact/jsx-runtime"
+        },
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),

@@ -43,10 +43,14 @@ export class RenderingManager {
                 const screen = this.scene.getObjectByName('screen');
                 if (screen) targets.screen = screen;
             }
+            if (!targets.keyboard) {
+                const keyboard = this.scene.getObjectByName('Keyboard');
+                if (keyboard) targets.keyboard = keyboard;
+            }
             raycaster.setFromCamera(pointer, this.cameraManager.camera);
             const intersects = raycaster.intersectObjects(Object.values(targets)); 
             if (intersects.length > 0) {
-                if (intersects[0].object.name === 'screen') {
+                if (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard') {
                     this.cameraManager.state = 'screen';
                     setCameraDOM('screen')
                 }
