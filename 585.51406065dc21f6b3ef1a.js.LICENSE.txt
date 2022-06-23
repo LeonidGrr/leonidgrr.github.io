@@ -1,0 +1,7 @@
+/*! https://mths.be/codepointat v0.2.0 by @mathias */
+
+/**
+ * @license
+ * Copyright 2010-2022 Three.js Authors
+ * SPDX-License-Identifier: MIT
+ */
