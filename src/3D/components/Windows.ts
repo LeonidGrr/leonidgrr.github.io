@@ -3,7 +3,7 @@ import { Tooltip } from './Tooltip';
 
 export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,tooltip: Tooltip) => {
     const glassMaterial = new THREE.MeshStandardMaterial({
-        opacity: 0.3,
+        opacity: 0.1,
         transparent: true,
         roughness: 0,
         metalness: 1,

@@ -6,7 +6,7 @@ import rain from '../sounds/rain.aac';
 export const Rain = async ({
         position = new THREE.Vector3(),
         raindropsCount = 24000,
-        rainPower = 0.01,
+        rainPower = 0.0125,
         maxX = 50,
         maxY = 50,
         maxZ = 50,
@@ -65,7 +65,7 @@ export const Rain = async ({
     const buffer2 = await audioLoader.loadAsync(rain);
     sound2.setBuffer(buffer2);
     sound2.setRefDistance(100);
-	sound2.setVolume(0.05);
+	sound2.setVolume(0.35);
     sound2.setLoop(true);
     scene.add(sound2);
     sound2.position.z = -50;

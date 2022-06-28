@@ -19,7 +19,7 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
     sphere.name = 'lamp_mesh';
     sphere.layers.enable(1);
 
-    const light = new THREE.PointLight(0xffffff, 2.5);
+    const light = new THREE.PointLight(0xffffff, 4);
     light.name = 'lamp_light';
     light.shadow.mapSize = new THREE.Vector2(512, 512);
     light.shadow.bias = 0.005;

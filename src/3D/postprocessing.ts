@@ -99,9 +99,30 @@ const postprocessing = (
         scene.traverse(restoreMaterial);
     };
 
+    
+    // FPS and pixel ratio modifier adjust
+    let last = new Date();
+    let pixelRatioModifier = 1.0;
+
+    const pixelRatioAdjust = () => {
+        const current = new Date();
+        const fps = 1000 / (current.getTime() - last.getTime());
+
+        if (fps >= 30) {
+            pixelRatioModifier = 1.0;
+        } else if (fps < 30 && fps >= 15) {
+            pixelRatioModifier = 0.7;
+        } else if (fps < 15) {
+            pixelRatioModifier = 0.5;
+        }
+        
+        last = current;
+    };
+
     const resizeRenderer = () => {
+        pixelRatioAdjust();
         const canvas = renderer.domElement;
-        const pixelRatio = window.devicePixelRatio;
+        const pixelRatio = window.devicePixelRatio * pixelRatioModifier;
         const width = canvas.clientWidth * pixelRatio | 0;
         const height = canvas.clientHeight * pixelRatio | 0;
         if (canvas.width !== width || canvas.height !== height) {

@@ -88,7 +88,8 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'all',   
+            chunks: 'all',
+            maxSize: 2048000,
         },
         minimize: true,
         minimizer: [new TerserPlugin({

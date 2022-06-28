@@ -37,7 +37,7 @@ export const Desktop = async (
         if (child.name === 'Desk') {
             child.traverse(function (c) {
                 if ((c as THREE.Mesh).isMesh) {
-                    // c.castShadow = true;
+                    c.castShadow = true;
                     c.receiveShadow = true;
                 }
             });
@@ -71,7 +71,7 @@ export const Desktop = async (
                 c.receiveShadow = true;
                 if ((c as THREE.Mesh).isMesh) {
                     const mesh = c as THREE.Mesh;
-                    (mesh.material as THREE.MeshStandardMaterial).color.set(0x000000);
+                    (mesh.material as THREE.MeshStandardMaterial).color.set(0xffffff);
                 }
             });
         }
@@ -89,9 +89,10 @@ export const Desktop = async (
 
     await TextLight('Hello world!', scene);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    ambientLight.name = 'ambient_light';
-    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.18);
+    directionalLight.name = 'directional_light';
+    directionalLight.position.set(0, 25, 25);
+    scene.add(directionalLight);
 
     StreetLight(scene);
 
