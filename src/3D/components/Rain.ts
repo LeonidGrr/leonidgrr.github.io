@@ -5,11 +5,11 @@ import rain from '../sounds/rain.aac';
 
 export const Rain = async ({
         position = new THREE.Vector3(),
-        raindropsCount = 150000,
+        raindropsCount = 24000,
         rainPower = 0.01,
-        maxX = 100,
-        maxY = 100,
-        maxZ = 100,
+        maxX = 50,
+        maxY = 50,
+        maxZ = 50,
     },
     camera: THREE.PerspectiveCamera,
     scene: THREE.Scene) => {

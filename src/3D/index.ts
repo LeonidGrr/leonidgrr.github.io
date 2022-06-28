@@ -10,7 +10,8 @@ export const init = (setCameraDOM: (name: string) => void) => {
     const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
     const renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias: true,
+        // antialias: true,
+        powerPreference: "high-performance",
     });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;

@@ -13,7 +13,7 @@ export const SphereLight = (scene: THREE.Scene) => {
     sphere.layers.enable(1);
 
     const light = new THREE.PointLight(0xffffff, 2);
-    light.shadow.mapSize = new THREE.Vector2(1024, 1024);
+    light.shadow.mapSize = new THREE.Vector2(512, 512);
     light.shadow.bias = 0.001;
     
     light.shadow.camera.near = 1;

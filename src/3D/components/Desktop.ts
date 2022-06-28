@@ -37,7 +37,7 @@ export const Desktop = async (
         if (child.name === 'Desk') {
             child.traverse(function (c) {
                 if ((c as THREE.Mesh).isMesh) {
-                    c.castShadow = true;
+                    // c.castShadow = true;
                     c.receiveShadow = true;
                 }
             });
