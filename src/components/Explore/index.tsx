@@ -3,8 +3,9 @@ import {
     useEffect,
     useRef,
 } from 'preact/hooks';
-import { Config } from '../index';
-import './index.scss';
+import { Config } from '../GUI/index';
+import classNames from 'classnames';
+import css from './Explore.module.css';
 
 type ExplorePanelProps = {
     onChangeCamera: (key: string) => void,
@@ -54,9 +55,9 @@ const Explore = (props: ExplorePanelProps) => {
         <>
             <div
                 aria-label="Explore more"
-                className="explore"
+                className={css.explore}
             >
-                <div className="explore-separator" />
+                <div className={css['explore-separator']} />
                 <button type="button" onClick={handleShowContent}>
                     Explore more
                 </button>
@@ -64,9 +65,9 @@ const Explore = (props: ExplorePanelProps) => {
             {/* <div
                 aria-label="Table of content"
                 ref={contentRef}
-                className={`content ${showContent ? 'content--show' : ''}`}
+                className={classNames(css.content, showContent && css['content--show'])}}
             >
-                <ul className="scenes">
+                <ul className={css.scenes}>
                     {Object.keys(titleMap).map(key => (
                         <li key={key}>
                             <button
@@ -76,7 +77,7 @@ const Explore = (props: ExplorePanelProps) => {
                             >
                                 {titleMap[key].name}
                             </button>
-                            <ul className="cameras">
+                            <ul className={css.cameras}>
                                 {currentScene === key && (
                                     Object.keys(titleMap[key]?.sub).map(key2 => (
                                         <li key={key2}>
@@ -93,14 +94,14 @@ const Explore = (props: ExplorePanelProps) => {
                             </ul>
                         </li>
                     ))}
-                    <li className="links">
+                    <li className={css.links}>
                         <a href="https://github.com/LeonidGrr/leonidgrr.github.io">
                             GitHub
                         </a>
                     </li>
                 </ul>
             </div> */}
-            <div className={`description ${showDescription ? 'description--show' : ''}`}>
+            <div className={classNames(css.description, showDescription && css['description--show'])}>
                 <span aria-label="Description">
                     {showDescription}
                 </span>

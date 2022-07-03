@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import fontTtf from '../../fonts/Prime-Regular.ttf'; 
+import fontTtf from '../../../static/fonts/Prime-Regular.ttf'; 
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
 export const TextLight = async (text: string, scene: THREE.Scene) => {

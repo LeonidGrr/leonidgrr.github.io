@@ -21,13 +21,13 @@
     flex-wrap: nowrap;
     animation: opacity_animation 1.5s ease-out forwards;
     z-index: 5;
+}
 
-    &-separator {
-        margin-bottom: 1rem;
-        background: #fff;
-        height: 1px;
-        animation: width_animation 1.5s ease-out forwards;
-    }
+.explore-separator {
+    margin-bottom: 1rem;
+    background: #fff;
+    height: 1px;
+    animation: width_animation 1.5s ease-out forwards;
 }
 
 .content, .description {
@@ -41,27 +41,27 @@
     align-items: flex-start;
     justify-content: flex-start;
     overflow: hidden;
-    
-    .scenes {
-        min-width: 14rem;
-        padding: 0.5rem 1rem;
-        margin: 0 1rem 1rem 0rem;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: flex-start;
-        justify-content: flex-start;
+}
 
-        li {
-            padding: 0.5rem;
-            list-style: none;
-            width: 100%;
-    
-            button, a {
-                font-size: 1rem;
-            }
-        }
-    }
+.scenes {
+    min-width: 14rem;
+    padding: 0.5rem 1rem;
+    margin: 0 1rem 1rem 0rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.scenes li {
+    padding: 0.5rem;
+    list-style: none;
+    width: 100%;
+}
+
+.scenes li button, .scenes li a {
+    font-size: 1rem;
 }
 
 .content {
@@ -70,10 +70,10 @@
     top: 0;
     left: 5%;
     height: 0;
+}
 
-    &--show {
-        height: calc(100% - 10.5rem);
-    }
+.content--show {
+    height: calc(100% - 10.5rem);
 }
 
 .description {
@@ -92,9 +92,10 @@
     text-align: right;
     font-size: 16px;
     line-height: 28px;
+}
 
-    &--show {
-        height: auto;
-        max-height: calc(100% - 10.25rem);
-    }
+
+.description--show {
+    height: auto;
+    max-height: calc(100% - 10.25rem);
 }

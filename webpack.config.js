@@ -4,7 +4,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: './src/index.tsx',
@@ -39,13 +40,24 @@ module.exports = {
                 ],
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.css$/,
                 use: [
-                  'style-loader',
-                  'css-loader',
-                  'sass-loader',
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                        },
+                    },
                 ],
-              },
+                include: /\.module\.css$/,
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                exclude: /\.module\.css$/,
+            },
             {
                 test: /\.(glb|gltf|fbx)$/i,
                 type: 'asset/resource',
@@ -99,16 +111,17 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
         alias: { 
-            "react": "preact/compat",
-            "react-dom/test-utils": "preact/test-utils",
-            "react-dom": "preact/compat",
-            "react/jsx-runtime": "preact/jsx-runtime"
+            'react': 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat',
+            'react/jsx-runtime': 'preact/jsx-runtime'
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
+        new MiniCssExtractPlugin(),
         new CompressionPlugin({
             algorithm: 'gzip',
             filename: '[path].gz[query]',

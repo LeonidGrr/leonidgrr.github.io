@@ -7,7 +7,7 @@ const stats = new Stats();
 document.body.appendChild(stats.dom);
 
 export const init = (setCameraDOM: (name: string) => void) => {
-    const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
+    const canvas: HTMLCanvasElement = document.querySelector('canvas')!;
     const renderer = new THREE.WebGLRenderer({
         canvas,
         // antialias: true,

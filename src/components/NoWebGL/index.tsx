@@ -1,8 +1,8 @@
-import './index.scss';
+import css from './NoWebGL.module.css';
 
 const NoWebGL = () => {
     return (
-        <div className="noWebGL">
+        <div className={css.noWebGL}>
             <span>
                 Sorry, your browser does not support WebGL.
             </span>

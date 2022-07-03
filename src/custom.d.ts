@@ -1,56 +1,13 @@
-declare module '*.jpg' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.png' {
-    const content: any;
-    export default content;
-}
-
-declare module "*.svg" {
-    const content: any;
-    export default content;
-}
-
-declare module '*.gltf' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.glb' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.fbx' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.obj' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.mtl' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.glsl' {
-    const content: any;
-    export default content;
-}
-
-declare module '*.aac' {
-    const content: any;
-    export default content;
-}
-
-declare module "*.ttf" {
-    const value: any;
-    export default value;
-  }
-
+declare module '*.jpg';
+declare module '*.png';
+declare module "*.svg";
+declare module '*.gltf';
+declare module '*.glb';
+declare module '*.fbx';
+declare module '*.obj';
+declare module '*.mtl';
+declare module '*.glsl';
+declare module '*.aac';
+declare module "*.ttf";
 declare module 'stats-js';
+declare module '*.css';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'preact/hooks';
 import * as THREE from 'three';
-import './index.scss';
+import css from './Loader.module.css';
 
 const Loader = () => {
     const [loaded, setLoaded] = useState(false);

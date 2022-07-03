@@ -1,4 +1,4 @@
-import './index.scss';
+import css from './Header.module.css';
 
 type HeaderProps = {
     header: string,
@@ -7,7 +7,7 @@ type HeaderProps = {
 const Header = (props: HeaderProps) => {
     const { header } = props;
     return (
-        <header>
+        <header className={css.header}>
             <h1>{header}</h1>
         </header>
     );

@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import Header from './Header';
-import Explore from './Explore';
-import Loader from './Loader';
-import NoWebGL from './NoWebGL';
-import { init } from '../3D'
-import './index.scss';
+import Header from '../Header';
+import Explore from '../Explore';
+import Loader from '../Loader';
+import NoWebGL from '../NoWebGL';
+import { init } from '../../3D'
+import css from './GUI.module.css';
 
 export type Config = {
     name: string,
@@ -40,7 +40,7 @@ export const GUI = ()  => {
     };
 
     useEffect(() => {
-        const canvas: HTMLCanvasElement = document.querySelector('canvas.webgl')!;
+        const canvas: HTMLCanvasElement = document.querySelector('canvas')!;
         const context = canvas.getContext("webgl");
         if (!window.WebGLRenderingContext) {
             setWebGLAvailible(false);
@@ -69,7 +69,7 @@ export const GUI = ()  => {
             {webGLAvailible
                 ? (
                     <>    
-                        <canvas className="webgl" tabIndex={1} />
+                        <canvas className={css.webgl} tabIndex={1} />
                         <Loader />
                     </>
                 )
