@@ -3,8 +3,7 @@ import Header from '../Header';
 import Explore from '../Explore';
 import Loader from '../Loader';
 import NoWebGL from '../NoWebGL';
-import { init } from '../../3D'
-import css from './GUI.module.css';
+import { init } from '../3D'
 
 export type Config = {
     name: string,
@@ -47,7 +46,7 @@ export const GUI = ()  => {
         } else if (!context) {
             setWebGLAvailible(false);
         } else {
-            setTimeout(() => handlersRef.current = init(setCameraDOM), 1500);
+            setTimeout(() => handlersRef.current = init(setCameraDOM), 2500);
         }
     }, []);
 
@@ -69,7 +68,7 @@ export const GUI = ()  => {
             {webGLAvailible
                 ? (
                     <>    
-                        <canvas className={css.webgl} tabIndex={1} />
+                        <canvas className="webgl" tabIndex={1} />
                         <Loader />
                     </>
                 )

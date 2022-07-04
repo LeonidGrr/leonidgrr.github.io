@@ -7,7 +7,17 @@ declare module '*.fbx';
 declare module '*.obj';
 declare module '*.mtl';
 declare module '*.glsl';
-declare module '*.aac';
+declare module '*.ogg';
 declare module "*.ttf";
-declare module 'stats-js';
 declare module '*.css';
+declare module 'stats-js';
+declare module JSX {
+    interface IntrinsicElements {
+        "group": any,
+        "geometry": any,
+        "lineBasicMaterial": any,
+        "mesh": any,
+        "octahedronGeometry": any,
+        "meshBasicMaterial": any,
+    }
+}
