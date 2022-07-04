@@ -13,8 +13,8 @@ import {
     TextLight,
     StreetLight,
 } from '.';
-import desktopScene from '../models/desktopSceneDraco.glb';
-import background from '../textures/background.png';
+import desktopScene from '../assets/models/desktopSceneDraco.glb';
+import background from '../assets/textures/background.png';
 
 export const Desktop = async (
     scene: THREE.Scene,

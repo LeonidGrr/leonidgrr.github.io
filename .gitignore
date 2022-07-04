@@ -1,4 +1,4 @@
-/.vscode
-/node_modules
-/dist
-/cli
+node_modules
+/build
+/*.log
+/old

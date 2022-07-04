@@ -3,10 +3,10 @@ import { RenderingManager, CameraManager } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
 
-const stats = new Stats();
-document.body.appendChild(stats.dom);
-
 export const init = (setCameraDOM: (name: string) => void) => {
+    const stats = new Stats();
+    document.body.appendChild(stats.dom);
+
     const canvas: HTMLCanvasElement = document.querySelector('canvas')!;
     const renderer = new THREE.WebGLRenderer({
         canvas,

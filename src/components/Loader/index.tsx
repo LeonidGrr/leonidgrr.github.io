@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState, useEffect } from 'preact/hooks';
 import * as THREE from 'three';
 import css from './Loader.module.css';
@@ -26,8 +27,8 @@ const Loader = () => {
     }, []);
 
     return (
-        <div className={`loader-wrapper ${loaded ? 'fade-out' : ''}`}>
-            <div className="loader-progress">
+        <div className={classNames(css['loader-wrapper'], loaded && css['fade-out'])}>
+            <div className={css['loader-progress']}>
                 <label for="loader">Loading assets</label>
                 <progress id="loader" max="100" value={progress}></progress>
             </div>

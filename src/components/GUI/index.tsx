@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import Header from '../Header';
+import Header from '../HeaderOld';
 import Explore from '../Explore';
 import Loader from '../Loader';
 import NoWebGL from '../NoWebGL';
-import { init } from '../../3D'
-import css from './GUI.module.css';
+import { init } from '../3D'
 
 export type Config = {
     name: string,
@@ -69,7 +68,7 @@ export const GUI = ()  => {
             {webGLAvailible
                 ? (
                     <>    
-                        <canvas className={css.webgl} tabIndex={1} />
+                        <canvas className="webgl" tabIndex={1} />
                         <Loader />
                     </>
                 )

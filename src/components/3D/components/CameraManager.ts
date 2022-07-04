@@ -1,17 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-const sizes = {
-    width: document.body.clientWidth,
-    height: document.body.clientHeight,
-};
-
 export class CameraManager {
     camera: THREE.PerspectiveCamera;
     state = 'base';
 
     constructor(renderer: THREE.WebGLRenderer) {
-        this.camera = new THREE.PerspectiveCamera(55, sizes.width / sizes.height, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(55, document.body.clientWidth / document.body.clientHeight, 0.1, 1000);
 
         const controls = new OrbitControls(this.camera, renderer.domElement);
         controls.enableDamping = true;

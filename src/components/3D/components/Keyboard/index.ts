@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import fontTtf from '../../../../static/fonts/Prime-Regular.ttf'; 
-import keySound1 from '../../sounds/key1.aac';
-import keySound2 from '../../sounds/key2.aac';
+import fontTtf from '../../../../assets/fonts/Prime-Regular.ttf'; 
+import keySound1 from '../../assets/sounds/key1.ogg';
+import keySound2 from '../../assets/sounds/key2.ogg';
 import { Tooltip } from '../Tooltip';
 import keyCodeMap from './keycodeMap';
 
