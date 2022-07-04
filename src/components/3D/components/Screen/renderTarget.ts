@@ -38,7 +38,7 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
     const rtHeight = 512;
     const renderTarget = new THREE.WebGLRenderTarget(rtWidth, rtHeight);
     const rtCamera = new THREE.PerspectiveCamera();
-    rtCamera.position.z = 15;
+    rtCamera.position.z = 20;
     rtCamera.lookAt(0, 0, 0);
         
     const rtScene = new THREE.Scene();
@@ -73,7 +73,7 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
     // Terminal
 
     // Container mesh
-    const geometry = new THREE.PlaneGeometry(7.15, 4.325);
+    const geometry = new THREE.PlaneGeometry(6.95, 4.25);
     const material = new THREE.MeshStandardMaterial({
         map: renderTarget.texture,
     });

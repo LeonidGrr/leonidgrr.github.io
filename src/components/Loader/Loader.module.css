@@ -7,12 +7,11 @@
     height: 100%;
     background-color: #000000;
     opacity: 1;
-    transition: 1s opacity;
+    transition: 3s opacity;
 }
 
-.loader-wrapper.fade-out {
+.fade-out {
     opacity: 0;
-    z-index: -1;
 }
 
 .loader-progress {

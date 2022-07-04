@@ -6,6 +6,7 @@ import css from './Loader.module.css';
 const Loader = () => {
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
+
     useEffect(() => {
         // THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
@@ -13,7 +14,7 @@ const Loader = () => {
     
         THREE.DefaultLoadingManager.onLoad = function() {
             // console.log('Loading Complete!');
-                setLoaded(true);
+            setTimeout(() => setLoaded(true));
         };
         
         THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {

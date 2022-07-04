@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import Header from '../HeaderOld';
+import Header from '../Header';
 import Explore from '../Explore';
 import Loader from '../Loader';
 import NoWebGL from '../NoWebGL';
@@ -46,7 +46,7 @@ export const GUI = ()  => {
         } else if (!context) {
             setWebGLAvailible(false);
         } else {
-            setTimeout(() => handlersRef.current = init(setCameraDOM), 1500);
+            setTimeout(() => handlersRef.current = init(setCameraDOM), 2500);
         }
     }, []);
 

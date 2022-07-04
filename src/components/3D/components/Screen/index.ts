@@ -26,7 +26,7 @@ export const Screen = async (
     });
 
     const { rtObject } = await setupRenderTarget(renderer);
-    rtObject.position.set(3.9, 12.5, -19.9);
+    rtObject.position.set(3.9, 12.4, -19.95);
     rtObject.rotateY(-Math.PI / 13);
     rtObject.rotateX(-Math.PI / 24);
     scene.add(rtObject);
