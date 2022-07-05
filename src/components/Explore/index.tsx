@@ -3,9 +3,9 @@ import {
     useEffect,
     useRef,
 } from 'preact/hooks';
-import { Config } from '../GUI/index';
 import classNames from 'classnames';
 import css from './Explore.module.css';
+import { Config } from 'src/routes/home';
 
 type ExplorePanelProps = {
     onChangeCamera: (key: string) => void,

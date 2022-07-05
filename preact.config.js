@@ -14,7 +14,6 @@ export default (config, env, helpers) => {
     const fileLoader = helpers.getLoadersByName(config, 'file-loader');
     fileLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf)(\?.*)?$/i);
     
-    
     const urlLoader = helpers.getLoadersByName(config, 'url-loader');
     urlLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf)(\?.*)?$/i);
 
@@ -24,4 +23,6 @@ export default (config, env, helpers) => {
     config.resolve.extensions.push('.glsl');
     config.resolve.extensions.push('.glb');
     config.resolve.extensions.push('.gltf');
+
+    config.resolve.modules.push(env.src)
 };

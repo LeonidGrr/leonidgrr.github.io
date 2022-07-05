@@ -13,14 +13,17 @@
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
-    "extends": "preact",
+    "parser": "@typescript-eslint/parser",
+    "extends": ["preact", "plugin:@typescript-eslint/recommended"],
     "ignorePatterns": [
-      "build/"
+        "build/"
     ]
-  },
+},
   "devDependencies": {
     "@types/classnames": "2.3.1",
     "@types/three": "0.141.0",
+    "@typescript-eslint/eslint-plugin": "2.25.0",
+      "@typescript-eslint/parser": "2.25.0",
     "copy-webpack-plugin": "6.4.1",
     "eslint": "^6.8.0",
     "eslint-config-preact": "1.1.0",
