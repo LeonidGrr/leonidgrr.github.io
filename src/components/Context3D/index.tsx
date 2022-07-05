@@ -6,7 +6,7 @@ export const Context3D = createContext({
     webGLAvailable: false,
     changeCamera: (key: string) => {},
     isEnabled: false,
-    disable3d: () => console.log('disable'),
+    disable3d: () => {},
     currentCamera: 'base',
 });
 
@@ -41,9 +41,16 @@ export const Context3DProvider: FunctionComponent = props => {
         }        
     }, [currentCamera]);
 
+    const webGLAvailable = useMemo(() => {
+        if (typeof window !== "undefined") {
+            return !!window.WebGLRenderingContext;
+        }
+        return false;
+    }, []);
+        
     return (
         <Context3D.Provider value={{
-            webGLAvailable: !!window.WebGLRenderingContext,
+            webGLAvailable,
             changeCamera,
             isEnabled,
             currentCamera,
