@@ -202,7 +202,6 @@ button:focus, a:focus {
     position: absolute;
     -webkit-backdrop-filter: blur(1px);
             backdrop-filter: blur(1px);
-    height: 0px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: start;
@@ -239,14 +238,14 @@ button:focus, a:focus {
 }
 
 .content__riTMf {
-    background-color: rgba(25, 25, 25, 1);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 5;
     top: 0;
     left: 5%;
-    height: 0;
+    height: 0px;
 }
 
-.content--show__9TFrw {
+.contentShow__ddXxi {
     height: calc(100% - 10.5rem);
 }
 
@@ -254,7 +253,6 @@ button:focus, a:focus {
     background: rgba(0, 0, 0, 0.5);
     color: #fff;
     z-index: 4;
-    padding: 0.5rem 1.25rem;
     max-width: 90%;
     display: -ms-flexbox;
     display: flex;
@@ -263,15 +261,15 @@ button:focus, a:focus {
     top: 0;
     right: 5%;
     max-height: 0;
-    height: 0;
+    height: 0px;
     white-space: pre-line;
     text-align: right;
     font-size: 16px;
     line-height: 28px;
 }
 
-
-.description--show__b0qzU {
+.descriptionShow__28FTC {
+    padding: 0.5rem 1.25rem;
     height: auto;
     max-height: calc(100% - 10.25rem);
 }
@@ -398,4 +396,4 @@ button:focus, a:focus {
     margin-bottom: 40px;
 }
 
-/*# sourceMappingURL=ssr-bundle.10442.css.map*/
+/*# sourceMappingURL=ssr-bundle.62be0.css.map*/
