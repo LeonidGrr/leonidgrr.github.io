@@ -1,11 +1,19 @@
 import { useState, useEffect, useRef, useMemo } from 'preact/hooks';
 import { createContext, FunctionComponent } from 'preact';
 import { init } from '../3D'
+import Loader from '../Loader';
+import { route } from 'preact-router';
 
-export const Context3D = createContext({
-    webGLAvailable: false,
+type Context3dProps = {
+    loader: preact.JSX.Element | null,
+    changeCamera: (key: string) => void,
+    disable3d: () => void,
+    currentCamera: string,
+};
+
+export const Context3D = createContext<Context3dProps>({
+    loader: null,
     changeCamera: (key: string) => {},
-    isEnabled: false,
     disable3d: () => {},
     currentCamera: 'base',
 });
@@ -24,15 +32,22 @@ export const Context3DProvider: FunctionComponent = props => {
 
     const disable3d = () => setIsEnabled(false);
 
+    const webGLAvailable = useMemo(() => {
+        if (typeof window !== "undefined") {
+            return !!window.WebGLRenderingContext;
+        }
+        return false;
+    }, []);
+
     useEffect(() => {
-        if (isEnabled && !!window.WebGLRenderingContext) {
-            const canvas = document.querySelector('canvas');
+        if (isEnabled && webGLAvailable) {
+            const canvas: HTMLCanvasElement | null = document.querySelector('.webgl');
             const context = canvas?.getContext('webgl');
-            if (context) {
-                setTimeout(() => handlersRef.current = init(setCameraDOM), 2500);
+            if (context && canvas) {
+                setTimeout(() => handlersRef.current = init(setCameraDOM, canvas), 2500);
             }
         }
-    }, [isEnabled]);
+    }, [isEnabled, webGLAvailable]);
 
     useEffect(() => {
         if (handlersRef.current) {
@@ -41,22 +56,21 @@ export const Context3DProvider: FunctionComponent = props => {
         }        
     }, [currentCamera]);
 
-    const webGLAvailable = useMemo(() => {
-        if (typeof window !== "undefined") {
-            return !!window.WebGLRenderingContext;
-        }
-        return false;
-    }, []);
-        
+	useEffect(() => {
+		if (!webGLAvailable && isEnabled) {
+			route('/nowebgl', true);
+		}
+	}, [webGLAvailable, isEnabled]);
+
     return (
         <Context3D.Provider value={{
-            webGLAvailable,
+            loader: webGLAvailable && isEnabled ? <Loader /> : null,
             changeCamera,
-            isEnabled,
             currentCamera,
             disable3d,
         }}>
             {props.children}
+            {webGLAvailable && isEnabled && <canvas className="webgl" tabIndex={1} />}
         </Context3D.Provider>
     );
 };

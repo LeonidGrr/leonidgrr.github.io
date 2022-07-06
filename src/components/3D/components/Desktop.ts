@@ -89,13 +89,8 @@ export const Desktop = async (
 
     await TextLight('Hello world!', scene);
 
+    // Night
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.18);
-    directionalLight.name = 'directional_light';
-    directionalLight.position.set(0, 25, 25);
-    scene.add(directionalLight);
-
-    StreetLight(scene);
-
     const textureLoader = new THREE.TextureLoader();
     const backgroundTexture = textureLoader.load(background);
     backgroundTexture.wrapS = THREE.RepeatWrapping;
@@ -106,4 +101,13 @@ export const Desktop = async (
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
     backgroundMesh.position.z = -400;
     scene.add(backgroundMesh);
+
+    // Day
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+    directionalLight.name = 'directional_light';
+    directionalLight.position.set(0, 25, 25);
+    scene.add(directionalLight);
+
+    StreetLight(scene);
+
 }

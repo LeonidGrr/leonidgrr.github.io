@@ -139,3 +139,12 @@ button:focus, a:focus {
     position: absolute;
     z-index: 1;
 }
+
+.message {
+    padding: 0 5%;
+    margin: 100px 0;
+}
+
+.message p {
+    margin: 40px 0;
+}

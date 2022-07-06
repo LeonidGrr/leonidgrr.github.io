@@ -23,13 +23,7 @@ const titleMap: Config = {
 };
 
 const Home: FunctionComponent<RoutableProps> = () => {
-	const { currentCamera, changeCamera, webGLAvailable, isEnabled } = useContext(Context3D);
-
-	useEffect(() => {
-		if (!webGLAvailable && isEnabled) {
-			route('/nowebgl', true);
-		}
-	}, [webGLAvailable, isEnabled]);
+	const { currentCamera, changeCamera, loader } = useContext(Context3D);
 
 	return (
 		<>
@@ -39,12 +33,7 @@ const Home: FunctionComponent<RoutableProps> = () => {
 				onChangeCamera={changeCamera}
 				titleMap={titleMap}
 			/>
-			{webGLAvailable && isEnabled && (
-				<>
-					<Loader />
-					<canvas className="webgl" tabIndex={1} />
-				</>
-			)}
+			{loader}
 		</>
 	);
 };

@@ -16,7 +16,13 @@ export class RenderingManager {
         // Main scene, camera, tooltips
         this.scene = new THREE.Scene();
         this.scene.name = 'main';
+        
+        // Night
         this.scene.fog = new THREE.FogExp2(0x000000);
+        
+        // Day
+        // this.scene.fog = new THREE.FogExp2(0xffffff);
+
         this.scene.background = this.scene.fog.color;
         this.scene.background.convertSRGBToLinear();
 
