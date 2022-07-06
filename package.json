@@ -14,21 +14,24 @@
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
-    "extends": ["preact", "plugin:@typescript-eslint/recommended"],
+    "extends": [
+      "preact",
+      "plugin:@typescript-eslint/recommended"
+    ],
     "ignorePatterns": [
-        "build/"
+      "build/"
     ]
-},
+  },
   "devDependencies": {
     "@types/classnames": "2.3.1",
     "@types/three": "0.141.0",
     "@typescript-eslint/eslint-plugin": "2.25.0",
-      "@typescript-eslint/parser": "2.25.0",
+    "@typescript-eslint/parser": "2.25.0",
     "copy-webpack-plugin": "6.4.1",
-    "eslint": "^6.8.0",
+    "eslint": "6.8.0",
     "eslint-config-preact": "1.1.0",
     "gh-pages": "3.2.3",
-    "preact-cli": "^3.3.5",
+    "preact-cli": "3.3.5",
     "sirv-cli": "1.0.3",
     "typescript": "4.3.4",
     "webpack-glsl-loader": "1.0.1"

@@ -3,16 +3,12 @@ import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import fontTtf from '../../../../assets/fonts/Prime-Regular.ttf'; 
-import keySound1 from '../../assets/sounds/key1.ogg';
-import keySound2 from '../../assets/sounds/key2.ogg';
+import keySound1 from '../../sounds/key1.ogg';
+import keySound2 from '../../sounds/key2.ogg';
 import { Tooltip } from '../Tooltip';
 import keyCodeMap from './keycodeMap';
 
 export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: Tooltip) => {
-    mesh.position.z -= 0.24;
-    mesh.position.x -= 0.255;
-    mesh.rotateY(-0.25);
-
     // Materials
     const keyboardMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0.45,

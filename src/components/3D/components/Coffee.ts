@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import smoke from '../assets/textures/smoke.png'
+import smoke from '../textures/smoke.png'
 
 export const Coffee = async (mesh: THREE.Mesh) => {
     mesh.traverse(function (child) {
