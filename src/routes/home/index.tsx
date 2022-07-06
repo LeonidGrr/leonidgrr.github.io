@@ -10,21 +10,15 @@ export type Config = {
     name: string,
     header: string,
     desc: string,
-    sub: {[key: string]: {
-        name: string,
-        desc: string,
-    }},
+    sub: Record<string, string>,
 };
 
 const titleMap: Config = {
     name: 'My dev lair',
     header: 'my dev lair',
-    desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around. `,
+	desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
     sub: {
-        screen: {
-            name: 'Screen',
-            desc: 'For now this is just an example of THREEJS render target...',
-        },
+        screen: 'For now this is just an example of THREEJS render target...',
     },
 };
 

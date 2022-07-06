@@ -2,6 +2,7 @@ import {
     useState,
     useEffect,
     useRef,
+    useCallback,
 } from 'preact/hooks';
 import classNames from 'classnames';
 import css from './Explore.module.css';
@@ -47,9 +48,12 @@ const Explore = (props: ExplorePanelProps) => {
     };
 
     useEffect(() => {
-        setShowDescription(titleMap?.sub[currentCamera]?.desc
-        || titleMap?.desc);
+        setShowDescription(titleMap.sub[currentCamera] || titleMap.desc);
     }, [currentCamera]);
+
+    const handleHideDescription = useCallback(() => {
+        setShowDescription(null);
+    }, []);
 
     return (
         <>
@@ -62,36 +66,21 @@ const Explore = (props: ExplorePanelProps) => {
                     Explore more
                 </button>
             </div>
-            {/* <div
+            <div
                 aria-label="Table of content"
                 ref={contentRef}
-                className={classNames(css.content, showContent && css['content--show'])}}
+                className={classNames(css.content, showContent && css.contentShow)}
             >
                 <ul className={css.scenes}>
-                    {Object.keys(titleMap).map(key => (
+                    {Object.keys(titleMap.sub).map((key: string) => (
                         <li key={key}>
                             <button
                                 data-key={key}
                                 type="button"
-                                onPointerDown={handleScene}
+                                onPointerDown={handleCamera}
                             >
-                                {titleMap[key].name}
+                                {key}
                             </button>
-                            <ul className={css.cameras}>
-                                {currentScene === key && (
-                                    Object.keys(titleMap[key]?.sub).map(key2 => (
-                                        <li key={key2}>
-                                            <button
-                                                data-key={key2}
-                                                type="button"
-                                                onPointerDown={handleCamera}
-                                            >
-                                                - {titleMap[key]?.sub[key2].name}
-                                            </button>
-                                        </li>
-                                    )
-                                ))}
-                            </ul>
                         </li>
                     ))}
                     <li className={css.links}>
@@ -100,9 +89,9 @@ const Explore = (props: ExplorePanelProps) => {
                         </a>
                     </li>
                 </ul>
-            </div> */}
-            <div className={classNames(css.description, showDescription && css['description--show'])}>
-                <span aria-label="Description">
+            </div>
+            <div className={classNames(css.description, showDescription && css.descriptionShow)} onClick={handleHideDescription}> 
+                <span aria-label="Description" >
                     {showDescription}
                 </span>
             </div>
