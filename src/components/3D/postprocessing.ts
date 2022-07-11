@@ -108,19 +108,19 @@ const postprocessing = (
         const current = new Date();
         const fps = 1000 / (current.getTime() - last.getTime());
 
-        if (fps >= 30) {
+        if (fps >= 24) {
             pixelRatioModifier = 1.0;
-        } else if (fps < 30 && fps >= 15) {
-            pixelRatioModifier = 0.7;
+        } else if (fps < 24 && fps >= 10) {
+            pixelRatioModifier = 0.8;
         } else if (fps < 15) {
-            pixelRatioModifier = 0.5;
+            pixelRatioModifier = 0.6;
         }
         
         last = current;
     };
 
     const resizeRenderer = () => {
-        pixelRatioAdjust();
+        // pixelRatioAdjust();
         const canvas = renderer.domElement;
         const pixelRatio = window.devicePixelRatio * pixelRatioModifier;
         const width = canvas.clientWidth * pixelRatio | 0;

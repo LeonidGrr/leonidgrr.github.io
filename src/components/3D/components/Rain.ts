@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import raindrop from '../assets/textures/raindrop.png';
-import thunder1 from '../assets/sounds/thunder.ogg';
-import rain from '../assets/sounds/rain.ogg';
+import raindrop from '../textures/raindrop.png';
+import thunder1 from '../sounds/thunder.ogg';
+import rain from '../sounds/rain.ogg';
 
 export const Rain = async ({
         position = new THREE.Vector3(),
-        raindropsCount = 24000,
+        raindropsCount = 1000,
         rainPower = 0.0125,
         maxX = 50,
         maxY = 50,
@@ -28,7 +28,7 @@ export const Rain = async ({
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 2,
+        size: 1.5,
         transparent: true,
         map: sprite,
         sizeAttenuation: true, 
@@ -85,16 +85,16 @@ export const Rain = async ({
         }
         ref.geometry.attributes.position.needsUpdate = true;
 
-        if (Math.random() > 0.99 || flash.power > 100) {
+        if (Math.random() > 0.99 || flash.power > 75) {
             Math.random() > 0.8 && sound1.play();
-            if (flash.power < 100) {
+            if (flash.power < 75) {
                 flash.position.set(
                     Math.random() * 200,
-                    50 + Math.random() * 100,
+                    50 + Math.random() * 75,
                     -200,
                 );
             }
-            flash.power = 50 + Math.random() * 100;
+            flash.power = 50 + Math.random() * 75;
         } else {
             flash.power = 0;
         }

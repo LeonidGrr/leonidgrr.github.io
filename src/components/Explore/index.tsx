@@ -7,9 +7,10 @@ import {
 import classNames from 'classnames';
 import css from './Explore.module.css';
 import { Config } from 'src/routes/home';
+import { CameraState } from '../3D/components/CameraManager';
 
 type ExplorePanelProps = {
-    onChangeCamera: (key: string) => void,
+    onChangeCamera: (key: CameraState) => void,
     currentCamera: string,
     titleMap: Config,
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Desktop, Tooltip, CameraManager } from '.';
+import { CameraState } from './CameraManager';
 
 export class RenderingManager {
     activeScene = 'desktop';
@@ -9,7 +10,7 @@ export class RenderingManager {
     constructor(
         renderer: THREE.WebGLRenderer,
         cameraManager: CameraManager,
-        setCameraDOM: (name: string) => void,
+        setCameraDOM: (name: CameraState) => void,
     ) {
         this.cameraManager = cameraManager;
 
@@ -37,35 +38,42 @@ export class RenderingManager {
         this.detectClick(setCameraDOM);
     }
 
-    detectClick = (setCameraDOM: (name: string) => void) => {
+    setupTargets = (targets: Record<string, THREE.Object3D>) => {
+        if (!targets.screen) {
+            const screen = this.scene.getObjectByName('screen');
+            if (screen) targets.screen = screen;
+        }
+        if (!targets.keyboard) {
+            const keyboard = this.scene.getObjectByName('Keyboard');
+            if (keyboard) targets.keyboard = keyboard;
+        }
+    }
+
+    detectClick = (setCameraDOM: (name: CameraState) => void) => {
         const raycaster = new THREE.Raycaster();
-        const targets: {[key: string]: THREE.Object3D} = {};
+        const targets: Record<string, THREE.Object3D> = {};
         const pointer = new THREE.Vector2();
 
         document.addEventListener('pointerdown', (e: PointerEvent) => {
+            this.setupTargets(targets);
+
             pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
             pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
-            if (!targets.screen) {
-                const screen = this.scene.getObjectByName('screen');
-                if (screen) targets.screen = screen;
-            }
-            if (!targets.keyboard) {
-                const keyboard = this.scene.getObjectByName('Keyboard');
-                if (keyboard) targets.keyboard = keyboard;
-            }
             raycaster.setFromCamera(pointer, this.cameraManager.camera);
-            const intersects = raycaster.intersectObjects(Object.values(targets)); 
+
+            const intersects = raycaster.intersectObjects(Object.values(targets));
+
             if (intersects.length > 0) {
                 if (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard') {
-                    this.cameraManager.state = 'screen';
-                    setCameraDOM('screen')
+                    this.cameraManager.state = CameraState.SCREEN;
+                    setCameraDOM(CameraState.SCREEN)
                 }
             } else {
-                this.cameraManager.state = 'base';
-                setCameraDOM('base')
+                this.cameraManager.state = CameraState.BASE;
+                setCameraDOM(CameraState.BASE)
             }
         }, false);
     }
 
-    setCameraWebGL = (cameraState: string) => this.cameraManager.state = cameraState;
+    setCameraWebGL = (cameraState: CameraState) => this.cameraManager.state = cameraState;
 }

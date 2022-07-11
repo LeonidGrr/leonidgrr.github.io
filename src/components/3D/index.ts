@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import { RenderingManager, CameraManager } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
+import { CameraState } from './components/CameraManager';
 
-export const init = (setCameraDOM: (name: string) => void, canvas: HTMLCanvasElement) => {
+export const init = (setCameraDOM: (name: CameraState) => void, canvas: HTMLCanvasElement) => {
     const stats = new Stats();
     document.body.appendChild(stats.dom);
 

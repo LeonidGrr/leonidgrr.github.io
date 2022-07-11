@@ -13,8 +13,8 @@ import {
     TextLight,
     StreetLight,
 } from '.';
-import desktopScene from '../assets/models/desktopSceneDraco.glb';
-import background from '../assets/textures/background.png';
+import desktopScene from '../models/desktopSceneDraco.glb';
+import background from '../textures/background.png';
 
 export const Desktop = async (
     scene: THREE.Scene,
@@ -80,7 +80,7 @@ export const Desktop = async (
 
     Rain({
         position: new THREE.Vector3(-50, 5, -100),
-        raindropsCount: 200,
+        raindropsCount: 500,
         rainPower: 0.25,
         maxX: 100,
         maxY: 100,
@@ -99,7 +99,7 @@ export const Desktop = async (
     const backgroundGeometry = new THREE.PlaneBufferGeometry(500, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-    backgroundMesh.position.z = -400;
+    backgroundMesh.position.z = -300;
     scene.add(backgroundMesh);
 
     // Day

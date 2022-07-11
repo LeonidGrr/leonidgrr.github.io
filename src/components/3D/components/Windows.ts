@@ -1,13 +1,22 @@
 import * as THREE from 'three';
 import { Tooltip } from './Tooltip';
+import raindropVert from '../shaders/raindrop-vert.glsl';
+import raindropFrag from '../shaders/raindrop-frag.glsl';
+import background from '../textures/background.png';
 
-export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,tooltip: Tooltip) => {
-    const glassMaterial = new THREE.MeshStandardMaterial({
-        opacity: 0.0,
-        transparent: true,
-        roughness: 0,
-        metalness: 1,
-        side: THREE.DoubleSide,
+export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip) => {
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(background);
+    const uniforms = {
+        iTime: { value: 0 },
+        iResolution:  { value: new THREE.Vector2(200.0, 200.0) },
+        zoom: { value: 0.25 },
+        iChannel0: { value: texture },
+    };
+    const rainyWindowMaterial = new THREE.ShaderMaterial({
+        vertexShader: raindropVert,
+        fragmentShader: raindropFrag,
+        uniforms,
     });
 
     const targets: THREE.Mesh[] = [];
@@ -17,22 +26,26 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
     mesh.traverse(function (c) {
         if (c.name === 'Window') {
             windowRef = c as THREE.Mesh;
-            windowRef!.rotation.y -= 0.05;
+            windowRef!.rotation.y -= 0.45;
         }
         if (c.name === 'Plane') {
             targets.push(c as THREE.Mesh);
             tooltip.addTarget(c as THREE.Mesh, 'Close window', new THREE.Vector3(0, 0, 0));
+        } 
+        if (c.name === 'Plane001') {
+            tooltip.addTarget(c as THREE.Mesh, 'I like rain.', new THREE.Vector3(-0.5, 0, 0));
         }
         if ((c as THREE.Mesh).isMesh && !c.name.includes('Plane')) {
             c.castShadow = true;
             c.receiveShadow = true;
         } else {
-            ((c as THREE.Mesh).material as THREE.MeshStandardMaterial) = glassMaterial;
+            (c as THREE.Mesh).material = rainyWindowMaterial;
         }
     });
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
+
     document.addEventListener('pointerdown', (e: PointerEvent) => {
         pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
         pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
@@ -52,6 +65,8 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera,toolti
             } else if (windowRef!.rotation.y < 0) {
                 windowRef!.rotation.y += 0.02;
             }
+
+            uniforms.iTime.value = clock.getElapsedTime();
             requestAnimationFrame(render);
         };
         requestAnimationFrame(render);

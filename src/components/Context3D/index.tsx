@@ -3,28 +3,29 @@ import { createContext, FunctionComponent } from 'preact';
 import { init } from '../3D'
 import Loader from '../Loader';
 import { route } from 'preact-router';
+import { CameraState } from '../3D/components/CameraManager';
 
 type Context3dProps = {
     loader: preact.JSX.Element | null,
-    changeCamera: (key: string) => void,
+    changeCamera: (key: CameraState) => void,
     disable3d: () => void,
-    currentCamera: string,
+    currentCamera: CameraState,
 };
 
 export const Context3D = createContext<Context3dProps>({
     loader: null,
-    changeCamera: (key: string) => {},
+    changeCamera: (key: CameraState) => {},
     disable3d: () => {},
-    currentCamera: 'base',
+    currentCamera: CameraState.BASE,
 });
 
 export const Context3DProvider: FunctionComponent = props => {
     const handlersRef = useRef<any>(null);
 
     const [isEnabled, setIsEnabled] = useState(true);
-    const [currentCamera, setCameraDOM] = useState('base');
+    const [currentCamera, setCameraDOM] = useState(CameraState.BASE);
 
-    const changeCamera = (key: string) => {
+    const changeCamera = (key: CameraState) => {
         if (key && currentCamera !== key) {
             setCameraDOM(key);
         }
