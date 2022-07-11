@@ -26,7 +26,7 @@ export const TextLight = async (text: string, scene: THREE.Scene) => {
     mesh.name="text_mesh"
     mesh.layers.enable(1);
 
-    mesh.position.set(-4.25, 9.75, -15.5);
+    mesh.position.set(-4, 9.75, -15.5);
     mesh.rotateY(Math.PI / 12);
     mesh.rotateX(-Math.PI / 10);
 
