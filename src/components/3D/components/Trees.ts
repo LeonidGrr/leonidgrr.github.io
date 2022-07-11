@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export const Trees = (mesh: THREE.Mesh, parent: THREE.Group) => {
-    mesh.position.set(-4.5, -1.5, 2.5);
+    mesh.position.set(-5.5, -1.5, 2.5);
 
     const clock = new THREE.Clock();
     const render = () => {
