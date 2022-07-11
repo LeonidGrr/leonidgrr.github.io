@@ -69,15 +69,15 @@ export class CameraManager {
         camera.aspect = document.body.clientWidth / document.body.clientHeight;
         camera.updateProjectionMatrix();
         const defaultPosition = this.cameraModes[CameraState.BASE][1];
-        camera.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
     
         if (camera.aspect > 1) {
+            camera.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
             camera.fov = 55;
             camera.rotation.set(-0.135, 0, 0);
         } else {
-            camera.position.set(0, 15, -3);
-            camera.rotation.set(-0.0025, 0.0, 0);
-            camera.fov = 77;
+            camera.position.set(7, 15, -3);
+            camera.rotation.set(-0.0025, 0.4, 0);
+            camera.fov = 70;
         }
         
         camera.updateProjectionMatrix();
