@@ -27,7 +27,7 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
     mesh.traverse(function (c) {
         if (c.name === 'Window') {
             windowRef = c as THREE.Mesh;
-            windowRef!.rotation.y -= 0.45;
+            windowRef!.rotation.y -= 0.4;
         }
         if (c.name === 'Plane') {
             targets.push(c as THREE.Mesh);
