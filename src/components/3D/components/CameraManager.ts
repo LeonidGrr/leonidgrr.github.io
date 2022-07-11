@@ -76,7 +76,7 @@ export class CameraManager {
             camera.fov = 55;
             camera.rotation.set(-0.135, 0, 0);
         } else {
-            camera.position.set(7.15, 15, -2.65);
+            camera.position.set(7.15, 15, -2.95);
             camera.rotation.set(-0.0025, 0.35, 0);
             camera.fov = 69;
         }
