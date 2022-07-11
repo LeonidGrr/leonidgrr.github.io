@@ -18,6 +18,7 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         fragmentShader: raindropFrag,
         uniforms,
     });
+    rainyWindowMaterial.extensions.derivatives = true;
 
     const targets: THREE.Mesh[] = [];
     let opened = true;

@@ -3,8 +3,6 @@
 // Heartfelt - by Martijn Steinrucken aka BigWings - 2017
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
-#extension GL_EXT_shader_texture_lod: enable
-
 varying vec3 vPosition;
 varying vec2 vUv;
 

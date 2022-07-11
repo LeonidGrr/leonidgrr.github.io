@@ -23,7 +23,7 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene) => {
     light.name = 'lamp_light';
     light.shadow.mapSize = new THREE.Vector2(512, 512);
     light.shadow.bias = 0.005;
-    light.distance = 20;
+    light.distance = 25;
     
     light.shadow.camera.near = 0.01;
     light.shadow.camera.far = 25;

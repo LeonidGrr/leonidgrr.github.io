@@ -13,7 +13,7 @@ import {
     TextLight,
     StreetLight,
 } from '.';
-import desktopScene from '../models/desktopSceneDraco.glb';
+import desktopScene from '../models/sceneDraco.glb';
 import background from '../textures/background.png';
 
 export const Desktop = async (
