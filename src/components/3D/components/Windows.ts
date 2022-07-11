@@ -32,9 +32,6 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         if (c.name === 'Plane') {
             targets.push(c as THREE.Mesh);
             tooltip.addTarget(c as THREE.Mesh, 'Close window', new THREE.Vector3(0, 0, 0));
-        } 
-        if (c.name === 'Plane001') {
-            tooltip.addTarget(c as THREE.Mesh, 'I like rain.', new THREE.Vector3(-0.5, 0, 0));
         }
         if ((c as THREE.Mesh).isMesh && !c.name.includes('Plane')) {
             c.castShadow = true;
