@@ -76,8 +76,8 @@ export class CameraManager {
             camera.rotation.set(-0.135, 0, 0);
         } else {
             camera.position.set(7, 15, -3);
-            camera.rotation.set(-0.0025, 0.4, 0);
-            camera.fov = 70;
+            camera.rotation.set(-0.0025, 0.35, 0);
+            camera.fov = 65;
         }
         
         camera.updateProjectionMatrix();
