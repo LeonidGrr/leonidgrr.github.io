@@ -21,7 +21,7 @@ export const Context3D = createContext<Context3dProps>({
 
 export const Context3DProvider: FunctionComponent = props => {
     const handlersRef = useRef<any>(null);
-
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [isEnabled, setIsEnabled] = useState(true);
     const [currentCamera, setCameraDOM] = useState(CameraState.BASE);
 
@@ -41,12 +41,8 @@ export const Context3DProvider: FunctionComponent = props => {
     }, []);
 
     useEffect(() => {
-        if (isEnabled && webGLAvailable) {
-            const canvas: HTMLCanvasElement | null = document.querySelector('.webgl');
-            const context = canvas?.getContext('webgl');
-            if (context && canvas) {
-                setTimeout(() => handlersRef.current = init(setCameraDOM, canvas), 2500);
-            }
+        if (isEnabled && webGLAvailable && canvasRef.current) {
+            setTimeout(() => handlersRef.current = init(setCameraDOM, canvasRef.current!), 2500);
         }
     }, [isEnabled, webGLAvailable]);
 
@@ -71,7 +67,7 @@ export const Context3DProvider: FunctionComponent = props => {
             disable3d,
         }}>
             {props.children}
-            {webGLAvailable && isEnabled && <canvas className="webgl" tabIndex={1} />}
+            <canvas className="webgl" tabIndex={1} ref={canvasRef}/>
         </Context3D.Provider>
     );
 };

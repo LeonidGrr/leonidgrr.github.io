@@ -33,7 +33,7 @@ export const Desktop = async (
 
     desktop.scene.rotateY(-Math.PI / 2);
     desktop.scene.scale.set(12, 12, 12);
-    desktop.scene.children.forEach(async child => {
+    desktop.scene.children[0].children.forEach(async child => {
         if (child.name === 'Desk') {
             child.traverse(function (c) {
                 if ((c as THREE.Mesh).isMesh) {
