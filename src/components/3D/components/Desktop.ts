@@ -54,7 +54,7 @@ export const Desktop = async (
             (mesh.material as THREE.MeshStandardMaterial).color.set(0x003c8c);
         }
         if (child.name === 'Screen') {
-            await Screen(child as THREE.Mesh, scene, renderer, tooltip);
+            await Screen(child as THREE.Mesh, scene, renderer);
         }
         if (child.name === 'Coffee') {
             await Coffee(child as THREE.Mesh);
