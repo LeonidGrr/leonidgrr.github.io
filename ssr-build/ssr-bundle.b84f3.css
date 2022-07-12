@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6, p, ol, ul {
     height: 0;
 }
 
-button, a {
+button {
     font-family: PrimeLight, sans-serif;
     background: none;
     color: #fff;
@@ -319,6 +319,9 @@ button:focus, a:focus {
     max-height: calc(100% - 10.25rem);
 }
 
+.closeButton__nPq\+M {
+    margin-left: 10px;
+}
 @-webkit-keyframes opacity_animation__piEyb {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -379,4 +382,4 @@ button:focus, a:focus {
 }
 
 
-/*# sourceMappingURL=ssr-bundle.7c74c.css.map*/
+/*# sourceMappingURL=ssr-bundle.b84f3.css.map*/
