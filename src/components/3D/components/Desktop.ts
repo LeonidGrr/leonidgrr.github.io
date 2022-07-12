@@ -51,7 +51,7 @@ export const Desktop = async (
         if (child.name === 'Floor') {
             child.receiveShadow = true;
             const mesh = child as THREE.Mesh;
-            (mesh.material as THREE.MeshStandardMaterial).color.set(0x003c8c);
+            (mesh.material as THREE.MeshStandardMaterial).color.set(0x0f0f0f);
         }
         if (child.name === 'Screen') {
             await Screen(child as THREE.Mesh, scene, renderer);
@@ -71,26 +71,24 @@ export const Desktop = async (
                 c.receiveShadow = true;
                 if ((c as THREE.Mesh).isMesh) {
                     const mesh = c as THREE.Mesh;
-                    (mesh.material as THREE.MeshStandardMaterial).color.set(0xffffff);
+                    (mesh.material as THREE.MeshStandardMaterial).color.set(0x282828);
                 }
             });
         }
     });
     scene.add(desktop.scene);
 
-    Rain({
-        position: new THREE.Vector3(-50, 5, -100),
-        raindropsCount: 500,
-        rainPower: 0.25,
-        maxX: 100,
-        maxY: 100,
-        maxZ: 50,
-    }, camera, scene);
+    Rain(camera, scene);
 
     await TextLight('Hello world!', scene);
 
-    // Night
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.18);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(0, 35, 35);
+    scene.add(directionalLight);
+
     const textureLoader = new THREE.TextureLoader();
     const backgroundTexture = textureLoader.load(background);
     backgroundTexture.wrapS = THREE.RepeatWrapping;
@@ -99,15 +97,6 @@ export const Desktop = async (
     const backgroundGeometry = new THREE.PlaneBufferGeometry(500, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-    backgroundMesh.position.z = -300;
+    backgroundMesh.position.z = -250;
     scene.add(backgroundMesh);
-
-    // Day
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.name = 'directional_light';
-    directionalLight.position.set(0, 25, 25);
-    scene.add(directionalLight);
-
-    StreetLight(scene);
-
 }

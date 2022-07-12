@@ -91,10 +91,9 @@ const Explore = (props: ExplorePanelProps) => {
                     </li>
                 </ul>
             </div>
-            <div className={classNames(css.description, showDescription && css.descriptionShow)} onClick={handleHideDescription}> 
-                <span aria-label="Description" >
-                    {showDescription}
-                </span>
+            <div className={classNames(css.description, showDescription && css.descriptionShow)} > 
+                <span aria-label="Description" dangerouslySetInnerHTML={{ __html: showDescription || '' }} />
+                <button title="Close" className={css.closeButton} onClick={handleHideDescription}>&#10799;</button>
             </div>
         </>
     );

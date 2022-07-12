@@ -13,16 +13,10 @@ export class RenderingManager {
         setCameraDOM: (name: CameraState) => void,
     ) {
         this.cameraManager = cameraManager;
-
-        // Main scene, camera, tooltips
         this.scene = new THREE.Scene();
         this.scene.name = 'main';
-        
-        // Night
+
         this.scene.fog = new THREE.FogExp2(0x000000);
-        
-        // Day
-        // this.scene.fog = new THREE.FogExp2(0xffffff);
 
         this.scene.background = this.scene.fog.color;
         this.scene.background.convertSRGBToLinear();
@@ -47,6 +41,10 @@ export class RenderingManager {
             const keyboard = this.scene.getObjectByName('Keyboard');
             if (keyboard) targets.keyboard = keyboard;
         }
+        if (!targets.windows) {
+            const windows = this.scene.getObjectByName('Windows');
+            if (windows) targets.windows = windows;
+        }
     }
 
     detectClick = (setCameraDOM: (name: CameraState) => void) => {
@@ -67,6 +65,9 @@ export class RenderingManager {
                 if (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard') {
                     this.cameraManager.state = CameraState.SCREEN;
                     setCameraDOM(CameraState.SCREEN)
+                } else if (intersects[0].object.parent?.name === 'Windows') {
+                    this.cameraManager.state = CameraState.WINDOWS;
+                    setCameraDOM(CameraState.WINDOWS)
                 }
             } else {
                 this.cameraManager.state = CameraState.BASE;

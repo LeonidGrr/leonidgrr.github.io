@@ -1,52 +1,43 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export enum CameraState {
     BASE = 'base',
     SCREEN = 'screen',
+    WINDOWS = 'windows',
 }
 
 export class CameraManager {
     camera: THREE.PerspectiveCamera;
-    state: CameraState;
-
-    cameraModes: Record<string, [THREE.Euler, THREE.Vector3]> = {
-        base: [new THREE.Euler(-0.135, 0, 0), new THREE.Vector3(0, 15, -3)],
-        screen: [new THREE.Euler(-0.275, -0.225, 0), new THREE.Vector3(1.5, 13.5, -10.75)],
-    };
+    state = CameraState.BASE;
 
     constructor(renderer: THREE.WebGLRenderer) {
         this.camera = new THREE.PerspectiveCamera(55, document.body.clientWidth / document.body.clientHeight, 0.1, 1000);
-        this.state = CameraState.BASE;
 
-        const controls = new OrbitControls(this.camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.enablePan = false;
-        controls.enableRotate = false;
-        controls.maxDistance = 15;
-        controls.zoomSpeed = 2;
-        
-        this.setupCamera(this.camera, controls);
+        this.setupCamera(this.camera);
+
+        const cameraModes: Record<string, [THREE.Euler, THREE.Vector3]> = {
+            base: [this.camera.rotation.clone(), this.camera.position.clone()],
+            screen: [new THREE.Euler(-0.275, -0.225, -0.05), new THREE.Vector3(1.5, 13.5, -10.75)],
+            windows: [new THREE.Euler(-0.1, 0.0, 0.0), new THREE.Vector3(-3, 15, -17.8)],
+        };
 
         window.addEventListener('resize', () => {
-            this.setupCamera(this.camera, controls);
-            this.cameraModes.base = [this.camera.rotation.clone(), this.camera.position.clone()];
+            this.setupCamera(this.camera);
+            cameraModes.base = [this.camera.rotation.clone(), this.camera.position.clone()];
             this.state = CameraState.BASE;
         });
 
         const render = () => {
             requestAnimationFrame(render);
-            if (this.cameraModes[this.state]) {
-                this.changeCamera(this.camera, controls, this.cameraModes[this.state][0], this.cameraModes[this.state][1], 0.05);
+            if (cameraModes[this.state]) {
+                this.changeCamera(this.camera, cameraModes[this.state][0], cameraModes[this.state][1], 0.05);
             }
-            controls.update();
         };
         requestAnimationFrame(render);
     }
 
     changeCamera = (
         camera: THREE.PerspectiveCamera,
-        controls: OrbitControls,
         targetRotation: THREE.Euler,
         targetPosition: THREE.Vector3,
         timing: number,
@@ -61,31 +52,24 @@ export class CameraManager {
         camera.updateProjectionMatrix();
         const direction = new THREE.Vector3();
         camera.getWorldDirection(direction);
-        camera.getWorldPosition(controls.target);
-        controls.target.addScaledVector(direction, 1);
     }
 
-    setupCamera = (camera: THREE.PerspectiveCamera, controls: OrbitControls) => {
+    setupCamera = (camera: THREE.PerspectiveCamera) => {
         camera.aspect = document.body.clientWidth / document.body.clientHeight;
         camera.updateProjectionMatrix();
-        const defaultPosition = this.cameraModes[CameraState.BASE][1];
-        camera.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
-        
+
         if (camera.aspect > 1) {
-            camera.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
-            camera.fov = 55;
+            camera.position.set(0, 15, -3);
             camera.rotation.set(-0.135, 0, 0);
+            camera.fov = 55;
         } else {
-            camera.position.set(7.15, 15, -2.95);
-            camera.rotation.set(-0.0025, 0.35, 0);
-            camera.fov = 69;
+            camera.position.set(11, 17, -1);
+            camera.rotation.set(-0.005, 0.5, 0);
+            camera.fov = 70;
         }
         
         camera.updateProjectionMatrix();
         const direction = new THREE.Vector3();
         camera.getWorldDirection(direction);
-        camera.getWorldPosition(controls.target);
-        controls.target.addScaledVector(direction, 1);
-        controls.update();
     }
 };

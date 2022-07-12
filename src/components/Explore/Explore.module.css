@@ -96,3 +96,7 @@
     height: auto;
     max-height: calc(100% - 10.25rem);
 }
+
+.closeButton {
+    margin-left: 10px;
+}

@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6, p, ol, ul {
     height: 0;
 }
 
-button, a {
+button {
     font-family: PrimeLight, sans-serif;
     background: none;
     color: #fff;

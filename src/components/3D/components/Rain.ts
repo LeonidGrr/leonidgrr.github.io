@@ -3,16 +3,14 @@ import raindrop from '../textures/raindrop.png';
 import thunder1 from '../sounds/thunder.ogg';
 import rain from '../sounds/rain.ogg';
 
-export const Rain = async ({
-        position = new THREE.Vector3(),
-        raindropsCount = 1000,
-        rainPower = 0.0125,
-        maxX = 50,
-        maxY = 50,
-        maxZ = 50,
-    },
-    camera: THREE.PerspectiveCamera,
-    scene: THREE.Scene) => {
+export const Rain = async (camera: THREE.PerspectiveCamera, scene: THREE.Scene) => {
+    const position = new THREE.Vector3(-50, 5, -100);
+    const raindropsCount = 500;
+    const rainPower = 0.25;
+    const maxX = 100;
+    const maxY = 100;
+    const maxZ = 50;
+
     const loader = new THREE.TextureLoader();
     const sprite = loader.load(raindrop);
     const geometry = new THREE.BufferGeometry();
