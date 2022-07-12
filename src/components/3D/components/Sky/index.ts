@@ -19,7 +19,7 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
         mieDirectionalG: 0.7,
         elevation: 0,
         azimuth: 180,
-        exposure: renderer.toneMappingExposure
+        exposure: 1.0,
     };
 
     function guiChanged() {
@@ -46,6 +46,7 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
     gui.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(guiChanged);
     gui.add(effectController, 'elevation', 0, 90, 0.1).onChange(guiChanged);
     gui.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(guiChanged);
+    gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
     gui.close();
     guiChanged();
 }
