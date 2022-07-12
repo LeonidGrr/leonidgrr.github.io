@@ -2,10 +2,9 @@ import * as THREE from 'three';
 import { Sky as SkyExample } from 'three/examples/jsm/objects/Sky';
 import * as dat from 'dat.gui';
 
-const gui = new dat.GUI();
-
 export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) => {
-    let sky = new SkyExample();
+   const gui = new dat.GUI();
+   let sky = new SkyExample();
     sky.scale.setScalar(450000);
     scene.add(sky);
 
