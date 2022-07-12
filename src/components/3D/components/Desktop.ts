@@ -11,9 +11,10 @@ import {
     Tooltip,
     Windows,
     TextLight,
+    Sky
 } from '.';
 import desktopScene from '../models/sceneDraco.glb';
-import background from '../textures/background0.png';
+import background from '../textures/background_half_transparent_0.png';
 
 export const Desktop = async (
     scene: THREE.Scene,
@@ -21,6 +22,8 @@ export const Desktop = async (
     renderer: THREE.WebGLRenderer,
     tooltip: Tooltip,
 ) => {
+    Sky(renderer, scene, camera);
+
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/gltf/');
     dracoLoader.preload();
@@ -95,6 +98,7 @@ export const Desktop = async (
     backgroundTexture.repeat.set(4, 1);
     const backgroundGeometry = new THREE.PlaneBufferGeometry(500, 75);
     const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture });
+    backgroundMaterial.transparent = true;
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
     backgroundMesh.position.z = -250;
     scene.add(backgroundMesh);

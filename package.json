@@ -10,7 +10,8 @@
     "dev": "preact watch",
     "lint": "eslint src",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "compressDraco": "gltf-pipeline -i ./src/components/3D/models/scene.glb -o ./src/components/3D/models/sceneDraco.glb -d"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/classnames": "2.3.1",
+    "@types/dat.gui": "^0.7.7",
     "@types/three": "0.141.0",
     "@typescript-eslint/eslint-plugin": "2.25.0",
     "@typescript-eslint/parser": "2.25.0",
@@ -31,6 +33,7 @@
     "eslint": "6.8.0",
     "eslint-config-preact": "1.1.0",
     "gh-pages": "3.2.3",
+    "gltf-pipeline": "^3.0.5",
     "preact-cli": "3.3.5",
     "sirv-cli": "1.0.3",
     "typescript": "4.3.4",
@@ -38,6 +41,7 @@
   },
   "dependencies": {
     "classnames": "2.3.1",
+    "dat.gui": "^0.7.9",
     "preact": "10.8.2 ",
     "preact-render-to-string": "5.1.4",
     "preact-router": "3.2.1",

@@ -148,3 +148,7 @@ button:focus, a:focus {
 .message p {
     margin: 40px 0;
 }
+
+div.dg.ac {
+    z-index: 100;
+}
