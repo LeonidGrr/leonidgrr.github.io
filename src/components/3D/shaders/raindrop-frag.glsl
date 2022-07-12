@@ -4,9 +4,9 @@
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
 varying vec2 vUv;
+varying vec3 vPosition;
 
 uniform float iTime;
-uniform vec2 iResolution;
 uniform float zoom;
 uniform sampler2D iChannel0;
 
@@ -99,15 +99,14 @@ vec2 Drops(vec2 uv, float t, float l0, float l1, float l2) {
 }
 
 void main() {
-	vec2 uv = (gl_FragCoord.xy-0.5*iResolution.xy) / iResolution.y;
+    vec2 uv = vec2(vUv.y, 1.0 - vUv.x);
     vec2 UV = vUv.yx;
     float T = iTime*0.025;
     float t = T*0.2;
     float rainAmount = sin(T*0.05)*0.3+0.7;
-    float maxBlur = mix(2.0, 5.0, rainAmount);
-    float minBlur = 1.0;
+    float maxBlur = mix(1.0, 4.0, rainAmount);
+    float minBlur = 0.5;
 
-    float zoom = 1.0;
     uv *= 0.7+zoom*0.3;
 
     UV = (UV-0.5)*(0.9+zoom*0.1)+0.5;

@@ -2,41 +2,53 @@ import * as THREE from 'three';
 import { Tooltip } from './Tooltip';
 import raindropVert from '../shaders/raindrop-vert.glsl';
 import raindropFrag from '../shaders/raindrop-frag.glsl';
-import background from '../textures/background.png';
-import background2 from '../textures/background2.png';
+import background from '../textures/background0.png';
 
 export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip) => {
+    const iTime = { value: 0 };
+
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(background);
     texture.flipY = false;
-
-    const iTime = { value: 0 };
     const rainyWindowMaterial = new THREE.ShaderMaterial({
         vertexShader: raindropVert,
         fragmentShader: raindropFrag,
         uniforms: {
             iTime,
-            iResolution: { value: new THREE.Vector2(200.0, 200.0) },
-            zoom: { value: 0.25 },
+            zoom: { value: 1 },
             iChannel0: { value: texture },
         },
     });
     rainyWindowMaterial.extensions.derivatives = true;
 
-    const texture2 = textureLoader.load(background2);
+    const texture2 = textureLoader.load(background);
     texture2.flipY = false;
     const rainyWindowMaterial2 = new THREE.ShaderMaterial({
         vertexShader: raindropVert,
         fragmentShader: raindropFrag,
         uniforms: {
             iTime,
-            iResolution: { value: new THREE.Vector2(200.0, 200.0) },
-            zoom: { value: 0.2 },
+            zoom: { value: 1 },
             iChannel0: { value: texture2 },
         },
     });
     rainyWindowMaterial2.extensions.derivatives = true;
     
+    const texture3 = textureLoader.load(background);
+    texture3.flipY = false;
+    texture3.wrapS = THREE.RepeatWrapping;
+    texture3.repeat.set(3, 1);
+    const rainyWindowMaterial3 = new THREE.ShaderMaterial({
+        vertexShader: raindropVert,
+        fragmentShader: raindropFrag,
+        uniforms: {
+            iTime,
+            zoom: { value: 20 },
+            iChannel0: { value: texture3 },
+        },
+    });
+    rainyWindowMaterial3.extensions.derivatives = true;
+
     const targets: THREE.Mesh[] = [];
     let opened = true;
     let windowRef: THREE.Mesh | null = null;
@@ -49,13 +61,14 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         if (c.name === 'Plane') {
             targets.push(c as THREE.Mesh);
             tooltip.addTarget(c as THREE.Mesh, 'Close window', new THREE.Vector3(0, 0, 0));
+            (c as THREE.Mesh).material = rainyWindowMaterial;
         }
         if ((c as THREE.Mesh).isMesh && !c.name.includes('Plane')) {
             c.castShadow = true;
             c.receiveShadow = true;
         } else if (!c.name.includes('Plane002')) {
-            (c as THREE.Mesh).material = rainyWindowMaterial;
-        } else {
+            (c as THREE.Mesh).material = rainyWindowMaterial3;
+        } else if (!c.name.includes('Plane001')) {
             (c as THREE.Mesh).material = rainyWindowMaterial2;
         }
     });
@@ -84,6 +97,9 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
             }
 
             iTime.value = clock.getElapsedTime();
+            // const defaultResolution = new THREE.Vector2(100.0, 100.0);
+            // iResolution.value = defaultResolution.multiplyScalar(camera.position.distanceTo(mesh.position) / 15);
+            // zoom.value = camera.position.distanceTo(mesh.position) / 15;
             requestAnimationFrame(render);
         };
         requestAnimationFrame(render);

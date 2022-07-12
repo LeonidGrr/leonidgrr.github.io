@@ -11,10 +11,9 @@ import {
     Tooltip,
     Windows,
     TextLight,
-    StreetLight,
 } from '.';
 import desktopScene from '../models/sceneDraco.glb';
-import background from '../textures/background.png';
+import background from '../textures/background0.png';
 
 export const Desktop = async (
     scene: THREE.Scene,
@@ -85,7 +84,7 @@ export const Desktop = async (
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
     directionalLight.position.set(0, 35, 35);
     scene.add(directionalLight);
 
