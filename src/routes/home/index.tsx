@@ -18,7 +18,7 @@ const titleMap: Config = {
 	desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
     sub: {
         screen: 'For now this is just an example of THREEJS render target...',
-        windows: 'I like rain.\nTo program this raindrops I used <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoys from Heartfelt</a> as a reference\n and then ported them into ThreeJS ShaderMaterial.',
+        windows: 'I like rain.\nTo program this raindrops I used <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoys by Heartfelt</a>\n and ported them into ThreeJS ShaderMaterial.',
     },
 };
 
