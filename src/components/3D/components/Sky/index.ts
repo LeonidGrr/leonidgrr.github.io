@@ -3,7 +3,6 @@ import { Sky as SkyExample } from 'three/examples/jsm/objects/Sky';
 import * as dat from 'dat.gui';
 
 export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) => {
-   const gui = new dat.GUI();
    let sky = new SkyExample();
     sky.scale.setScalar(450000);
     scene.add(sky);
@@ -21,6 +20,7 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
         exposure: 1.0,
     };
 
+    if (typeof window !== "undefined") {
     function guiChanged() {
         const uniforms = sky.material.uniforms;
         uniforms['turbidity'].value = effectController.turbidity;
@@ -38,7 +38,7 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
         renderer.toneMappingExposure = effectController.exposure;
         renderer.render(scene, camera);
     }
-
+    const gui = new dat.GUI();
     gui.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(guiChanged);
     gui.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(guiChanged);
     gui.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(guiChanged);
@@ -48,5 +48,6 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
     gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
     gui.close();
     guiChanged();
+    }
 }
 
