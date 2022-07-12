@@ -21,7 +21,7 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
     };
 
     if (typeof window !== "undefined") {
-    function guiChanged() {
+    const guiChanged = () => {
         const uniforms = sky.material.uniforms;
         uniforms['turbidity'].value = effectController.turbidity;
         uniforms['rayleigh'].value = effectController.rayleigh;
