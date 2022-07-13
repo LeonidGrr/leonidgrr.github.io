@@ -151,6 +151,10 @@ button:focus, a:focus {
 .message p {
     margin: 40px 0;
 }
+
+div.dg.ac {
+    z-index: 100;
+}
 .loader-wrapper__gLPZi {
     position: absolute;
     z-index: 2;
@@ -382,4 +386,4 @@ button:focus, a:focus {
 }
 
 
-/*# sourceMappingURL=ssr-bundle.b84f3.css.map*/
+/*# sourceMappingURL=ssr-bundle.d642d.css.map*/
