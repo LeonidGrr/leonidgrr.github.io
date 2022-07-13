@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import { Sky as SkyExample } from 'three/examples/jsm/objects/Sky';
-import * as dat from 'dat.gui';
 
-export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) => {
+export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) => {
    let sky = new SkyExample();
     sky.scale.setScalar(450000);
     scene.add(sky);
@@ -21,33 +20,37 @@ export const Sky = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: T
     };
 
     if (typeof window !== "undefined") {
-    const guiChanged = () => {
-        const uniforms = sky.material.uniforms;
-        uniforms['turbidity'].value = effectController.turbidity;
-        uniforms['rayleigh'].value = effectController.rayleigh;
-        uniforms['mieCoefficient'].value = effectController.mieCoefficient;
-        uniforms['mieDirectionalG'].value = effectController.mieDirectionalG;
+        let dat = await import('dat.gui');
+        const gui = new dat.GUI();
 
-        const phi = THREE.MathUtils.degToRad(90 - effectController.elevation);
-        const theta = THREE.MathUtils.degToRad(effectController.azimuth);
+        const guiChanged = () => {
+            const uniforms = sky.material.uniforms;
+            uniforms['turbidity'].value = effectController.turbidity;
+            uniforms['rayleigh'].value = effectController.rayleigh;
+            uniforms['mieCoefficient'].value = effectController.mieCoefficient;
+            uniforms['mieDirectionalG'].value = effectController.mieDirectionalG;
 
-        sun.setFromSphericalCoords(1, phi, theta);
+            const phi = THREE.MathUtils.degToRad(90 - effectController.elevation);
+            const theta = THREE.MathUtils.degToRad(effectController.azimuth);
 
-        uniforms['sunPosition'].value.copy(sun);
+            sun.setFromSphericalCoords(1, phi, theta);
 
-        renderer.toneMappingExposure = effectController.exposure;
-        renderer.render(scene, camera);
-    }
-    const gui = new dat.GUI();
-    gui.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(guiChanged);
-    gui.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(guiChanged);
-    gui.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(guiChanged);
-    gui.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(guiChanged);
-    gui.add(effectController, 'elevation', 0, 90, 0.1).onChange(guiChanged);
-    gui.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(guiChanged);
-    gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
-    gui.close();
-    guiChanged();
+            uniforms['sunPosition'].value.copy(sun);
+
+            renderer.toneMappingExposure = effectController.exposure;
+            renderer.render(scene, camera);
+        };
+
+        gui.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(guiChanged);
+        gui.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(guiChanged);
+        gui.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(guiChanged);
+        gui.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(guiChanged);
+        gui.add(effectController, 'elevation', 0, 90, 0.1).onChange(guiChanged);
+        gui.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(guiChanged);
+        gui.add(effectController, 'exposure', 0, 1, 0.0001).onChange(guiChanged);
+
+        gui.close();
+        guiChanged();
     }
 }
 

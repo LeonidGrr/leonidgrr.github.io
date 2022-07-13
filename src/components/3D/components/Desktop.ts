@@ -22,8 +22,6 @@ export const Desktop = async (
     renderer: THREE.WebGLRenderer,
     tooltip: Tooltip,
 ) => {
-    Sky(renderer, scene, camera);
-
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/gltf/');
     dracoLoader.preload();
@@ -79,6 +77,8 @@ export const Desktop = async (
         }
     });
     scene.add(desktop.scene);
+
+    await Sky(renderer, scene, camera);
 
     Rain(camera, scene);
 
