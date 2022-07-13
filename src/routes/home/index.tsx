@@ -6,10 +6,13 @@ import Explore from '../../components/Explore';
 import Header from '../../components/Header';
 
 export type Config = {
-    name: string,
-    header: string,
-    desc: string,
-    sub: Record<string, string>,
+    name: string
+    header: string
+    desc: string
+    sub: Record<string, {
+		name: string
+		desc: string
+	}>
 };
 
 const titleMap: Config = {
@@ -17,8 +20,14 @@ const titleMap: Config = {
     header: 'my dev lair',
 	desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
     sub: {
-        screen: 'For now this is just an example of THREEJS render target...',
-        windows: 'I like rain.\nTo program this raindrops I used <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoys by Heartfelt</a>\n and ported them into ThreeJS ShaderMaterial.',
+        screen: {
+			name: 'Screen - ThreeJS render target',
+			desc: 'For now this is just an example of THREEJS render target...',
+		},
+        windows: {
+			name: 'Raindrops shader',
+			desc: 'I like rain.\nTo program this raindrops I used <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoys by Heartfelt</a>\n and ported them into ThreeJS ShaderMaterial.',
+		},
     },
 };
 

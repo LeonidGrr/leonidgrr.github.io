@@ -4,9 +4,11 @@ import raindropVert from '../shaders/raindrop-vert.glsl';
 import raindropFrag from '../shaders/raindrop-frag.glsl';
 import background1 from '../textures/background_transparent_1.png';
 import background2 from '../textures/background2.png';
+import { SceneTheme } from './Desktop';
 
-export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip) => {
+export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip, theme: SceneTheme) => {
     const iTime = { value: 0 };
+    const opacity = { value: theme.config[theme.mode].opacity };
 
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(background1);
@@ -17,6 +19,7 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         uniforms: {
             iTime,
             zoom: { value: 1 },
+            opacity,
             iChannel0: { value: texture },
         },
     });
@@ -33,7 +36,8 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         fragmentShader: raindropFrag,
         uniforms: {
             iTime,
-            zoom: { value: 1 },
+            zoom: { value: 0.1 },
+            opacity,
             iChannel0: { value: texture2 },
         },
     });
@@ -80,18 +84,20 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         }
     });
 
-    if (windowRef) {
-        const clock = new THREE.Clock();
-        const render = () => {
+    const clock = new THREE.Clock();
+    const render = () => {
+        if (windowRef) {
             if (opened) {
                 windowRef!.rotation.y += Math.sin(clock.getElapsedTime()) * 0.00025;
             } else if (windowRef!.rotation.y < 0) {
                 windowRef!.rotation.y += 0.02;
             }
+        }
 
-            iTime.value = clock.getElapsedTime();
-            requestAnimationFrame(render);
-        };
+        iTime.value = clock.getElapsedTime();
+        opacity.value = theme.config[theme.mode].opacity;
+
         requestAnimationFrame(render);
-    }
+    };
+    requestAnimationFrame(render);
 }

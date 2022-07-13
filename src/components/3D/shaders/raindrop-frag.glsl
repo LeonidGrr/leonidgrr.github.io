@@ -4,10 +4,10 @@
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
 varying vec2 vUv;
-varying vec3 vPosition;
 
 uniform float iTime;
 uniform float zoom;
+uniform float opacity;
 uniform sampler2D iChannel0;
 
 vec3 N13(float p) {
@@ -128,7 +128,7 @@ void main() {
     float focus = mix(maxBlur-c.y, minBlur, smoothstep(0.1, 0.2, c.x));
     vec3 col = texture2DLodEXT(iChannel0, UV+n, focus).rgb;
     
-    gl_FragColor = vec4(col, 0.7);
+    gl_FragColor = vec4(col, opacity);
 }
 
 

@@ -11,7 +11,7 @@ import { CameraState } from '../3D/components/CameraManager';
 
 type ExplorePanelProps = {
     onChangeCamera: (key: CameraState) => void,
-    currentCamera: string,
+    currentCamera: CameraState,
     titleMap: Config,
 }
 
@@ -49,10 +49,10 @@ const Explore = (props: ExplorePanelProps) => {
     };
 
     useEffect(() => {
-        setShowDescription(titleMap.sub[currentCamera] || titleMap.desc);
+        setShowDescription(titleMap.sub[currentCamera]?.desc || titleMap.desc);
     }, [currentCamera]);
 
-    const handleHideDescription = useCallback(() => {
+    const handleHideDescription = useCallback((e: Event) => {
         setShowDescription(null);
     }, []);
 
@@ -80,7 +80,7 @@ const Explore = (props: ExplorePanelProps) => {
                                 type="button"
                                 onPointerDown={handleCamera}
                             >
-                                {key}
+                                {titleMap.sub[key].name}
                             </button>
                         </li>
                     ))}

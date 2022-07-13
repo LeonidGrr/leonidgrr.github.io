@@ -16,12 +16,47 @@ import {
 import desktopScene from '../models/sceneDraco.glb';
 import background from '../textures/background_half_transparent_0.png';
 
+export enum SceneThemeMode {
+    DAY = 'day',
+    NIGHT = 'night',
+};
+
+export type SceneTheme = {
+    config: Record<SceneThemeMode, {
+        opacity: number,
+        sky: boolean,
+        rain: boolean,
+    }>,
+    mode: SceneThemeMode,
+};
+
 export const Desktop = async (
     scene: THREE.Scene,
     camera: THREE.PerspectiveCamera,
     renderer: THREE.WebGLRenderer,
     tooltip: Tooltip,
 ) => {
+    const theme = {
+        config: {
+            day: {
+                opacity: 0.3,
+                sky: true,
+                rain: false,
+            },
+            night: {
+                opacity: 0.8,
+                sky: false,
+                rain: true,
+            },
+        },
+        mode: SceneThemeMode.DAY,
+    };
+
+    let dat = await import('dat.gui');
+    const gui = new dat.GUI();
+    gui.add(theme, 'mode', { Day: SceneThemeMode.DAY, Night: SceneThemeMode.NIGHT });
+    gui.close();
+
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/gltf/');
     dracoLoader.preload();
@@ -63,7 +98,7 @@ export const Desktop = async (
             Trees(child as THREE.Mesh, desktop.scene);
         }
         if (child.name === 'Windows') {
-            Windows(child as THREE.Mesh, camera, tooltip);
+            Windows(child as THREE.Mesh, camera, tooltip, theme);
         }
         if (child.name === 'Room') {
             child.traverse(c => {
@@ -78,7 +113,7 @@ export const Desktop = async (
     });
     scene.add(desktop.scene);
 
-    await Sky(renderer, scene, camera);
+    await Sky(renderer, scene, camera, theme, gui);
 
     Rain(camera, scene);
 

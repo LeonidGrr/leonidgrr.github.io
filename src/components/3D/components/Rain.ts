@@ -43,7 +43,7 @@ export const Rain = async (camera: THREE.PerspectiveCamera, scene: THREE.Scene) 
     const positions = ref.geometry.attributes.position;
 
     // Flashlight
-    const flash = new THREE.PointLight(0x062d89, 30, 300, 1.7);
+    const flash = new THREE.PointLight(0x062d89, 30, 500, 1.7);
     flash.position.set(0, 50, -200);
     scene.add(flash);
 

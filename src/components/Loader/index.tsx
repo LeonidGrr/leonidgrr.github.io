@@ -14,7 +14,7 @@ const Loader = () => {
     
         THREE.DefaultLoadingManager.onLoad = function() {
             // console.log('Loading Complete!');
-            setTimeout(() => setLoaded(true));
+            setTimeout(() => setLoaded(true), 1000);
         };
         
         THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
