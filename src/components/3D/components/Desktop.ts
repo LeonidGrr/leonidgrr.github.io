@@ -49,7 +49,7 @@ export const Desktop = async (
                 rain: true,
             },
         },
-        mode: SceneThemeMode.DAY,
+        mode: SceneThemeMode.NIGHT,
     };
 
     let dat = await import('dat.gui');
@@ -117,7 +117,7 @@ export const Desktop = async (
 
     Rain(camera, scene);
 
-    await TextLight('Hello world!', scene);
+    await TextLight(scene, camera);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);

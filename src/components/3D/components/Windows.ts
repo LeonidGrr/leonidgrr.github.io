@@ -72,7 +72,6 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
-
     document.addEventListener('pointerdown', (e: PointerEvent) => {
         pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
         pointer.y = -(e.clientY / document.body.clientHeight) * 2 + 1;
