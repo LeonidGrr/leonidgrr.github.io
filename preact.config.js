@@ -12,10 +12,10 @@ export default (config, env, helpers) => {
     );
 
     const fileLoader = helpers.getLoadersByName(config, 'file-loader');
-    fileLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf)(\?.*)?$/i);
+    fileLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf|json.data)(\?.*)?$/i);
     
     const urlLoader = helpers.getLoadersByName(config, 'url-loader');
-    urlLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf)(\?.*)?$/i);
+    urlLoader.map(entry => entry.rule.test = /\.(svg|woff2?|ttf|eot|jpe?g|png|webp|gif|mp4|mov|ogg|webm|glb|gltf|json.data)(\?.*)?$/i);
 
     const rawLoader = helpers.getLoadersByName(config, 'raw-loader');
     rawLoader.map(entry => entry.rule.test = /\.(xml|html|txt|md|glsl)$/);
@@ -23,6 +23,7 @@ export default (config, env, helpers) => {
     config.resolve.extensions.push('.glsl');
     config.resolve.extensions.push('.glb');
     config.resolve.extensions.push('.gltf');
+    config.resolve.extensions.push('.json.data');
 
     config.resolve.modules.push(env.src)
 };

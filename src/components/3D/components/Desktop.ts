@@ -10,7 +10,7 @@ import {
     Trees,
     Tooltip,
     Windows,
-    TextLight,
+    ParticleText,
     Sky
 } from '.';
 import desktopScene from '../models/sceneDraco.glb';
@@ -117,7 +117,7 @@ export const Desktop = async (
 
     Rain(camera, scene);
 
-    await TextLight(scene, camera);
+    await ParticleText(scene, camera);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);

@@ -14,3 +14,4 @@ export { Venusian } from './Venusian';
 export { Windows } from './Windows';
 export { RenderingManager } from './RenderingManager';
 export { Sky } from './Sky';
+export { ParticleText } from './ParticleText';
