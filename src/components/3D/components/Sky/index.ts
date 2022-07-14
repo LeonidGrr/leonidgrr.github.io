@@ -11,12 +11,12 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
 
     const effectController = {
         turbidity: 0,
-        rayleigh: -1,
+        rayleigh: 0,
         mieCoefficient: 0.005,
         mieDirectionalG: 0.7,
         elevation: 0,
         azimuth: -160,
-        exposure: 2,
+        exposure: 1.25,
     };
 
     const init = () => {
@@ -37,12 +37,12 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     const render = () => {
         if (theme.mode === SceneThemeMode.DAY) {
             effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
-            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.01);
-            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.01);
+            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.05);
+            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.05);
         } else if (theme.mode === SceneThemeMode.NIGHT) {
             effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
-            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.01);
-            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, -1, 0.01);
+            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.05);
+            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0, 0.05);
         }
         init();
         requestAnimationFrame(render);
