@@ -104,23 +104,14 @@ export const Desktop = async (
 
     await ParticleText(scene, camera);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.25);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(0, 35, 35);
     scene.add(directionalLight);
 
-    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight2.position.set(-15, 30, -50);
     directionalLight2.rotateY(-Math.PI / 16);
     scene.add(directionalLight2);
-
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2.25);
-    // directionalLight.position.set(0, 35, 35);
-    // scene.add(directionalLight);
-
-    // const directionalLight2 = new THREE.DirectionalLight(0xffffff, 5);
-    // directionalLight2.position.set(-15, 30, -50);
-    // directionalLight2.rotateY(-Math.PI / 16);
-    // scene.add(directionalLight2);
 
     const textureLoader = new THREE.TextureLoader();
     const backgroundTexture = textureLoader.load(background);
@@ -139,8 +130,8 @@ export const Desktop = async (
             directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1.25, 0.1);
             directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 1, 0.1);
         } else if (theme.mode === SceneThemeMode.NIGHT) {
-            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1.25, 0.1);
-            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 1, 0.1);
+            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1, 0.05);
+            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 0.5, 0.05);
         }
         requestAnimationFrame(render);
     };
