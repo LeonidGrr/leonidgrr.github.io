@@ -51,10 +51,10 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0.0, 0.02);
             }
             if (effectController.turbidity > 0) {
-                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0.0, 0.05);
+                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0.0, 0.01);
             }
             if (effectController.rayleigh > 0) {
-                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0.0, 0.05);
+                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, -0.04, 0.01);
             }
         }
         init();
