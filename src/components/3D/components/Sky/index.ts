@@ -59,6 +59,7 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
             } else {
                 sky.visible = false;
             }
+        }
         init();
         requestAnimationFrame(render);
     };
