@@ -44,7 +44,7 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
             }
         }
         if (theme.mode === SceneThemeMode.NIGHT) {
-            if (effectController.elevation !== 0 || effectController.turbidity !== 0 || effectController.rayleigh !== 0) {
+            if (effectController.elevation > 0 || effectController.rayleigh > 0) {
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
                 effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.05);
                 effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0, 0.05);
