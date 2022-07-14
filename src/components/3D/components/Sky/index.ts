@@ -37,26 +37,25 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     const render = () => {
         if (theme.mode === SceneThemeMode.DAY) {
             if (effectController.elevation !== 9.3 || effectController.turbidity !== 10 || effectController.rayleigh !== 3) {
-                // show sky
+                sky.visible = true;
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
                 effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.05);
                 effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.05);
             }
         }
         if (theme.mode === SceneThemeMode.NIGHT) {
-            if (effectController.elevation !== 0 || effectController.turbidity !== 0 || effectController.rayleigh !== 0)
+            if (effectController.elevation !== 0 || effectController.turbidity !== 0 || effectController.rayleigh !== 0) {
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
                 effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.05);
                 effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0, 0.05);
             } else {
-                // hide sky
+                sky.visible = false;
             }
         }
         init();
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
-
 
     const folder = gui.addFolder('Sky');
     folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).listen().onChange(theme.setFreeMode);
