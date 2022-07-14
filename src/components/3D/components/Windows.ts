@@ -4,11 +4,11 @@ import raindropVert from '../shaders/raindrop-vert.glsl';
 import raindropFrag from '../shaders/raindrop-frag.glsl';
 import background1 from '../textures/background_transparent_1.png';
 import background2 from '../textures/background2.png';
-import { SceneTheme } from './Desktop';
+import { SceneTheme, SceneThemeMode } from './Desktop';
 
 export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip, theme: SceneTheme) => {
     const iTime = { value: 0 };
-    const opacity = { value: theme.config[theme.mode].opacity };
+    const opacity = { value: 0.8 };
 
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load(background1);
@@ -57,10 +57,6 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
             targets.push(c as THREE.Mesh);
             tooltip.addTarget(c as THREE.Mesh, 'Close window', new THREE.Vector3(0, 0, 0));
         }
-        if ((c as THREE.Mesh).isMesh && !c.name.includes('Plane')) {
-            c.castShadow = true;
-            c.receiveShadow = true;
-        }
         if (c.name.includes('Glass')) {
             (c as THREE.Mesh).material = rainyWindowMaterial;
         }
@@ -94,7 +90,13 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
         }
 
         iTime.value = clock.getElapsedTime();
-        opacity.value = theme.config[theme.mode].opacity;
+        
+        if (theme.mode === SceneThemeMode.DAY) {
+            opacity.value = THREE.MathUtils.lerp(opacity.value, 0.3, 0.01);
+            
+        } else if (theme.mode === SceneThemeMode.NIGHT) {
+            opacity.value = THREE.MathUtils.lerp(opacity.value, 0.8, 0.01);
+        }
 
         requestAnimationFrame(render);
     };

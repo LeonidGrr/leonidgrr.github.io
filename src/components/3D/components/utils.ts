@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { Vector3 } from 'three';
 
 export const fillWithPoints = (geometry: THREE.BufferGeometry, count: number): THREE.BufferGeometry => {
     const ray = new THREE.Ray()
@@ -20,7 +19,7 @@ export const fillWithPoints = (geometry: THREE.BufferGeometry, count: number): T
           vA.fromBufferAttribute(pos, i * 3 + 0);
           vB.fromBufferAttribute(pos, i * 3 + 1);
           vC.fromBufferAttribute(pos, i * 3 + 2);
-          if (ray.intersectTriangle(vA, vB, vC, false, new Vector3())) {
+          if (ray.intersectTriangle(vA, vB, vC, false, new THREE.Vector3())) {
               counter++;
           };
         }

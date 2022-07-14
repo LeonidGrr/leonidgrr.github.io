@@ -50,8 +50,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
     mesh.traverse(async child => {
         if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
-            if (child.name.includes('Cube')
-            && child.position.y !== 0) {
+            if (child.name.includes('Cube') && child.position.y !== 0) {
                 mesh.material = keyboardMaterial;
 
                 const key = Object.values(keyCodeMap).find(value => {;

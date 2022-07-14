@@ -26,7 +26,7 @@ const titleMap: Config = {
 		},
         windows: {
 			name: 'Raindrops shader',
-			desc: 'I like rain.\nTo program this raindrops I used <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoys by Heartfelt</a>\n and ported them into ThreeJS ShaderMaterial.',
+			desc: 'I like rain.\n To program this raindrops I used ThreeJS ShaderMaterial and custom fragment shader, partially based on <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoy by Heartfelt</a>.',
 		},
     },
 };

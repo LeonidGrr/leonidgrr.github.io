@@ -9,14 +9,14 @@ import data2 from './2.json';
 import data3 from './3.json';
 import data4 from './4.json';
 
-const POINTS_COUNT = 2250;
+const POINTS_COUNT = 2048;
 const UPDATE_TIME_LIMIT = 1000;
 const colors = ['#F7A541', '#F45D4C', '#FA2E59', '#4783c3', '#9c6cb7'];
 
 // Use this to create JSONs with prebuilt buffer geometries
 const getStringifiedGeometries = async () => {
     const list = [
-        'Click me!',
+        'Click me',
         'Hello world!',
         'Weather: always rainy',
         'leonidgrr@gmail.com',
@@ -52,14 +52,20 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
     const particleGeometries = [data1, data2, data3, data4].map(v => loader.parse(v));
 
     const ref = new THREE.Object3D();
-    ref.position.set(-5, 9.75, -17);
-    ref.rotateY(Math.PI / 12);
+    ref.position.set(-5, 9.5, -17);
+    ref.rotateY(Math.PI / 16);
     ref.rotateX(-Math.PI / 10);
     scene.add(ref);
 
-    const particlesMat = new THREE.PointsMaterial({ color: 0xff0000, size: 0.05 });
+    const particlesMat = new THREE.PointsMaterial({
+        color: 0xff0000,
+        size: 0.075,
+        transparent: true,
+        opacity: 0.5,
+        blending: THREE.AdditiveBlending,
+    });
     const particles = new THREE.Points(particleGeometries[config.currentIdx], particlesMat);
-    particles.layers.enable(1);
+    // particles.layers.enable(1);
     ref.add(particles);
 
     const positions = particles.geometry.attributes.position;

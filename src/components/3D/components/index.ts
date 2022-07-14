@@ -9,7 +9,6 @@ export { Screen } from './Screen';
 export { Rain } from './Rain';
 export { Desktop } from './Desktop';
 export { Trees } from './Trees';
-export { StreetLight } from './StreetLight';
 export { Venusian } from './Venusian';
 export { Windows } from './Windows';
 export { RenderingManager } from './RenderingManager';

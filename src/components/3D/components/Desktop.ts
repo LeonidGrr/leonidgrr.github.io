@@ -23,8 +23,6 @@ export enum SceneThemeMode {
 
 export type SceneTheme = {
     config: Record<SceneThemeMode, {
-        opacity: number,
-        sky: boolean,
         rain: boolean,
     }>,
     mode: SceneThemeMode,
@@ -39,13 +37,9 @@ export const Desktop = async (
     const theme = {
         config: {
             day: {
-                opacity: 0.3,
-                sky: true,
                 rain: false,
             },
             night: {
-                opacity: 0.8,
-                sky: false,
                 rain: true,
             },
         },
@@ -78,7 +72,7 @@ export const Desktop = async (
             });
         }
         if (child.name === 'Lamp') {
-            await Lamp(child as THREE.Mesh, scene);
+            await Lamp(child as THREE.Mesh, scene, theme);
         }
         if (child.name === 'Keyboard') {
             await Keyboard(child as THREE.Mesh, camera, tooltip);
@@ -102,8 +96,6 @@ export const Desktop = async (
         }
         if (child.name === 'Room') {
             child.traverse(c => {
-                c.castShadow = true;
-                c.receiveShadow = true;
                 if ((c as THREE.Mesh).isMesh) {
                     const mesh = c as THREE.Mesh;
                     (mesh.material as THREE.MeshStandardMaterial).color.set(0x282828);
@@ -119,12 +111,23 @@ export const Desktop = async (
 
     await ParticleText(scene, camera);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.25);
     directionalLight.position.set(0, 35, 35);
     scene.add(directionalLight);
+
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight2.position.set(-15, 30, -50);
+    directionalLight2.rotateY(-Math.PI / 16);
+    scene.add(directionalLight2);
+
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 2.25);
+    // directionalLight.position.set(0, 35, 35);
+    // scene.add(directionalLight);
+
+    // const directionalLight2 = new THREE.DirectionalLight(0xffffff, 5);
+    // directionalLight2.position.set(-15, 30, -50);
+    // directionalLight2.rotateY(-Math.PI / 16);
+    // scene.add(directionalLight2);
 
     const textureLoader = new THREE.TextureLoader();
     const backgroundTexture = textureLoader.load(background);
@@ -137,4 +140,16 @@ export const Desktop = async (
     const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
     backgroundMesh.position.z = -250;
     scene.add(backgroundMesh);
+
+    const render = () => {
+        if (theme.mode === SceneThemeMode.DAY) {
+            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1.25, 0.1);
+            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 1, 0.1);
+        } else if (theme.mode === SceneThemeMode.NIGHT) {
+            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1.25, 0.1);
+            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 1, 0.1);
+        }
+        requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
 }

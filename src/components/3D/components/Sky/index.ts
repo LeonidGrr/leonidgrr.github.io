@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Sky as SkyExample } from 'three/examples/jsm/objects/Sky';
-import { SceneTheme } from '../Desktop';
+import { SceneTheme, SceneThemeMode } from '../Desktop';
 
 export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera, theme: SceneTheme, gui: dat.GUI) => {
     let sky = new SkyExample();
@@ -10,13 +10,13 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     let sun = new THREE.Vector3();
 
     const effectController = {
-        turbidity: 10,
-        rayleigh: 3,
+        turbidity: 0,
+        rayleigh: -1,
         mieCoefficient: 0.005,
         mieDirectionalG: 0.7,
-        elevation: 6.4,
+        elevation: 0,
         azimuth: -160,
-        exposure: 1,
+        exposure: 2,
     };
 
     const init = () => {
@@ -32,25 +32,31 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
         uniforms['sunPosition'].value.copy(sun);
 
         renderer.toneMappingExposure = effectController.exposure;
-        renderer.render(scene, camera);
     };
 
     const render = () => {
-        sky.visible = theme.config[theme.mode].sky;
+        if (theme.mode === SceneThemeMode.DAY) {
+            effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
+            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.01);
+            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.01);
+        } else if (theme.mode === SceneThemeMode.NIGHT) {
+            effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
+            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.01);
+            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, -1, 0.01);
+        }
+        init();
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
 
 
     const folder = gui.addFolder('Sky');
-    folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(init);
-    folder.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(init);
-    folder.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(init);
-    folder.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(init);
-    folder.add(effectController, 'elevation', 0, 90, 0.1).onChange(init);
-    folder.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(init);
-    folder.add(effectController, 'exposure', 0, 1, 0.0001).onChange(init);
-
-    init();
+    folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).listen();
+    folder.add(effectController, 'rayleigh', 0.0, 4, 0.001).listen();
+    folder.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).listen();
+    folder.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).listen();
+    folder.add(effectController, 'elevation', 0, 90, 0.1).listen()
+    folder.add(effectController, 'azimuth', -180, 180, 0.1).listen();
+    folder.add(effectController, 'exposure', 0, 5, 0.0001).listen();
 }
 
