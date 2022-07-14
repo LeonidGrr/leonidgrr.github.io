@@ -127,11 +127,11 @@ export const Desktop = async (
 
     const render = () => {
         if (theme.mode === SceneThemeMode.DAY) {
-            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1.25, 0.1);
-            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 1, 0.1);
+            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 2.25, 0.1);
+            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 2, 0.1);
         } else if (theme.mode === SceneThemeMode.NIGHT) {
-            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 1, 0.05);
-            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 0.5, 0.05);
+            directionalLight.intensity = THREE.MathUtils.lerp(directionalLight.intensity, 0, 0.05);
+            directionalLight2.intensity = THREE.MathUtils.lerp(directionalLight2.intensity, 0.0, 0.05);
         }
         requestAnimationFrame(render);
     };

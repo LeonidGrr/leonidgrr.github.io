@@ -65,7 +65,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
         blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeometries[config.currentIdx], particlesMat);
-    // particles.layers.enable(1);
+    particles.layers.enable(1);
     ref.add(particles);
 
     const positions = particles.geometry.attributes.position;

@@ -36,7 +36,6 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
 
     const render = () => {
         if (theme.mode === SceneThemeMode.DAY) {
-            sky.visible = true;
             if (effectController.elevation < 9.3) {
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
             }
@@ -54,10 +53,10 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
             if (effectController.turbidity > 0) {
                 effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0.0, 0.2);
             }
-            if (effectController.rayleigh > 0) {
+            if (effectController.rayleigh > 0.02) {
                 effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0.0, 0.02);
             } else {
-                sky.visible = false;
+                effectController.rayleigh = 0;
             }
         }
         init();

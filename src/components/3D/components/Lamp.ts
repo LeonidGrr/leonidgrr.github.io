@@ -21,7 +21,7 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene, theme: SceneThe
     sphere.layers.enable(1);
 
     const light = new THREE.PointLight(0xffffff, 0);
-    light.distance = 15;
+    light.distance = 20;
     
     light.shadow.camera.near = 0.01;
     light.shadow.camera.far = 15;
@@ -36,8 +36,8 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene, theme: SceneThe
             light.intensity = THREE.MathUtils.lerp(light.intensity, 0, 0.1);
             material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 0, 0.2);
         } else if (theme.mode === SceneThemeMode.NIGHT) {
-            light.intensity = THREE.MathUtils.lerp(light.intensity, 3, 0.1);
-            material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 1, 0.1);
+            light.intensity = THREE.MathUtils.lerp(light.intensity, 4, 0.1);
+            material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 2, 0.1);
         }
         requestAnimationFrame(render);
     };
