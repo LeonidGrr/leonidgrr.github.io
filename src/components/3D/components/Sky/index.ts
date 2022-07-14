@@ -11,10 +11,10 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
 
     const effectController = {
         turbidity: -1.0,
-        rayleigh: -1.0,
+        rayleigh: 0.0,
         mieCoefficient: 0.005,
         mieDirectionalG: 0.7,
-        elevation: -1.0,
+        elevation: 0.0,
         azimuth: -160,
         exposure: 1.25,
     };
@@ -47,13 +47,13 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
             }
         }
         if (theme.mode === SceneThemeMode.NIGHT) {
-            if (effectController.elevation > -1) {
+            if (effectController.elevation > 0) {
                 effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, -1.0, 0.02);
             }
             if (effectController.turbidity > -1) {
                 effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, -1.0, 0.05);
             }
-            if (effectController.rayleigh > -1) {
+            if (effectController.rayleigh > 0) {
                 effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, -1.0, 0.05);
             }
         }
