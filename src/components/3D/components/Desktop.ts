@@ -19,12 +19,11 @@ import background from '../textures/background_half_transparent_0.png';
 export enum SceneThemeMode {
     DAY = 'day',
     NIGHT = 'night',
+    FREE = 'free',
 };
 
 export type SceneTheme = {
-    config: Record<SceneThemeMode, {
-        rain: boolean,
-    }>,
+    setFreeMode: () => void,
     mode: SceneThemeMode,
 };
 
@@ -34,21 +33,15 @@ export const Desktop = async (
     renderer: THREE.WebGLRenderer,
     tooltip: Tooltip,
 ) => {
+    const setFreeMode = () => theme.mode = SceneThemeMode.FREE;
     const theme = {
-        config: {
-            day: {
-                rain: false,
-            },
-            night: {
-                rain: true,
-            },
-        },
+        setFreeMode,
         mode: SceneThemeMode.NIGHT,
     };
 
     let dat = await import('dat.gui');
     const gui = new dat.GUI();
-    gui.add(theme, 'mode', { Day: SceneThemeMode.DAY, Night: SceneThemeMode.NIGHT });
+    gui.add(theme, 'mode', { Day: SceneThemeMode.DAY, Night: SceneThemeMode.NIGHT, Free: SceneThemeMode.FREE }).listen();
     gui.close();
 
     const dracoLoader = new DRACOLoader();
