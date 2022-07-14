@@ -73,4 +73,3 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     folder.add(effectController, 'azimuth', -180, 180, 0.1).listen().onChange(theme.setFreeMode);
     folder.add(effectController, 'exposure', -1, 5, 0.0001).listen().onChange(theme.setFreeMode);
 }
-
