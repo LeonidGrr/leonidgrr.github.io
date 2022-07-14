@@ -36,13 +36,21 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
 
     const render = () => {
         if (theme.mode === SceneThemeMode.DAY) {
-            effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
-            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.05);
-            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.05);
-        } else if (theme.mode === SceneThemeMode.NIGHT) {
-            effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
-            effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.05);
-            effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0, 0.05);
+            if (effectController.elevation !== 9.3 || effectController.turbidity !== 10 || effectController.rayleigh !== 3) {
+                // show sky
+                effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 9.3, 0.05);
+                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 10, 0.05);
+                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 3, 0.05);
+            }
+        }
+        if (theme.mode === SceneThemeMode.NIGHT) {
+            if (effectController.elevation !== 0 || effectController.turbidity !== 0 || effectController.rayleigh !== 0)
+                effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0, 0.05);
+                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0, 0.05);
+                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0, 0.05);
+            } else {
+                // hide sky
+            }
         }
         init();
         requestAnimationFrame(render);
@@ -51,12 +59,12 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
 
 
     const folder = gui.addFolder('Sky');
-    folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).listen();
-    folder.add(effectController, 'rayleigh', 0.0, 4, 0.001).listen();
-    folder.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).listen();
-    folder.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).listen();
-    folder.add(effectController, 'elevation', 0, 90, 0.1).listen()
-    folder.add(effectController, 'azimuth', -180, 180, 0.1).listen();
-    folder.add(effectController, 'exposure', 0, 5, 0.0001).listen();
+    folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'rayleigh', 0.0, 4, 0.001).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'elevation', 0, 90, 0.1).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'azimuth', -180, 180, 0.1).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'exposure', 0, 5, 0.0001).listen().onChange(theme.setFreeMode);
 }
 
