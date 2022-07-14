@@ -10,7 +10,7 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     let sun = new THREE.Vector3();
 
     const effectController = {
-        turbidity: -1.0,
+        turbidity: 0.0,
         rayleigh: 0.0,
         mieCoefficient: 0.005,
         mieDirectionalG: 0.7,
@@ -48,13 +48,13 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
         }
         if (theme.mode === SceneThemeMode.NIGHT) {
             if (effectController.elevation > 0) {
-                effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, -1.0, 0.02);
+                effectController.elevation = THREE.MathUtils.lerp(effectController.elevation, 0.0, 0.02);
             }
-            if (effectController.turbidity > -1) {
-                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, -1.0, 0.05);
+            if (effectController.turbidity > 0) {
+                effectController.turbidity = THREE.MathUtils.lerp(effectController.turbidity, 0.0, 0.05);
             }
             if (effectController.rayleigh > 0) {
-                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, -1.0, 0.05);
+                effectController.rayleigh = THREE.MathUtils.lerp(effectController.rayleigh, 0.0, 0.05);
             }
         }
         init();
@@ -63,12 +63,12 @@ export const Sky = async (renderer: THREE.WebGLRenderer, scene: THREE.Scene, cam
     requestAnimationFrame(render);
 
     const folder = gui.addFolder('Sky');
-    folder.add(effectController, 'turbidity', 0.0, 20.0, 0.1).listen().onChange(theme.setFreeMode);
-    folder.add(effectController, 'rayleigh', 0.0, 4, 0.001).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'turbidity', -1, 20, 0.1).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'rayleigh', -1, 4, 0.001).listen().onChange(theme.setFreeMode);
     folder.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).listen().onChange(theme.setFreeMode);
     folder.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).listen().onChange(theme.setFreeMode);
     folder.add(effectController, 'elevation', 0, 90, 0.1).listen().onChange(theme.setFreeMode);
     folder.add(effectController, 'azimuth', -180, 180, 0.1).listen().onChange(theme.setFreeMode);
-    folder.add(effectController, 'exposure', 0, 5, 0.0001).listen().onChange(theme.setFreeMode);
+    folder.add(effectController, 'exposure', -1, 5, 0.0001).listen().onChange(theme.setFreeMode);
 }
 
