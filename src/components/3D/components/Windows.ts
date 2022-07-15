@@ -4,7 +4,7 @@ import raindropVert from '../shaders/raindrop-vert.glsl';
 import raindropFrag from '../shaders/raindrop-frag.glsl';
 import background1 from '../textures/background_transparent_1.png';
 import background2 from '../textures/background2.png';
-import { SceneTheme, SceneThemeMode } from './Desktop';
+import { SceneTheme, SceneThemeMode } from './Scene';
 
 export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, tooltip: Tooltip, theme: SceneTheme) => {
     const iTime = { value: 0 };

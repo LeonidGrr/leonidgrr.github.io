@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { SceneTheme, SceneThemeMode } from './Desktop';
+import { SceneTheme, SceneThemeMode } from './Scene';
 
 export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene, theme: SceneTheme) => {
     mesh.position.z -= 0.1;
@@ -37,7 +37,7 @@ export const Lamp = async (mesh: THREE.Mesh, scene: THREE.Scene, theme: SceneThe
             material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 0, 0.2);
         } else if (theme.mode === SceneThemeMode.NIGHT) {
             light.intensity = THREE.MathUtils.lerp(light.intensity, 4, 0.1);
-            material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 2, 0.1);
+            material.emissiveIntensity = THREE.MathUtils.lerp(material.emissiveIntensity, 1, 0.1);
         }
         requestAnimationFrame(render);
     };

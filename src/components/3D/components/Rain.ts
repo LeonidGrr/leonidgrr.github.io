@@ -26,7 +26,7 @@ export const Rain = async (camera: THREE.PerspectiveCamera, scene: THREE.Scene) 
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
     const material = new THREE.PointsMaterial({
-        size: 1.5,
+        size: 2.5,
         transparent: true,
         map: sprite,
         sizeAttenuation: true, 

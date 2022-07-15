@@ -1,21 +1,14 @@
 import * as THREE from 'three';
 import { RenderingManager, CameraManager } from './components';
-import Stats from 'stats-js';
 import postprocessing from './postprocessing';
 
 export const init = (canvas: HTMLCanvasElement) => {
-    const stats = new Stats();
-    document.body.appendChild(stats.dom);
-
     const renderer = new THREE.WebGLRenderer({
         canvas,
-        // antialias: true,
-        powerPreference: "high-performance",
+        antialias: true,
     });
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
 
     // Scene and camera manager
     const cameraManager = new CameraManager();
@@ -28,7 +21,6 @@ export const init = (canvas: HTMLCanvasElement) => {
     const renderLoop = (time: number) => {
         requestAnimationFrame(renderLoop);
         time *= 0.001;
-		stats.update();
 
         rendering.renderBloom();
         rendering.finalComposer.render();

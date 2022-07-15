@@ -9,7 +9,7 @@ import data2 from './2.json';
 import data3 from './3.json';
 import data4 from './4.json';
 
-const POINTS_COUNT = 2048;
+const POINTS_COUNT = 4096;
 const UPDATE_TIME_LIMIT = 1000;
 const colors = ['#F7A541', '#F45D4C', '#FA2E59', '#4783c3', '#9c6cb7'];
 
@@ -41,25 +41,25 @@ const getStringifiedGeometries = async () => {
     });
 };
 
-export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => {
+export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera, gui?: dat.GUI) => {
     const config = {
         data: ['1.json', '2.json', '3.json', '4.json'],
         currentIdx: 0,
         updateStarted: 0,
     };
-    
     const loader = new THREE.BufferGeometryLoader();
     const particleGeometries = [data1, data2, data3, data4].map(v => loader.parse(v));
 
+    const rotationModifier = { x: 0, y: -0.13, z: -0.05 };
     const ref = new THREE.Object3D();
     ref.position.set(-5, 9.5, -17);
     scene.add(ref);
 
     const particlesMat = new THREE.PointsMaterial({
         color: 0xff0000,
-        size: 0.075,
+        size: 0.05,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.2,
         blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeometries[config.currentIdx], particlesMat);
@@ -114,8 +114,20 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
         ref.position.y += sin * Math.random() * 0.0005;
 
         ref.lookAt(camera.position);
+        ref.rotation.x += rotationModifier.x;
+        ref.rotation.y += rotationModifier.y;
+        ref.rotation.z += rotationModifier.z;
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
+
+    if (gui) {
+        const folder = gui.addFolder('Particle text');
+        folder.add(particlesMat, 'size', 0, 2, 0.01);
+        folder.add(particlesMat, 'opacity', 0, 1, 0.01);
+        folder.add(rotationModifier, 'x', -3, 3, 0.01).name('rotation x');
+        folder.add(rotationModifier, 'y', -3, 3, 0.01).name('rotation y');
+        folder.add(rotationModifier, 'z', -3, 3, 0.01).name('rotation z');
+    }
 };
 

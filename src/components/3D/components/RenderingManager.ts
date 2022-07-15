@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Desktop, Tooltip, CameraManager } from '.';
+import { Tooltip, CameraManager, Scene } from '.';
 import { CameraState } from './CameraManager';
 
 export class RenderingManager {
@@ -25,7 +25,7 @@ export class RenderingManager {
         // Setup desktop scene
         const scene = new THREE.Scene();
         scene.name = 'desktop';
-        Desktop(scene, this.cameraManager.camera, renderer, tooltip);
+        Scene(scene, this.cameraManager.camera, renderer, tooltip);
         this.scene.add(scene);
 
         this.detectClick();
@@ -78,12 +78,14 @@ export class RenderingManager {
     }
 
     setCameraWebGL = (m: MessageEvent<string>) => {
-        let data = m.data.split(':');
-        const state = data[1] as CameraState;
-        const stateExist = Object.values(CameraState).includes(state);
-
-        if (stateExist && data[0] === 'change_camera_from_dom' && this.cameraManager.state !== state) {
-            this.cameraManager.state = state;
+        if (typeof m.data === 'string') {
+            const data = m.data.split(':');
+            const state = data[1] as CameraState;
+            const stateExist = Object.values(CameraState).includes(state);
+    
+            if (stateExist && data[0] === 'change_camera_from_dom' && this.cameraManager.state !== state) {
+                this.cameraManager.state = state;
+            }
         }
     };
 }

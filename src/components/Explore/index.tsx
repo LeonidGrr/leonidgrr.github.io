@@ -1,12 +1,12 @@
 import {
     useState,
     useEffect,
-    useRef,
     useCallback,
 } from 'preact/hooks';
 import classNames from 'classnames';
 import css from './Explore.module.css';
 import { Config } from 'src/routes/home';
+import { SceneThemeMode } from '../3D/components/Scene';
 
 type ExplorePanelProps = {
     titleMap: Config,
@@ -17,13 +17,17 @@ const Explore = (props: ExplorePanelProps) => {
         titleMap,
     } = props;
     const [showContent, setShowContent] = useState(false);
+    const [debug, setDebug] = useState(false);
+    const [mode, setMode] = useState<Omit<SceneThemeMode, SceneThemeMode.FREE>>(SceneThemeMode.NIGHT);
     const [showDescription, setShowDescription] = useState<string | null>(titleMap.sub.about.desc);
 
     useEffect(() => {
         const updateState = (m: MessageEvent<string>) => {
-            let data = m.data.split(':');
-            if (data[0] === 'change_camera_from_webgl') {
-                setShowDescription(titleMap.sub[data[1]]?.desc);
+            if (typeof m.data === 'string') {
+                const data = m.data.split(':');
+                if (data[0] === 'change_camera_from_webgl') {
+                    setShowDescription(titleMap.sub[data[1]]?.desc);
+                }
             }
         };
     
@@ -34,33 +38,47 @@ const Explore = (props: ExplorePanelProps) => {
         };
     }, []);
 
-    const contentRef = useRef<null | HTMLDivElement>(null);
-    const isSmallScreen = () => {
-        if (contentRef.current) {
-            return contentRef.current.offsetWidth >= document.body.clientWidth / 2;
-        }
-        return false;
-    };
-
     const handleCamera = (e: any) => {
         e.stopPropagation();
         const { key } = e.currentTarget.dataset;
         if (key && showDescription !== key) {
             postMessage(`change_camera_from_dom:${key}`);
             setShowDescription(titleMap.sub[key]?.desc);
-            if (isSmallScreen()) {
-                setShowContent(false);
-            }
+            setShowContent(false);
         }
     };
 
-    const handleShowContent = (e: Event) => {
+    const handleShowContent = useCallback(() => {
         setShowContent(prev => !prev);
-    };
+    }, []);
 
-    const handleDebug = () => {};
+    const handleDebug = useCallback(() => {
+        setDebug(prev => {
+            postMessage(`debug:${!prev}`);
+            return !prev;
+        });
+        handleShowContent();
+    }, []);
 
-    const handleHideDescription = useCallback((e: Event) => {
+    const handleDarkMode = useCallback(() => {
+        setMode(prev => {
+            let nextMode = prev;
+            if (prev === SceneThemeMode.NIGHT) {
+                nextMode = SceneThemeMode.DAWN;
+            }
+            if (prev === SceneThemeMode.DAWN) {
+                nextMode = SceneThemeMode.DAY;
+            }
+            if (prev === SceneThemeMode.DAY) {
+                nextMode = SceneThemeMode.NIGHT;
+            }
+            postMessage(`mode:${nextMode}`);
+            return nextMode;
+        });
+        handleShowContent();
+    }, []);
+
+    const handleHideDescription = useCallback(() => {
         setShowDescription(null);
     }, []);
 
@@ -72,12 +90,11 @@ const Explore = (props: ExplorePanelProps) => {
             >
                 <div className={css['explore-separator']} />
                 <button type="button" onClick={handleShowContent}>
-                    Explore
+                    Explore more
                 </button>
             </div>
             <div
                 aria-label="Table of content"
-                ref={contentRef}
                 className={classNames(css.content, showContent && css.contentShow)}
             >
                 <ul className={css.scenes}>
@@ -96,9 +113,22 @@ const Explore = (props: ExplorePanelProps) => {
                     <li className={css.links}>
                         <button
                             type="button"
+                            onPointerDown={handleDarkMode}
+                        >
+                            Theme&nbsp;
+                            <span className={classNames(css.mode)}>{mode}</span>
+                        </button>
+                    </li>
+            
+                    <li className={css.links}>
+                        <button
+                            type="button"
                             onPointerDown={handleDebug}
                         >
-                            Debug
+                            Debug&nbsp;
+                            {debug
+                                ? <span className={classNames(debug && css.mode)}>ON</span>
+                                : <span className={classNames(!debug && css.mode)}>OFF</span>}
                         </button>
                     </li>
 

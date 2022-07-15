@@ -3,7 +3,6 @@ import { createContext, FunctionComponent } from 'preact';
 import { init } from '../3D'
 import Loader from '../Loader';
 import { route } from 'preact-router';
-import { CameraState } from '../3D/components/CameraManager';
 
 type Context3dProps = {
     loader: preact.JSX.Element | null,

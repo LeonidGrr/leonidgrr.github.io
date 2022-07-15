@@ -100,3 +100,8 @@
 .closeButton {
     margin-left: 10px;
 }
+
+.mode {
+    font-weight: bold;
+    text-transform: uppercase;
+}
