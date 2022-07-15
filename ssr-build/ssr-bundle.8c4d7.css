@@ -114,6 +114,11 @@ button {
     text-decoration: none;
 }
 
+a {
+    color: #fff;
+    font-size: 1rem;
+}
+
 button:hover, a:hover {
     color: blue;
 }
@@ -386,4 +391,4 @@ div.dg.ac {
 }
 
 
-/*# sourceMappingURL=ssr-bundle.d642d.css.map*/
+/*# sourceMappingURL=ssr-bundle.8c4d7.css.map*/
