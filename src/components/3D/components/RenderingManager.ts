@@ -10,7 +10,6 @@ export class RenderingManager {
     constructor(
         renderer: THREE.WebGLRenderer,
         cameraManager: CameraManager,
-        setCameraDOM: (name: CameraState) => void,
     ) {
         this.cameraManager = cameraManager;
         this.scene = new THREE.Scene();
@@ -29,7 +28,9 @@ export class RenderingManager {
         Desktop(scene, this.cameraManager.camera, renderer, tooltip);
         this.scene.add(scene);
 
-        this.detectClick(setCameraDOM);
+        this.detectClick();
+
+        window.addEventListener('message', this.setCameraWebGL);
     }
 
     setupTargets = (targets: Record<string, THREE.Object3D>) => {
@@ -47,7 +48,7 @@ export class RenderingManager {
         }
     }
 
-    detectClick = (setCameraDOM: (name: CameraState) => void) => {
+    detectClick = () => {
         const raycaster = new THREE.Raycaster();
         const targets: Record<string, THREE.Object3D> = {};
         const pointer = new THREE.Vector2();
@@ -64,17 +65,25 @@ export class RenderingManager {
             if (intersects.length > 0) {
                 if (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard') {
                     this.cameraManager.state = CameraState.SCREEN;
-                    setCameraDOM(CameraState.SCREEN)
+                    postMessage(`change_camera_from_webgl:${CameraState.SCREEN}`);
                 } else if (intersects[0].object.parent?.name === 'Windows') {
                     this.cameraManager.state = CameraState.WINDOWS;
-                    setCameraDOM(CameraState.WINDOWS)
+                    postMessage(`change_camera_from_webgl:${CameraState.WINDOWS}`);
                 }
             } else {
                 this.cameraManager.state = CameraState.BASE;
-                setCameraDOM(CameraState.BASE)
+                postMessage(`change_camera_from_webgl:${CameraState.BASE}`);
             }
         }, false);
     }
 
-    setCameraWebGL = (cameraState: CameraState) => this.cameraManager.state = cameraState;
+    setCameraWebGL = (m: MessageEvent<string>) => {
+        let data = m.data.split(':');
+        const state = data[1] as CameraState;
+        const stateExist = Object.values(CameraState).includes(state);
+
+        if (stateExist && data[0] === 'change_camera_from_dom' && this.cameraManager.state !== state) {
+            this.cameraManager.state = state;
+        }
+    };
 }

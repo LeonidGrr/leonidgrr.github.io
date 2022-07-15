@@ -53,8 +53,6 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
 
     const ref = new THREE.Object3D();
     ref.position.set(-5, 9.5, -17);
-    ref.rotateY(Math.PI / 16);
-    ref.rotateX(-Math.PI / 10);
     scene.add(ref);
 
     const particlesMat = new THREE.PointsMaterial({
@@ -88,7 +86,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
         if (config.updateStarted > 0 && clock.getElapsedTime() - config.updateStarted > UPDATE_TIME_LIMIT) {
             config.updateStarted = 0;
         } else {
-            particles.rotation.setFromRotationMatrix(camera.matrixWorld);
+            // particles.rotation.setFromRotationMatrix(camera.matrixWorld);
             particles.geometry.attributes.position.needsUpdate = true;
     
             for (let i = 0; i < POINTS_COUNT; i++) {   
@@ -115,6 +113,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera) => 
         const sin = Math.sin(clock.getElapsedTime());
         ref.position.y += sin * Math.random() * 0.0005;
 
+        ref.lookAt(camera.position);
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);

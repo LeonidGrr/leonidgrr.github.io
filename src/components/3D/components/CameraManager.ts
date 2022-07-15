@@ -10,7 +10,7 @@ export class CameraManager {
     camera: THREE.PerspectiveCamera;
     state = CameraState.BASE;
 
-    constructor(renderer: THREE.WebGLRenderer) {
+    constructor() {
         this.camera = new THREE.PerspectiveCamera(55, document.body.clientWidth / document.body.clientHeight, 0.1, 1000);
 
         this.setupCamera(this.camera);

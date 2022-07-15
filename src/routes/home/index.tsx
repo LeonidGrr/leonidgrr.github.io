@@ -8,7 +8,6 @@ import Header from '../../components/Header';
 export type Config = {
     name: string
     header: string
-    desc: string
     sub: Record<string, {
 		name: string
 		desc: string
@@ -18,8 +17,11 @@ export type Config = {
 const titleMap: Config = {
     name: 'My dev lair',
     header: 'my dev lair',
-	desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
     sub: {
+		about: {
+			name: 'About',
+			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
+		},
         screen: {
 			name: 'Screen - ThreeJS render target',
 			desc: 'For now this is just an example of THREEJS render target...',
@@ -32,14 +34,12 @@ const titleMap: Config = {
 };
 
 const Home: FunctionComponent<RoutableProps> = () => {
-	const { currentCamera, changeCamera, loader } = useContext(Context3D);
+	const { loader } = useContext(Context3D);
 
 	return (
 		<>
 			<Header header={titleMap.header} />
 			<Explore
-				currentCamera={currentCamera}
-				onChangeCamera={changeCamera}
 				titleMap={titleMap}
 			/>
 			{loader}

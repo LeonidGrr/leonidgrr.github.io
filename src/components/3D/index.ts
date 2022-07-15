@@ -2,9 +2,8 @@ import * as THREE from 'three';
 import { RenderingManager, CameraManager } from './components';
 import Stats from 'stats-js';
 import postprocessing from './postprocessing';
-import { CameraState } from './components/CameraManager';
 
-export const init = (setCameraDOM: (name: CameraState) => void, canvas: HTMLCanvasElement) => {
+export const init = (canvas: HTMLCanvasElement) => {
     const stats = new Stats();
     document.body.appendChild(stats.dom);
 
@@ -19,11 +18,10 @@ export const init = (setCameraDOM: (name: CameraState) => void, canvas: HTMLCanv
     renderer.toneMapping = THREE.ReinhardToneMapping;
 
     // Scene and camera manager
-    const cameraManager = new CameraManager(renderer);
+    const cameraManager = new CameraManager();
     const {
         scene,
-        setCameraWebGL,
-    } = new RenderingManager(renderer, cameraManager, setCameraDOM);
+    } = new RenderingManager(renderer, cameraManager);
 
     // Rendering
     const rendering = postprocessing(scene, cameraManager.camera, renderer);   
@@ -36,6 +34,4 @@ export const init = (setCameraDOM: (name: CameraState) => void, canvas: HTMLCanv
         rendering.finalComposer.render();
     };
     requestAnimationFrame(renderLoop);
-
-    return { setCameraWebGL };
 };

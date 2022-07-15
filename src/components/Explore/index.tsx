@@ -7,22 +7,32 @@ import {
 import classNames from 'classnames';
 import css from './Explore.module.css';
 import { Config } from 'src/routes/home';
-import { CameraState } from '../3D/components/CameraManager';
 
 type ExplorePanelProps = {
-    onChangeCamera: (key: CameraState) => void,
-    currentCamera: CameraState,
     titleMap: Config,
 }
 
 const Explore = (props: ExplorePanelProps) => {
     const {
-        onChangeCamera,
-        currentCamera,
         titleMap,
     } = props;
     const [showContent, setShowContent] = useState(false);
-    const [showDescription, setShowDescription] = useState<string | null>(null);
+    const [showDescription, setShowDescription] = useState<string | null>(titleMap.sub.about.desc);
+
+    useEffect(() => {
+        const updateState = (m: MessageEvent<string>) => {
+            let data = m.data.split(':');
+            if (data[0] === 'change_camera_from_webgl') {
+                setShowDescription(titleMap.sub[data[1]]?.desc);
+            }
+        };
+    
+        window.addEventListener('message', updateState);
+
+        return () => {
+            window.removeEventListener('message', updateState);
+        };
+    }, []);
 
     const contentRef = useRef<null | HTMLDivElement>(null);
     const isSmallScreen = () => {
@@ -35,22 +45,20 @@ const Explore = (props: ExplorePanelProps) => {
     const handleCamera = (e: any) => {
         e.stopPropagation();
         const { key } = e.currentTarget.dataset;
-        if (key && currentCamera !== key) {
-            onChangeCamera(key);
+        if (key && showDescription !== key) {
+            postMessage(`change_camera_from_dom:${key}`);
+            setShowDescription(titleMap.sub[key]?.desc);
             if (isSmallScreen()) {
                 setShowContent(false);
             }
         }
     };
 
-    const handleShowContent = (e: any) => {
-        e.stopPropagation();
+    const handleShowContent = (e: Event) => {
         setShowContent(prev => !prev);
     };
 
-    useEffect(() => {
-        setShowDescription(titleMap.sub[currentCamera]?.desc || titleMap.desc);
-    }, [currentCamera]);
+    const handleDebug = () => {};
 
     const handleHideDescription = useCallback((e: Event) => {
         setShowDescription(null);
@@ -64,7 +72,7 @@ const Explore = (props: ExplorePanelProps) => {
             >
                 <div className={css['explore-separator']} />
                 <button type="button" onClick={handleShowContent}>
-                    Explore more
+                    Explore
                 </button>
             </div>
             <div
@@ -84,6 +92,16 @@ const Explore = (props: ExplorePanelProps) => {
                             </button>
                         </li>
                     ))}
+                    
+                    <li className={css.links}>
+                        <button
+                            type="button"
+                            onPointerDown={handleDebug}
+                        >
+                            Debug
+                        </button>
+                    </li>
+
                     <li className={css.links}>
                         <a href="https://github.com/LeonidGrr/leonidgrr.github.io">
                             GitHub
