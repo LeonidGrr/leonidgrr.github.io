@@ -114,6 +114,11 @@ button {
     text-decoration: none;
 }
 
+a {
+    color: #fff;
+    font-size: 1rem;
+}
+
 button:hover, a:hover {
     color: blue;
 }
