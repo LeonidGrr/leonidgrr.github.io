@@ -331,6 +331,11 @@ div.dg.ac {
 .closeButton__nPq\+M {
     margin-left: 10px;
 }
+
+.mode__MCtJ2 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
 @-webkit-keyframes opacity_animation__piEyb {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -391,4 +396,4 @@ div.dg.ac {
 }
 
 
-/*# sourceMappingURL=ssr-bundle.8c4d7.css.map*/
+/*# sourceMappingURL=ssr-bundle.70bad.css.map*/
