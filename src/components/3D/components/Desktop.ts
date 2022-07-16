@@ -69,7 +69,7 @@ export const Desktop = async (
             child.traverse(c => {
                 if ((c as THREE.Mesh).isMesh) {
                     const mesh = c as THREE.Mesh;
-                    (mesh.material as THREE.MeshStandardMaterial).color.set(0xffffff);
+                    (mesh.material as THREE.MeshStandardMaterial).color.set(0x282828);
                 }
             });
         }
