@@ -91,8 +91,8 @@ export const Windows = (mesh: THREE.Mesh, camera: THREE.PerspectiveCamera, toolt
 
         iTime.value = clock.getElapsedTime();
         
-        if (theme.mode === SceneThemeMode.DAY) {
-            opacity.value = THREE.MathUtils.lerp(opacity.value, 0.3, 0.01);
+        if (theme.mode === SceneThemeMode.DAY || theme.mode === SceneThemeMode.DAWN) {
+            opacity.value = THREE.MathUtils.lerp(opacity.value, 0.15, 0.01);
             
         } else if (theme.mode === SceneThemeMode.NIGHT) {
             opacity.value = THREE.MathUtils.lerp(opacity.value, 0.8, 0.01);
