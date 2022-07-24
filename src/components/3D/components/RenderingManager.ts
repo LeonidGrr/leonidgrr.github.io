@@ -54,6 +54,8 @@ export class RenderingManager {
         const pointer = new THREE.Vector2();
 
         document.addEventListener('pointerdown', (e: PointerEvent) => {
+            if (e.target.tagName === "CANVAS") {
+
             this.setupTargets(targets);
 
             pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
@@ -73,6 +75,7 @@ export class RenderingManager {
             } else {
                 this.cameraManager.state = CameraState.BASE;
                 postMessage(`change_camera_from_webgl:${CameraState.BASE}`);
+            }
             }
         }, false);
     }
