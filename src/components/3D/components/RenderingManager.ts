@@ -54,7 +54,7 @@ export class RenderingManager {
         const pointer = new THREE.Vector2();
 
         document.addEventListener('pointerdown', (e: PointerEvent) => {
-            if (e.target?.tagName === "CANVAS") {
+            if ((ev.target as HTMLElement).tagName === "CANVAS") {
 
             this.setupTargets(targets);
 
