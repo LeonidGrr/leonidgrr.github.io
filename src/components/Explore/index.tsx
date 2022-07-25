@@ -125,10 +125,9 @@ const Explore = (props: ExplorePanelProps) => {
                             type="button"
                             onPointerDown={handleDebug}
                         >
-                            Debug&nbsp;
                             {debug
-                                ? <span className={classNames(debug && css.mode)}>ON</span>
-                                : <span className={classNames(!debug && css.mode)}>OFF</span>}
+                                ? <span className={classNames(debug && css.mode)}>Hide debug</span>
+                                : <span className={classNames(!debug && css.mode)}>Show debug</span>}
                         </button>
                     </li>
 
