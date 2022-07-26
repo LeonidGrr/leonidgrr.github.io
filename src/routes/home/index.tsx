@@ -1,7 +1,6 @@
 import { FunctionComponent } from 'preact';
 import { RoutableProps } from 'preact-router';
-import { useContext } from 'preact/hooks';
-import { Context3D } from '../../components/Context3D';
+import { Scene3D } from '../../components/Context3D';
 import Explore from '../../components/Explore';
 import Header from '../../components/Header';
 
@@ -34,16 +33,13 @@ const titleMap: Config = {
 };
 
 const Home: FunctionComponent<RoutableProps> = () => {
-	const { loader } = useContext(Context3D);
-
 	return (
-		<>
+		<Scene3D>
 			<Header header={titleMap.header} />
 			<Explore
 				titleMap={titleMap}
 			/>
-			{loader}
-		</>
+		</Scene3D>
 	);
 };
 
