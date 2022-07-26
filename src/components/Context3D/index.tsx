@@ -14,7 +14,7 @@ export const Scene3D: FunctionComponent = props => {
         if (typeof window !== "undefined") {
             return !!window.WebGLRenderingContext;
         }
-        return false;
+        return true;
     }, []);
 
     useEffect(() => {
