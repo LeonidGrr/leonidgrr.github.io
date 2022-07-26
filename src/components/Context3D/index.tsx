@@ -35,7 +35,7 @@ export const Scene3D: FunctionComponent = props => {
             </Link>
         </div>
 	    )}
-	    {isEnabled && webGLAvailable && <Loader />
+	    {isEnabled && webGLAvailable && <Loader />}
             <canvas className="webgl" tabIndex={1} ref={canvasRef}/>
         </>
     );
