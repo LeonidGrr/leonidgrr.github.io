@@ -22,12 +22,6 @@ export const Scene3D: FunctionComponent = props => {
         }
     }, [isEnabled, webGLAvailable]);
 
-	useEffect(() => {
-		if (!webGLAvailable && isEnabled) {
-			route('/nowebgl', true);
-		}
-	}, [webGLAvailable, isEnabled]);
-
     return (
         <>
             {props.children}
