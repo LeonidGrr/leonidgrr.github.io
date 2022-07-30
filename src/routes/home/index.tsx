@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'preact';
 import { RoutableProps } from 'preact-router';
-import { Scene3D } from '../../components/Context3D';
+import { Scene3D } from '../../components/Scene3D';
 import Explore from '../../components/Explore';
 import Header from '../../components/Header';
 
