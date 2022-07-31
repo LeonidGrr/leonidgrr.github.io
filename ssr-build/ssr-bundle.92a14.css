@@ -169,11 +169,12 @@ div.dg.ac {
     height: 100%;
     background-color: #000000;
     opacity: 1;
-    transition: 3s opacity;
+    transition: opacity 3s, width 0s 3s ;
 }
 
 .fade-out__SuLAa {
     opacity: 0;
+    width: 0;
 }
 
 .loader-progress__kID0V {
@@ -245,8 +246,8 @@ div.dg.ac {
     margin-bottom: 1rem;
     background: #fff;
     height: 1px;
-    -webkit-animation: width_animation__HFgqT 1.5s ease-out forwards;
-            animation: width_animation__HFgqT 1.5s ease-out forwards;
+    -webkit-animation: width_animation__HFgqT 1.5s ease-out 0.5s forwards;
+            animation: width_animation__HFgqT 1.5s ease-out 0.5s forwards;
 }
 
 .content__riTMf, .description__rbxxy {
@@ -386,8 +387,8 @@ div.dg.ac {
     content: '';
     background: #fff;
     height: 1px;
-    -webkit-animation: width_animation__rwi1z 1.5s ease-out forwards;
-            animation: width_animation__rwi1z 1.5s ease-out forwards;
+    -webkit-animation: width_animation__rwi1z 1.5s ease-out 0.5s forwards;
+            animation: width_animation__rwi1z 1.5s ease-out 0.5s forwards;
 }
 .profile__hKgU4 {
 	padding: 56px 20px;
@@ -396,4 +397,4 @@ div.dg.ac {
 }
 
 
-/*# sourceMappingURL=ssr-bundle.70bad.css.map*/
+/*# sourceMappingURL=ssr-bundle.92a14.css.map*/
