@@ -1,0 +1,16 @@
+{
+  "name": "boids-wasm",
+  "collaborators": [
+    "Leonid <leonidgrr@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "boids_wasm_bg.wasm",
+    "boids_wasm.js",
+    "boids_wasm.d.ts"
+  ],
+  "module": "boids_wasm.js",
+  "types": "boids_wasm.d.ts",
+  "sideEffects": false
+}

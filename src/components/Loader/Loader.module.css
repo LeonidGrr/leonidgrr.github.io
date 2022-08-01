@@ -1,0 +1,34 @@
+.loader-wrapper {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 1;
+    transition: opacity 3s, width 0s 3s ;
+}
+
+.fade-out {
+    opacity: 0;
+    width: 0;
+}
+
+.loader-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+}
+
+.loader-progress label {
+    color: #fff;
+}
