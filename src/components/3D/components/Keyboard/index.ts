@@ -116,18 +116,34 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
         }
     };
 
+    const hiddenInput = document.createElement('input');
+    hiddenInput.className = 'hiddenInput';
+    hiddenInput.style.opacity = '0';
+    hiddenInput.value = '';
+    document.body.append(hiddenInput); 
+
     const pointer = new THREE.Vector2();
     const pointerDownHandler = (e: PointerEvent) => {
+        hiddenInput.focus();
         pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
         pointer.y = - (e.clientY / document.body.clientHeight) * 2 + 1;
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(keyMeshes); 
         if (intersects.length > 0) {
+            const char = Object.values(keyCodeMap).find(k => k.name === intersects[0].object.name)?.char;
+            if (char) {
+                hiddenInput.value += char;
+                document.dispatchEvent(new KeyboardEvent('keydown', { 'key': char }));
+            }
             animateKeyPress(intersects[0].object);
         }
     };
 
     const keyPressHandler = (e: KeyboardEvent) => {
+        if (String.fromCharCode(e.keyCode).match(/(\w|\s)/g)) {
+            hiddenInput.focus();
+        }
+
         const key = keyCodeMap[e.keyCode];
         if (key) {
             const mesh = keyMeshes.find(k => {

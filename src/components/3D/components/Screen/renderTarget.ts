@@ -25,14 +25,14 @@ function makeLabelCanvas(baseWidth: number, fontSize: number, name: string) {
     // scale to fit but don't stretch
     const scaleFactor = Math.min(1, baseWidth / textWidth);
     ctx.translate(width / 2, height / 2);
-    ctx.scale(scaleFactor, 1);
+    // ctx.scale(scaleFactor, 1);
     ctx.fillStyle = 'white';
     ctx.fillText(name, 0, 0);
 
     return ctx.canvas;
 }
 
-export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
+export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, initialState: string) => {
     // Initial scene
     const rtWidth = 512;
     const rtHeight = 512;
@@ -55,8 +55,9 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
     const cube = new THREE.Mesh(g, m);
     rtScene.add(cube);
 
-    const canvas = makeLabelCanvas(300, 64, 'Press any key...');
-    const texture = new THREE.CanvasTexture(canvas);
+    let canvas = makeLabelCanvas(600, 64, initialState);
+    let texture = new THREE.CanvasTexture(canvas);
+
     texture.wrapS = THREE.ClampToEdgeWrapping;
     texture.wrapT = THREE.ClampToEdgeWrapping;
 
@@ -93,5 +94,15 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer) => {
     };
     requestAnimationFrame(render);
 
-    return { rtObject };
+    const onChange = (value: string) => {
+        canvas = makeLabelCanvas(600, 64, value);
+        texture = new THREE.CanvasTexture(canvas);
+        texture.wrapS = THREE.ClampToEdgeWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        labelMaterial.map = texture;
+        label.scale.x = canvas.width  * 0.01;
+        label.scale.y = canvas.height * 0.01;
+    };
+
+    return { rtObject, onChange };
 };

@@ -23,7 +23,7 @@ export const Screen = async (
         }
     });
 
-    const { rtObject } = await setupRenderTarget(renderer);
+    const { rtObject, onChange } = await setupRenderTarget(renderer, 'Press any key...');
     rtObject.position.set(3.9, 12.4, -19.95);
     rtObject.rotateY(-Math.PI / 13);
     rtObject.rotateX(-Math.PI / 24);
@@ -40,4 +40,14 @@ export const Screen = async (
         rtObject.position.z,
     );
     scene.add(light);
+
+    let hiddenInput: HTMLInputElement | null = null;
+    document.addEventListener('keydown', () => {
+        if (!hiddenInput) {
+            hiddenInput = document.querySelector('input.hiddenInput');
+        }
+        if (hiddenInput && document.activeElement === hiddenInput) {
+            onChange(hiddenInput.value);
+        }
+    });
 };
