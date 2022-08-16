@@ -124,7 +124,6 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
 
     const pointer = new THREE.Vector2();
     const pointerDownHandler = (e: PointerEvent) => {
-        hiddenInput.focus();
         pointer.x = (e.clientX / document.body.clientWidth) * 2 - 1;
         pointer.y = - (e.clientY / document.body.clientHeight) * 2 + 1;
         raycaster.setFromCamera(pointer, camera);
@@ -132,6 +131,7 @@ export const Keyboard = async (mesh: THREE.Mesh, camera: THREE.Camera, tooltip: 
         if (intersects.length > 0) {
             const char = Object.values(keyCodeMap).find(k => k.name === intersects[0].object.name)?.char;
             if (char) {
+                hiddenInput.focus();
                 hiddenInput.value += char;
                 document.dispatchEvent(new KeyboardEvent('keydown', { 'key': char }));
             }
