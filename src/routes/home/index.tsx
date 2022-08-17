@@ -14,16 +14,16 @@ export type Config = {
 };
 
 const titleMap: Config = {
-    name: 'My dev lair',
-    header: 'my dev lair',
+    name: "Programmer's lair",
+    header: "programmer's lair",
     sub: {
 		about: {
 			name: 'About',
-			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n This is little demo page. Feel free to tap and click around.`,
+			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n\n This is little demo page, consist of two parts:\n - Interactive 3D scene, build with ThreeJS library.\n - Overlay user interface, build with PreactJS.\n\n Feel free to tap and click around to find out about small features.`,
 		},
         screen: {
 			name: 'Screen - ThreeJS render target',
-			desc: 'For now this is just an example of THREEJS render target...',
+			desc: 'For now this is just an example of THREEJS render target with tip of interactivity - mesh geometry is randomly trasformed when you press some key.',
 		},
         windows: {
 			name: 'Raindrops shader',

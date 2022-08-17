@@ -1,6 +1,6 @@
 {
-  "name": "my dev lair",
-  "short_name": "my dev lair",
+  "name": "Programmer's lair",
+  "short_name": "Programmer's lair",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

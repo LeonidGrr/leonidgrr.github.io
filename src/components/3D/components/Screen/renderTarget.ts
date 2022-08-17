@@ -46,11 +46,11 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, initialSt
     rtScene.background = new THREE.Color(0, 0, 1);
     rtScene.add(light);
 
-    const g = new THREE.BoxGeometry(3, 3, 3);
+    const g = new THREE.BoxBufferGeometry(3, 3, 3);
     const m = new THREE.MeshBasicMaterial({
         color: 0x00ff00,
         wireframe: true,
-        wireframeLinewidth: 3,
+        wireframeLinewidth: 2,
     });
     const cube = new THREE.Mesh(g, m);
     rtScene.add(cube);
@@ -84,25 +84,48 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, initialSt
     rtObject.add(mesh);
 
     let activeScene = rtScene;
+
+    const initilalPositions = cube.geometry.attributes.position.clone();
+    const targetPositions: { targetx: number, targety: number, targetz: number}[] = [];
+    const updateMesh = () => {
+        for (let i = 0; i < initilalPositions.count; i++) {
+            const px = initilalPositions.getX(i);
+            const py = initilalPositions.getY(i);
+            const pz = initilalPositions.getZ(i);
+
+            const targetx = px * (Math.random() + 0.5);
+            const targety = py * (Math.random() + 0.5);
+            const targetz = pz * (Math.random() + 0.5);
+    
+            targetPositions[i] = {targetx, targety, targetz};
+        }
+    };
+
     const render = () => {
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
         renderer.setRenderTarget(renderTarget);
         renderer.render(activeScene, rtCamera);
         renderer.setRenderTarget(null);
+
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        const currentPosition = cube.geometry.attributes.position;
+        for (let i = 0; i < currentPosition.count; i++) {   
+            const px = currentPosition.getX(i);
+            const py = currentPosition.getY(i);
+            const pz = currentPosition.getZ(i);
+            if (targetPositions[i]) {
+                currentPosition.setXYZ(
+                    i,
+                    THREE.MathUtils.lerp(px, targetPositions[i].targetx, 0.25),
+                    THREE.MathUtils.lerp(py, targetPositions[i].targety, 0.25),
+                    THREE.MathUtils.lerp(pz, targetPositions[i].targetz, 0.25),
+                );
+            }
+        }
+        cube.geometry.attributes.position.needsUpdate = true;
         requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
 
-    const onChange = (value: string) => {
-        canvas = makeLabelCanvas(600, 64, value);
-        texture = new THREE.CanvasTexture(canvas);
-        texture.wrapS = THREE.ClampToEdgeWrapping;
-        texture.wrapT = THREE.ClampToEdgeWrapping;
-        labelMaterial.map = texture;
-        label.scale.x = canvas.width  * 0.01;
-        label.scale.y = canvas.height * 0.01;
-    };
-
-    return { rtObject, onChange };
+    return { rtObject, updateMesh };
 };

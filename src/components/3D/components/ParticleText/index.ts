@@ -85,10 +85,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera, gui
     const render = () => {
         if (config.updateStarted > 0 && clock.getElapsedTime() - config.updateStarted > UPDATE_TIME_LIMIT) {
             config.updateStarted = 0;
-        } else {
-            // particles.rotation.setFromRotationMatrix(camera.matrixWorld);
-            particles.geometry.attributes.position.needsUpdate = true;
-    
+        } else {    
             for (let i = 0; i < POINTS_COUNT; i++) {   
                 const px = positions.getX(i);
                 const py = positions.getY(i);
