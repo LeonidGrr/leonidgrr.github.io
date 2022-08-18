@@ -38,6 +38,19 @@ const Explore = (props: ExplorePanelProps) => {
         };
     }, []);
 
+    useEffect(() => {
+        const onTabPressed = (e: KeyboardEvent) => {
+            if (!showContent && e.key === 'Tab') {
+                setShowContent(true);
+                document.querySelector('li')?.focus();
+            }
+        };
+        document.addEventListener('keydown', onTabPressed);
+        return () => {
+            window.removeEventListener('keydown', onTabPressed);
+        };
+    }, [])
+
     const handleCamera = (e: any) => {
         e.stopPropagation();
         const { key } = e.currentTarget.dataset;
@@ -103,7 +116,7 @@ const Explore = (props: ExplorePanelProps) => {
                             <button
                                 data-key={key}
                                 type="button"
-                                onPointerDown={handleCamera}
+                                onClick={handleCamera}
                             >
                                 {titleMap.sub[key].name}
                             </button>
@@ -113,7 +126,7 @@ const Explore = (props: ExplorePanelProps) => {
                     <li className={css.links}>
                         <button
                             type="button"
-                            onPointerDown={handleDarkMode}
+                            onClick={handleDarkMode}
                         >
                             Theme&nbsp;
                             <span className={classNames(css.mode)}>{mode}</span>
@@ -123,7 +136,7 @@ const Explore = (props: ExplorePanelProps) => {
                     <li className={css.links}>
                         <button
                             type="button"
-                            onPointerDown={handleDebug}
+                            onClick={handleDebug}
                         >
                             {debug
                                 ? <span className={classNames(debug && css.mode)}>Hide debug</span>
