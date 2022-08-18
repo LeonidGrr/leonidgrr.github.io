@@ -127,5 +127,9 @@ export const setupRenderTarget = async (renderer: THREE.WebGLRenderer, initialSt
     };
     requestAnimationFrame(render);
 
-    return { rtObject, updateMesh };
+    document.addEventListener('keydown', () => {
+        updateMesh();
+    });
+
+    return { rtObject };
 };
