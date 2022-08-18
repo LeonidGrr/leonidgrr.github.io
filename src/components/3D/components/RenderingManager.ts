@@ -64,10 +64,10 @@ export class RenderingManager {
                 const intersects = raycaster.intersectObjects(Object.values(targets));
     
                 if (intersects.length > 0) {
-                    if (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard') {
+                    if (this.cameraManager.state !== CameraState.SCREEN && (intersects[0].object.name === 'screen' || intersects[0].object.parent?.name === 'Keyboard')) {
                         this.cameraManager.state = CameraState.SCREEN;
                         postMessage(`change_camera_from_webgl:${CameraState.SCREEN}`);
-                    } else if (intersects[0].object.parent?.name === 'Windows') {
+                    } else if (this.cameraManager.state !== CameraState.WINDOWS && intersects[0].object.parent?.name === 'Windows') {
                         this.cameraManager.state = CameraState.WINDOWS;
                         postMessage(`change_camera_from_webgl:${CameraState.WINDOWS}`);
                     }
