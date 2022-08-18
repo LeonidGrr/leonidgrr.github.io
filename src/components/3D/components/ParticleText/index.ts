@@ -52,6 +52,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera, gui
 
     const rotationModifier = { x: 0, y: -0.13, z: -0.05 };
     const ref = new THREE.Object3D();
+    ref.name = 'Particles';
     ref.position.set(-5, 9.5, -17);
     scene.add(ref);
 
@@ -63,6 +64,7 @@ export const ParticleText = async (scene: THREE.Scene, camera: THREE.Camera, gui
         blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeometries[config.currentIdx], particlesMat);
+    particles.name = 'Particles';
     particles.layers.enable(1);
     ref.add(particles);
 

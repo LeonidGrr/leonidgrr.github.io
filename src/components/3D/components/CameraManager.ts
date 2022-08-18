@@ -4,6 +4,7 @@ export enum CameraState {
     BASE = 'base',
     SCREEN = 'screen',
     WINDOWS = 'windows',
+    PARTICLES = 'particles',
 }
 
 export class CameraManager {
@@ -19,6 +20,7 @@ export class CameraManager {
             base: [this.camera.rotation.clone(), this.camera.position.clone()],
             screen: [new THREE.Euler(-0.275, -0.225, -0.05), new THREE.Vector3(1.5, 13.5, -10.75)],
             windows: [new THREE.Euler(-0.1, 0.0, 0.0), new THREE.Vector3(-3, 15, -17.8)],
+            particles: [this.camera.rotation.clone(), this.camera.position.clone()],
         };
 
         window.addEventListener('resize', () => {

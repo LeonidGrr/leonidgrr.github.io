@@ -29,6 +29,10 @@ const titleMap: Config = {
 			name: 'Raindrops shader',
 			desc: 'I like rain.\n To program this raindrops I used ThreeJS ShaderMaterial and custom fragment shader, partially based on <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoy by Heartfelt</a>.',
 		},
+        particles: {
+			name: 'Particle text geometry',
+			desc: '4096 particles evenly distributed inside pre-generated text geometries.',
+		},
     },
 };
 

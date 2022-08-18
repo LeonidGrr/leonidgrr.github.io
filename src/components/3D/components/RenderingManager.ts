@@ -46,6 +46,10 @@ export class RenderingManager {
             const windows = this.scene.getObjectByName('Windows');
             if (windows) targets.windows = windows;
         }
+        if (!targets.particles) {
+            const particles = this.scene.getObjectByName('Particles');
+            if (particles) targets.particles = particles;
+        }
     }
 
     detectClick = () => {
@@ -70,6 +74,9 @@ export class RenderingManager {
                     } else if (this.cameraManager.state !== CameraState.WINDOWS && intersects[0].object.parent?.name === 'Windows') {
                         this.cameraManager.state = CameraState.WINDOWS;
                         postMessage(`change_camera_from_webgl:${CameraState.WINDOWS}`);
+                    } else if (this.cameraManager.state !== CameraState.PARTICLES && (intersects[0].object.name === 'Particles' || intersects[0].object.parent?.name === 'Particles')) {
+                        this.cameraManager.state = CameraState.PARTICLES;
+                        postMessage(`change_camera_from_webgl:${CameraState.PARTICLES}`);
                     }
                 } else {
                     this.cameraManager.state = CameraState.BASE;
