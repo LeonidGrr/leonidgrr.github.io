@@ -23,11 +23,11 @@ const titleMap: Config = {
 		},
         screen: {
 			name: 'Screen - ThreeJS render target',
-			desc: 'For now this is just an example of THREEJS render target with tip of interactivity - mesh geometry is randomly trasformed when you press some key.',
+			desc: 'Tthis is just an example of THREEJS render target with tip of interactivity - mesh geometry is randomly trasformed when you press some key.',
 		},
         windows: {
 			name: 'Raindrops shader',
-			desc: 'I like rain.\n To program this raindrops I used ThreeJS ShaderMaterial and custom fragment shader, partially based on <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoy by Heartfelt</a>.',
+			desc: 'I like rain.\n To program this raindrops I used ShaderMaterial with fragment shader, based on <a href="https://www.shadertoy.com/view/ltffzl">beautiful shadertoy by Heartfelt</a>.',
 		},
         particles: {
 			name: 'Particle text geometry',
