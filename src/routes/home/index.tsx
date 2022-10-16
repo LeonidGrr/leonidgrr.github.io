@@ -19,11 +19,11 @@ const titleMap: Config = {
     sub: {
 		about: {
 			name: 'About',
-			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n\n This is little demo page, made of two parts:\n - Interactive 3D scene built with ThreeJS library.\n - Overlay user interface build with PreactJS.\n\n Feel free to tap and click around to find small features.`,
+			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n\n This is little demo pag made of:\n - Interactive 3D scene built with ThreeJS library.\n - Overlay user interface built with PreactJS.\n\n Feel free to tap and click around to find small features.`,
 		},
         screen: {
 			name: 'Screen - ThreeJS render target',
-			desc: 'This is just an example of THREEJS render target with tip of interactivity - mesh geometry is randomly trasformed when you press some key.',
+			desc: 'This is just an example of THREEJS render target with tip of interactivity - mesh geometry is randomly trasformed when you press some key. Also note interactive 3D keyboard model...',
 		},
         windows: {
 			name: 'Raindrops shader',
