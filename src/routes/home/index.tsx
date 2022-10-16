@@ -19,7 +19,7 @@ const titleMap: Config = {
     sub: {
 		about: {
 			name: 'About',
-			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n\n This is little demo pag made of:\n - Interactive 3D scene built with ThreeJS library.\n - Overlay user interface built with PreactJS.\n\n Feel free to tap and click around to find small features.`,
+			desc: `Hello! My name is Leonid. I am just humble programmer trying to learn something in a spare time.\n\n This little demo made of:\n - Interactive 3D scene built with ThreeJS library.\n - Overlay user interface built with PreactJS.\n\n Feel free to tap and click around to find small features.`,
 		},
         screen: {
 			name: 'Screen - ThreeJS render target',
